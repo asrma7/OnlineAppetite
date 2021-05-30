@@ -36,7 +36,7 @@
                     <a href="index.php">Categories</a>
                 </li>
                 <li class="nav-link">
-                    <a href="index.php">Customer Care</a>
+                    <a href="customer-care.php">Customer Care</a>
                 </li>
                 <li class="nav-link">
                     <a href="index.php">Become a seller</a>
