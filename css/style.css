@@ -37,6 +37,20 @@ nav{
     width: 100%;
     position: relative;
 }
+.hamburger {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 50px;
+    z-index: 10;
+    width: 50px;
+    background-color: rgba(0, 0, 0, .5);
+    background-image: url('../assets/images/hamburger.png');
+    background-size: contain;
+    border-radius: 10px;
+    cursor: pointer;
+    display: none;
+}
 ul.nav {
     position: absolute;
     list-style: none;
@@ -46,7 +60,9 @@ ul.nav {
     top: 0;
     left: 0;
 }
-
+.small-nav {
+    display: block;
+}
 #navspacer {
     height: 50px;
     width: 100%;
@@ -55,6 +71,7 @@ ul.nav {
 li.nav-link {
     display: inline-block;
     margin: 5px;
+    user-select: none;
 }
 
 li.nav-link a{
@@ -62,6 +79,14 @@ li.nav-link a{
     text-decoration: none;
     color: black;
     font-weight: 700;
+}
+
+li.nav-link.small-logo img {
+    height: 30px;
+}
+
+li.nav-link.nav-small {
+    display: none;
 }
 
 li.nav-link.active{
@@ -80,6 +105,7 @@ li.nav-link.active{
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .header-address {
@@ -98,7 +124,7 @@ li.nav-link.active{
 .searchbar {
     width: 500px;
     height: 35px;
-    background-color: #C4C4C4;
+    background-color: #DDD;
     border: none;
     padding: 0 35px 0 10px;
 }
@@ -123,7 +149,7 @@ li.nav-link.active{
     background-color: #C4C4C4;
     border: none;
     padding: 10px;
-    margin: 0 10px;
+    margin: 0 8px;
 }
 
 .cart {
@@ -145,7 +171,6 @@ li.nav-link.active{
 }
 
 #sliderimage {
-    height: 400px;
     width: 100%;
 }
 
@@ -277,4 +302,31 @@ footer {
     top:50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width:650px){
+    .top-row{
+        display: none;
+    }
+    .hamburger{
+        display: block;
+    }
+    nav {
+        position: fixed;
+    }
+    li.nav-link{
+        display: block;
+        text-align: center;
+        background-color: #DDD;
+    }
+    li.nav-link a{
+        display: block;
+        padding: 20px;
+    }
+    li.nav-link.nav-small {
+        display: block;
+    }
+    .small-nav {
+        display: none;
+    }
 }

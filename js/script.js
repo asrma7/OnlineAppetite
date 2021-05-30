@@ -17,3 +17,12 @@ function gotoTop() {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
+
+function openNav() {
+  var nav = document.querySelector('ul.nav');
+  if(nav.classList.contains('small-nav')){
+    nav.classList.remove('small-nav');
+  }else{
+    nav.classList.add('small-nav');
+  }
+}
