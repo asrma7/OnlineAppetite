@@ -8,7 +8,10 @@
     <title>OnlineAppetite</title>
 </head>
 <body>
-    <?php include 'header.php';?>
+    <?php
+        $page = 'home'; 
+        include 'header.php';
+    ?>
     <div class="slider">
         <img id="sliderimage">
         <div id="sliderpoints">

@@ -8,7 +8,10 @@
     <title>Customer Care</title>
 </head>
 <body>
-    <?php include 'header.php';?>
+    <?php
+        $page = 'customerCare';
+        include 'header.php';
+    ?>
     <?php include 'footer.php';?>
     <script src="js/script.js"></script>
     <script src="js/index.js"></script>

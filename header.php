@@ -30,19 +30,19 @@
                 <li class="nav-link small-logo nav-small">
                     <a href="/"><img src="assets/images/smalllogo.png" alt="logo"></a>
                 </li>
-                <li class="nav-link active">
+                <li class="nav-link <?php echo $page=='home'?'active':'';?>">
                     <a href="/">Home</a>
                 </li>
-                <li class="nav-link">
+                <li class="nav-link <?php echo $page=='deal'?'active':'';?>">
                     <a href="index.php">Today's Deal</a>
                 </li>
-                <li class="nav-link">
+                <li class="nav-link <?php echo $page=='caregories'?'active':'';?>">
                     <a href="index.php">Categories</a>
                 </li>
-                <li class="nav-link">
-                    <a href="customer-care.php">Customer Care</a>
+                <li class="nav-link <?php echo $page=='customerCare'?'active':'';?>">
+                    <a href="customerCare.php">Customer Care</a>
                 </li>
-                <li class="nav-link">
+                <li class="nav-link <?php echo $page=='seller'?'active':'';?>">
                     <a href="index.php">Become a seller</a>
                 </li>
                 <li class="nav-link nav-small">
