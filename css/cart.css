@@ -1,0 +1,6 @@
+@media (max-width:500px) {
+  #order{
+    width:40px;
+    color: red;
+  }
+}

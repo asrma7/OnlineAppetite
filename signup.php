@@ -30,7 +30,7 @@
                 <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Register</button></div><a class="already" href="signin.php" style="color: #fb7925;">Already have an account?</a>
             </form>
         </div>
-    </section>
+    </section>  
     <?php include 'footer.php'?>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
