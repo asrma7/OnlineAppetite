@@ -17,8 +17,8 @@
  <section class="login-clean">
         <form method="post" style="background: #c5c3c3;">
             <h4 class="text-center" style="font-size:23px; margin: 30px;margin-top: -2px; color: black;">Forgot Password</h4>
-            <div class="mb-3"><input class="form-control" type="email" name="username" placeholder="username"></div>
-            <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+            <div class="mb-3"><input class="form-control" type="text" name="username" placeholder="Username"></div>
+            <div class="mb-3"><input class="form-control" type="email" name="email" placeholder="Email"></div>
             <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Send Reset Link</button></div>
         </form>
     </section>

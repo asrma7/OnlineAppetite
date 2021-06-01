@@ -1,0 +1,30 @@
+
+#sliderimage {
+    width: 100%;
+}
+
+#sliderpoints {
+    display: flex;
+    width: 60px;
+    justify-content: space-between;
+    margin: 10px auto;
+}
+
+.sliderpoint {
+    height: 10px;
+    width: 10px;
+    border: 1px solid #C4C4C4;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.sliderpoint.active{
+    background-color: #8CC63F;
+    border-color: #8CC63F;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}

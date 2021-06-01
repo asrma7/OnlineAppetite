@@ -8,14 +8,14 @@
     <title>Login</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/Registration-Form.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <?php
         include 'header.php';
     ?>
 <section class="register-photo">
-        <div class="form-container" style="width: 600px;color: rgb(33, 37, 41);">
+        <div class="form-container" style="min-width: 500px;max-width: 500px;color: rgb(33, 37, 41);">
             <form method="post" style="background: #c5c3c3;">
                 <h2 class="text-center"><strong>Register</strong></h2>
                 <div class="mb-3"><input class="form-control" type="email" placeholder="Name:" name="name" required="" style="background: rgb(255, 255, 255);"></div>
@@ -32,8 +32,7 @@
         </div>
     </section>
     <?php include 'footer.php'?>
-    <script src="js/script.js"></script>
-    <script src="js/index.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
