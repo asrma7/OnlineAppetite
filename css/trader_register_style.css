@@ -1,0 +1,83 @@
+/*trader_register.php styling*/
+
+section{
+    border:1px solid black;
+    width:40%;
+    margin:0px auto;
+    background-color: grey;
+    padding:15px;
+    text-align: center;
+
+
+}
+.class_contact_num label{
+    margin-left:70px;
+}
+
+section form{
+    display:flex;
+    flex-direction: column;
+}
+#area_code{
+    width: 120px;
+}
+#phone_no{
+    width:145px;
+}
+
+
+form{
+    padding-left:30px;
+}
+h1{
+    text-align: center;
+}
+
+
+.class_contact_num{
+    display:flex;
+}
+
+.class_contact_num input{
+    width:140px;
+}
+
+
+.dash{
+    float: left;
+}
+
+
+
+/*address*/
+
+.class_city{
+    float:left;
+}
+
+.address_label label{
+    float: left;
+}
+
+.class_postal_code{
+    float:left;
+}
+
+/*trading since*/
+.trading_label label{
+    float:left;
+}
+
+.month_selector{
+    float:left;
+}
+
+.day_selector{
+    float:left;
+}
+
+
+/*types of business*/
+.business_type{
+    float:left;
+}
