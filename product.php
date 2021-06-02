@@ -16,7 +16,6 @@
 
 <body>
     <?php
-    $page = 'customerCare';
     include 'header.php';
     ?>
     <!-- Product Names -->
