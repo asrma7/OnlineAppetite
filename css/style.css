@@ -216,11 +216,22 @@ li.my-nav-link.active{
 
 .loadmore {
     background-color: #F84343;
+    box-shadow: 2px 2px 5px #2E2E2E;
     color: #FFFFFF;
     border: none;
     padding: 10px;
     width: 200px;
     margin: 20px 0;
+    cursor: pointer;
+}
+
+.loadmore:hover {
+    background-color: #f24e4e;
+}
+
+.loadmore:active {
+    background-color: #F84343;
+    box-shadow: 2px 2px 2px #2E2E2E;
 }
 
 footer {

@@ -19,7 +19,7 @@
     ?>
 
 
-    <section class="cart">
+    <section class="my-cart">
         <div class="cart_flex">
 
             <!--CART FLEX 1/2-->
@@ -45,6 +45,9 @@
                     </div>
                 </div>
 
+                <?php
+                    for($i=0; $i<4; $i++){
+                ?>
                 <!--Cart 1-->
                 <div class="cart_product">
                     <input type="checkbox" id="seller_name" name="seller" value="seller">
@@ -61,7 +64,7 @@
 
                             <!--product image-->
                             <div class="product_img">
-                                <img src="assets/images/veg.jpg">
+                                <img src="assets/images/placeholder.png">
                             </div>
 
                             <!--product description-->
@@ -74,115 +77,22 @@
 
                         <!--PRODUCT FLEX 2-->
                         <div class="product_flex_b">
-                            <h3 style="color:orange">Price </h3>
-                            <p style="color:orange">Original Price </p>
-                            <p>Discount Price </p>
-                            <p> Discount rate%</p>
+                            <h3 style="color:#F1592A; margin:0">Price</h3>
+                            <span style="text-decoration: line-through;">Discount Price</span><br>
+                            <span>Discount rate%</span>
                         </div>
 
                         <!--PRODUCT FLEX 3-->
                         <div class="product_flex_c">
                             <form>
-                                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                                <input type="number" id="number" value="0" />
-                                <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                                <button class="value-button" onclick="decreaseValue(<?=$i?>)" value="Decrease Value">-</button>
+                                <input type="number" class="number-count" id="number-<?=$i?>" value="0" />
+                                <button class="value-button" onclick="increaseValue(<?=$i?>)" value="Increase Value">+</button>
                             </form>
                         </div>
                     </div>
-
                 </div>
-
-
-                <!--cart 2-->
-                <div class="cart_product">
-                    <input type="checkbox" id="seller_name" name="seller" value="seller">
-                    <label for="seller_name"> Seller name</label>
-
-                    <!--PRODUCT FLEX-->
-                    <div class="product_flex">
-                        <!--PRODUCT FLEX 1-->
-                        <div class="product_flex_a">
-                            <input type="checkbox" id="seller_name" name="seller" value="seller">
-
-                            <!--product image-->
-                            <div class="product_img">
-                                <img src="assets/images/veg.jpg">
-                            </div>
-
-                            <!--product description-->
-                            <div class="product_description">
-                                <h3> Product Name</h3>
-                                <p>Stock availability </p>
-                            </div>
-
-                        </div>
-
-                        <!--PRODUCT FLEX 2-->
-                        <div class="product_flex_b">
-
-                            <h3 style="color:orange">Price </h3>
-                            <p style="color:orange">Original Price </p>
-                            <p>Discount Price </p>
-                            <p> Discount rate%</p>
-                        </div>
-
-                        <!--PRODUCT FLEX 3-->
-                        <div class="product_flex_c">
-                            <form>
-                                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                                <input type="number" id="number" value="0" />
-                                <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <!--cart 3-->
-                <div class="cart_product">
-                    <input type="checkbox" id="seller_name" name="seller" value="seller">
-                    <label for="seller_name"> Seller name</label>
-
-                    <!--PRODUCT FLEX-->
-                    <div class="product_flex">
-                        <!--PRODUCT FLEX 1-->
-                        <div class="product_flex_a">
-                            <input type="checkbox" id="seller_name" name="seller" value="seller">
-
-                            <!--product image-->
-                            <div class="product_img">
-                                <img src="assets/images/veg.jpg">
-                            </div>
-
-                            <!--product description-->
-                            <div class="product_description">
-                                <h3> Product Name</h3>
-                                <p>Stock availability </p>
-                            </div>
-
-                        </div>
-
-                        <!--PRODUCT FLEX 2-->
-                        <div class="product_flex_b">
-
-                            <h3 style="color:orange">Price </h3>
-                            <p style="color:orange">Original Price </p>
-                            <p>Discount Price </p>
-                            <p> Discount rate%</p>
-                        </div>
-
-                        <!--PRODUCT FLEX 3-->
-                        <div class="product_flex_c">
-                            <form>
-                                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                                <input type="number" id="number" value="0" />
-                                <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
+                <?php } ?>
             </div>
 
 
@@ -217,11 +127,11 @@
 
                     <!--flex for total amount -->
                     <div class="total_amt">
-                        <p style="color:orange;"> Rs 0</p>
+                        <p style="color:#F1592A;"> Rs 0</p>
                     </div>
                 </div>
 
-                <input type="text" id="checkout" name="voucher" placeholder="Proceed to checkout" >
+                <button class="loadmore" type="submit">Proceed to checkout</button>
 
 
             </div>
@@ -234,24 +144,25 @@
 
     <?php include 'footer.php'; ?>
     <script src="js/script.js"></script>
-    <script src="js/index.js"></script>
 
 
     <!--PRODUCT FLEX 3 JavaScript Portion-->
     <script>
-        function increaseValue() {
-            var value = parseInt(document.getElementById('number').value, 10);
+        function increaseValue(i) {
+            event.preventDefault();
+            var value = parseInt(document.getElementById('number-'+i).value, 10);
             value = isNaN(value) ? 0 : value;
             value++;
-            document.getElementById('number').value = value;
+            document.getElementById('number-'+i).value = value;
         }
 
-        function decreaseValue() {
-            var value = parseInt(document.getElementById('number').value, 10);
+        function decreaseValue(i) {
+            event.preventDefault();
+            var value = parseInt(document.getElementById('number-'+i).value, 10);
             value = isNaN(value) ? 0 : value;
             value < 1 ? value = 1 : '';
             value--;
-            document.getElementById('number').value = value;
+            document.getElementById('number-'+i).value = value;
         }
     </script>
 </body>
