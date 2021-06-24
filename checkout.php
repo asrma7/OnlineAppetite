@@ -27,7 +27,7 @@
         </div>
     </div>
     <!-- Payment Method -->
-    <div class="container" style="max-width:700px;background-color:#F1F1F1">
+    <div class="container mb-5" style="max-width:700px;background-color:#F1F1F1">
         <h2 class="text-center py-3"> Select Payment Method </h2>
         <div class="container py-4" style="background-color:#cccccc;max-width:600px">
             <h2 class="text-center px-3 mb-3"> Order Summary</h2>

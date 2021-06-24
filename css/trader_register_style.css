@@ -1,83 +1,39 @@
-/*trader_register.php styling*/
-
-section{
-    border:1px solid black;
-    width:40%;
+.trader-form{
+    background-color: #C4C4C4;
     margin:0px auto;
-    background-color: grey;
-    padding:15px;
-    text-align: center;
-
-
-}
-.class_contact_num label{
-    margin-left:70px;
+    width:50%;
+    padding:50px;
+    border-radius:10px;
+    color:black;
 }
 
-section form{
-    display:flex;
-    flex-direction: column;
+.trader-form input{
+    border-radius:0px;
 }
-#area_code{
-    width: 120px;
-}
-#phone_no{
-    width:145px;
-}
-
-
-form{
-    padding-left:30px;
-}
-h1{
-    text-align: center;
+.traderbtn {
+    background-color: #F1592A;
+    border: none;
+    padding: 10px 0;
+    box-shadow: 2px 2px 10px #666;
+    color: #ffffff;
 }
 
-
-.class_contact_num{
-    display:flex;
+.traderbtn:hover {
+    background-color: #f8663a;
 }
 
-.class_contact_num input{
-    width:140px;
+.traderbtn:focus {
+    box-shadow: 2px 2px 2px #666;
 }
 
-
-.dash{
-    float: left;
+.toc, .toc:hover {
+    color: #000;
 }
 
-
-
-/*address*/
-
-.class_city{
-    float:left;
-}
-
-.address_label label{
-    float: left;
-}
-
-.class_postal_code{
-    float:left;
-}
-
-/*trading since*/
-.trading_label label{
-    float:left;
-}
-
-.month_selector{
-    float:left;
-}
-
-.day_selector{
-    float:left;
-}
-
-
-/*types of business*/
-.business_type{
-    float:left;
+.trader-form label{
+    -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none; 
 }

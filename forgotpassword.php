@@ -8,7 +8,6 @@
     <title>Login</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/Login-Form.css">
-    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <?php
@@ -24,7 +23,6 @@
     </section>
     <?php include 'footer.php';?>
     <script src="js/script.js"></script>
-    <script src="js/index.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
