@@ -7,6 +7,9 @@ $errors = [];
 
 if (empty($login)) {
     $errors['login'] = "Username/Email is required.";
+    $_SESSION['errors'] = $errors;
+    $_SESSION['old'] = $old;
+    header('Location: /signin.php');
 } else {
     $sql = "SELECT user_id, full_name, username, email, password_hash, image FROM users WHERE (username=='$login' OR email =='$login') AND user_role=='3'";
     $user = fetch_row($sql);

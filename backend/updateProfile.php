@@ -1,5 +1,5 @@
 <?php
-include 'utils/database.php';
+include '../utils/database.php';
 session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: /signin.php');
@@ -60,9 +60,9 @@ if (file_exists($image["tmp_name"])) {
             $errors['profileImage'] = "Image dimension should be within 300X200.";
         }
         if (empty($errors['profileImage'])) {
-            $target = "uploads/users/" . $user_id . '.' . $file_extension;
+            $target = "../uploads/users/" . $user_id . '.' . $file_extension;
             if (move_uploaded_file($image["tmp_name"], $target)) {
-                $profileImage = $target;
+                $profileImage = '/uploads/users/'. $user_id . '.' . $file_extension;
             } else {
                 $errors['profileImage'] = "Problem in uploading image files.";
             }

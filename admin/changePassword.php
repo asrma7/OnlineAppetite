@@ -1,8 +1,8 @@
 <?php
 require_once '../sessionManager.php';
 require_once '../utils/database.php';
-if (!isset($_SESSION['trader'])) {
-  header('Location: /trader/login.php');
+if (!isset($_SESSION['admin'])) {
+  header('Location: /admin/login.php');
 }else {
   if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];

@@ -368,3 +368,9 @@ footer {
         display: none;
     }
 }
+
+.alert-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #d32535;
+}

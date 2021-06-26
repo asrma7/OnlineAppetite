@@ -93,7 +93,7 @@ if (!isset($_SESSION['user'])) {
                   <a href="/editprofile.php"><button class="btn btn-secondary mb-2">Edit Profile</button></a>
                 </div>
                 <div class="col-6">
-                  <a href="changepass.php"><button class="btn btn-secondary mb-2">Change Password</button></a>
+                  <a href="changePassword.php"><button class="btn btn-secondary mb-2">Change Password</button></a>
                 </div>
               </div>
             </div>

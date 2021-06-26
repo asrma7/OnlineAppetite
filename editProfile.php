@@ -45,7 +45,7 @@ if (!isset($_SESSION['user'])) {
                     <?= $message['message']; ?>
                 </div>
             <?php } ?>
-            <form action="updateProfile.php" method="POST" enctype="multipart/form-data">
+            <form action="/backend/updateProfile.php" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-4 col-sm-6 col-12">
                         <div class="img">
