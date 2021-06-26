@@ -74,10 +74,10 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="<?=$_SESSION['trader']['image']??"/assets/images/adminlte/avatar2.png"?>" class="img-circle elevation-2" alt="User Image">
+        <img src="<?= $_SESSION['trader']['image'] ?? "/assets/images/adminlte/avatar2.png" ?>" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="/trader/profile.php" class="d-block"><?=$_SESSION['trader']['full_name']?></a>
+        <a href="/trader/profile.php" class="d-block"><?= $_SESSION['trader']['full_name'] ?></a>
       </div>
     </div>
 
@@ -156,6 +156,29 @@
               <a href="/trader/viewProducts.php" class="nav-link <?= $page == 'ViewProducts' ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>View Products</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item <?= $page == 'AddDiscount' || $page == 'ViewDiscounts' ? 'menu-open' : '' ?>">
+          <a href="#" class="nav-link <?= $page == 'AddDiscount' || $page == 'ViewDiscounts' ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-friends"></i>
+            <p>
+              Discounts
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/admin/addDiscount.php" class="nav-link <?= $page == 'AddDiscount' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Discount</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/admin/viewDiscounts.php" class="nav-link <?= $page == 'ViewDiscounts' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>View Discounts</p>
               </a>
             </li>
           </ul>

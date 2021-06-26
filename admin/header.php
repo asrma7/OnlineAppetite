@@ -129,29 +129,37 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item <?=$page=='addCategory'||$page=='viewCategories'?'menu-open':''?>">
-            <a href="#" class="nav-link <?=$page=='addCategory'||$page=='viewCategories'?'active':''?>">
-              <i class="nav-icon fas fa-user-friends"></i>
-              <p>
-                Category
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/admin/addCategory.php" class="nav-link <?=$page=='addCategory'?'active':''?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add Category</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/viewCategories.php" class="nav-link <?=$page=='viewCategories'?'active':''?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>View Categories</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+        <li class="nav-item <?= $page == 'AddCategory' || $page == 'ViewCategories' ? 'menu-open' : '' ?>">
+          <a href="#" class="nav-link <?= $page == 'AddCategory' || $page == 'ViewCategories' ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-friends"></i>
+            <p>
+              Category
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/admin/addCategory.php" class="nav-link <?= $page == 'AddCategory' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Category</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/admin/viewCategories.php" class="nav-link <?= $page == 'ViewCategories' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>View Categories</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/viewShops.php" class="nav-link <?= $page == 'Shops' ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-store-alt"></i>
+            <p>
+              Shops
+            </p>
+          </a>
+        </li>
         <li class="nav-item">
           <a href="/admin/viewOrders.php" class="nav-link <?= $page == 'Orders' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-shopping-cart"></i>
@@ -167,6 +175,29 @@
               Products
             </p>
           </a>
+        </li>
+        <li class="nav-item <?= $page == 'AddDiscount' || $page == 'ViewDiscounts' ? 'menu-open' : '' ?>">
+          <a href="#" class="nav-link <?= $page == 'AddDiscount' || $page == 'ViewDiscounts' ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-friends"></i>
+            <p>
+              Discounts
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/admin/addDiscount.php" class="nav-link <?= $page == 'AddDiscount' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Discount</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/admin/viewDiscounts.php" class="nav-link <?= $page == 'ViewDiscounts' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>View Discounts</p>
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item">
           <a href="/admin/viewPayments.php" class="nav-link <?= $page == 'Payments' ? 'active' : '' ?>">

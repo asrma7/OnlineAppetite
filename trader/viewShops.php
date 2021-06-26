@@ -1,5 +1,6 @@
 <?php
 require_once '../sessionManager.php';
+require_once '../utils/database.php';
 if(!isset($_SESSION['trader']))
 {
   header('Location: /trader/login.php');
@@ -32,6 +33,7 @@ if(!isset($_SESSION['trader']))
     <?php
     $page = "ViewShops";
     include 'header.php';
+    $shops = fetch_all_row("SELECT shops.*, (SELECT COUNT(*) FROM products WHERE products.shop_id = shops.shop_id) AS products FROM shops");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -71,16 +73,16 @@ if(!isset($_SESSION['trader']))
               </tr>
             </thead>
             <tbody>
-              <?php for ($i = 0; $i < 50; $i++) { ?>
+              <?php foreach($shops as $shop) { ?>
                 <tr>
-                  <td>1</td>
-                  <td>Mero Shop</td>
-                  <td>04-12-2021</td>
-                  <td>123424/123212</td>
-                  <td>Small</td>
-                  <td>12</td>
+                  <td><?= $shop['shop_id'] ?></td>
+                  <td><?= $shop['shop_name'] ?></td>
+                  <td class="text-center"><?= $shop['verified_on']??'-' ?></td>
+                  <td><?= $shop['gov_no'] ?></td>
+                  <td><?= $shop['shop_type'] ?></td>
+                  <td><?= $shop['products'] ?></td>
                   <td>
-                    <div class="row justify-content-around">
+                    <div class="d-flex">
                       <button class="btn btn-warning m-1">Edit</button>
                       <button class="btn btn-danger m-1">Delete</button>
                     </div>

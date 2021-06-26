@@ -95,8 +95,8 @@ if (!isset($_SESSION['trader'])) {
                       <input type="file" name="profileImage" class="custom-file-input  <?= isset($errors['profileImage']) ? 'is-invalid' : ''; ?>" id="profileImage">
                       <label class="custom-file-label" for="profileImage">Choose image</label>
                     </div>
-                    <?= isset($errors['profileImage']) ? '<div class="text-danger">' . $errors['profileImage'] . '</div>' : ''; ?>
                   </div>
+                  <?= isset($errors['profileImage']) ? '<div class="text-danger">' . $errors['profileImage'] . '</div>' : ''; ?>
                 </div>
               </div>
               <div class="col-md-8 offset-md-1 col-sm-6 col-12">

@@ -75,7 +75,7 @@ if(!isset($_SESSION['trader']))
                   <td>1</td>
                   <td>Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr</td>
                   <td>
-                    <div class="row justify-content-around">
+                    <div class="d-flex">
                       <button class="btn btn-info m-1">View</button>
                       <button class="btn btn-success m-1">Confirm</button>
                       <button class="btn btn-danger m-1">Cancel</button>

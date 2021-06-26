@@ -3,18 +3,18 @@ require_once 'sessionManager.php';
 require_once 'utils/database.php';
 if (!isset($_SESSION['user'])) {
     header('Location: /signin.php');
-}else {
+} else {
     if (isset($_SESSION['message'])) {
-      $message = $_SESSION['message'];
-      unset($_SESSION['message']);
+        $message = $_SESSION['message'];
+        unset($_SESSION['message']);
     }
     if (isset($_SESSION['errors'])) {
-      $errors = $_SESSION['errors'];
-      $old = $_SESSION['old'];
-      unset($_SESSION['errors']);
-      unset($_SESSION['old']);
+        $errors = $_SESSION['errors'];
+        $old = $_SESSION['old'];
+        unset($_SESSION['errors']);
+        unset($_SESSION['old']);
     }
-  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,11 +55,11 @@ if (!isset($_SESSION['user'])) {
                             <label for="profileImage">Profile Image</label>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" name="profileImage" class="custom-file-input  <?= isset($errors['profileImage']) ? 'is-invalid' : ''; ?>" id="profileImage">
+                                    <input type="file" name="profileImage" class="custom-file-input <?= isset($errors['profileImage']) ? 'is-invalid' : ''; ?>" id="profileImage">
                                     <label class="custom-file-label" for="profileImage">Choose image</label>
                                 </div>
-                                <?= isset($errors['profileImage']) ? '<div class="text-danger">' . $errors['profileImage'] . '</div>' : ''; ?>
                             </div>
+                            <?= isset($errors['profileImage']) ? '<div class="text-danger">' . $errors['profileImage'] . '</div>' : ''; ?>
                         </div>
                     </div>
                     <div class="col-md-7 offset-md-1 col-sm-6 col-12">

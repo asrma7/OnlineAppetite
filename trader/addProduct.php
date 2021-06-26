@@ -1,5 +1,6 @@
 <?php
 require_once '../sessionManager.php';
+require_once '../utils/database.php';
 if (!isset($_SESSION['trader'])) {
   header('Location: /trader/login.php');
 } else {
@@ -46,6 +47,9 @@ if (!isset($_SESSION['trader'])) {
     <?php
     $page = "AddProduct";
     include 'header.php';
+    $user_id = $_SESSION['trader']['user_id'];
+    $categories = fetch_all_row('SELECT * FROM categories');
+    $shops = fetch_all_row("SELECT * FROM shops WHERE trader_id = '$user_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -73,7 +77,7 @@ if (!isset($_SESSION['trader'])) {
         <div class="container-fluid">
           <h5 class="mb-2">Add Product</h5>
 
-          <form class="addForm" action="insertProduct.php" method="POST">
+          <form class="addForm" action="insertProduct.php" method="POST" enctype="multipart/form-data">
             <?php if (isset($message)) { ?>
               <div class="alert alert-<?= $message['color'] ?> text-center" role="alert">
                 <?= $message['message']; ?>
@@ -96,44 +100,60 @@ if (!isset($_SESSION['trader'])) {
               <label for="category">Category</label>
               <select class="form-control select2 select2-danger <?= isset($errors['category']) ? 'is-invalid' : ''; ?>" id="category" name="category" data-dropdown-css-class="select2-danger" style="width: 100%;">
                 <option <?php echo !isset($old['category']) ? 'selected' : ''; ?> disabled>Select one</option>
-                <option <?php if (isset($old['category'])) echo $old['category'] == '1' ? 'selected' : '';?> value="1">Alaska</option>
-                <option <?php if (isset($old['category'])) echo $old['category'] == '2' ? 'selected' : '';?> value="2">California</option>
-                <option <?php if (isset($old['category'])) echo $old['category'] == '3' ? 'selected' : '';?> value="3">Delaware</option>
+                <?php
+                foreach ($categories as $category) {
+                ?>
+                  <option <?php if (isset($old['category'])) echo $old['category'] == $category['category_id'] ? 'selected' : ''; ?> value="<?= $category['category_id'] ?>"><?= $category['category_name'] ?></option>
+                <?php } ?>
               </select>
               <?= isset($errors['category']) ? '<div class="invalid-feedback">' . $errors['category'] . '</div>' : ''; ?>
             </div>
             <!--quantity-->
             <div class="form-group">
-              <label for="quantity">Quantity</label>
-              <input type="number" id="quantity" name="quantity" class="form-control <?= isset($errors['quantity']) ? 'is-invalid' : ''; ?>" value="<?= $old['quantity'] ?? ''; ?>">
-              <?= isset($errors['quantity']) ? '<div class="invalid-feedback">' . $errors['quantity'] . '</div>' : ''; ?>
+              <label for="stock">Stock</label>
+              <input type="number" id="stock" name="stock" class="form-control <?= isset($errors['stock']) ? 'is-invalid' : ''; ?>" value="<?= $old['stock'] ?? ''; ?>">
+              <?= isset($errors['stock']) ? '<div class="invalid-feedback">' . $errors['stock'] . '</div>' : ''; ?>
             </div>
             <!--shop-->
             <div class="form-group">
               <label for="shop">Shop</label>
               <select class="form-control select2 select2-danger <?= isset($errors['shop']) ? 'is-invalid' : ''; ?>" id="shop" name="shop" data-dropdown-css-class="select2-danger" style="width: 100%;">
                 <option <?php echo !isset($old['shop']) ? 'selected' : ''; ?> disabled>Select one</option>
-                <option <?php if (isset($old['shop'])) echo $old['shop'] == '1' ? 'selected' : '';?> value="1">Alaska</option>
-                <option <?php if (isset($old['shop'])) echo $old['shop'] == '2' ? 'selected' : '';?> value="2">California</option>
-                <option <?php if (isset($old['shop'])) echo $old['shop'] == '3' ? 'selected' : '';?> value="3">Delaware</option>
+                <?php
+                foreach ($shops as $shop) {
+                ?>
+                  <option <?php if (isset($old['shop'])) echo $old['shop'] == $shop['shop_id'] ? 'selected' : ''; ?> value="<?= $shop['shop_id'] ?>"><?= $shop['shop_name'] ?></option>
+                <?php } ?>
               </select>
               <?= isset($errors['shop']) ? '<div class="invalid-feedback">' . $errors['shop'] . '</div>' : ''; ?>
             </div>
             <!--description-->
             <div class="form-group">
               <label for="inputDescription">Description</label>
-              <textarea id="inputDescription" class="form-control <?= isset($errors['description']) ? 'is-invalid' : ''; ?>" value="<?= $old['description'] ?? ''; ?>" name="description" rows="4"></textarea>
+              <textarea id="inputDescription" class="form-control <?= isset($errors['description']) ? 'is-invalid' : ''; ?>" name="description" rows="4"><?= $old['description'] ?? ''; ?></textarea>
               <?= isset($errors['description']) ? '<div class="invalid-feedback">' . $errors['description'] . '</div>' : ''; ?>
             </div>
-            <!--product image-->
+            <!--product image 1-->
             <div class="form-group">
-              <label for="productImage">Product Image</label>
+              <label for="productImage1">Product Image 1</label>
               <div class="input-group">
                 <div class="custom-file">
-                  <input type="file" name="productImage" class="custom-file-input" id="productImage">
-                  <label class="custom-file-label" for="productImage">Choose product image</label>
+                  <input type="file" name="productImage1" class="custom-file-input <?= isset($errors['profileImage']) ? 'is-invalid' : ''; ?>" id="productImage1">
+                  <label class="custom-file-label" for="productImage1">Choose product image</label>
                 </div>
               </div>
+              <?= isset($errors['productImage1']) ? '<div class="text-danger">' . $errors['productImage1'] . '</div>' : ''; ?>
+            </div>
+            <!--product image 1-->
+            <div class="form-group">
+              <label for="productImage2">Product Image 2</label>
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" name="productImage2" class="custom-file-input <?= isset($errors['profileImage']) ? 'is-invalid' : ''; ?>" id="productImage2">
+                  <label class="custom-file-label" for="productImage2">Choose product image</label>
+                </div>
+              </div>
+              <?= isset($errors['productImage2']) ? '<div class="text-danger">' . $errors['productImage2'] . '</div>' : ''; ?>
             </div>
             <!--submit button-->
             <button type="submit" class="btn btn-outline-secondary mb-3">Add Product</button>
@@ -155,6 +175,8 @@ if (!isset($_SESSION['trader'])) {
   <script src="/js/adminlte/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
   <script src="/js/adminlte/adminlte.min.js"></script>
+  <!-- bs-custom-file-input -->
+  <script src="/js/bs-custom-file-input/bs-custom-file-input.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="/js/adminlte/demo.js"></script>
   <!-- Select2 -->
@@ -163,6 +185,9 @@ if (!isset($_SESSION['trader'])) {
     $(function() {
       //Initialize Select2 Elements
       $('.select2').select2()
+    });
+    $(function() {
+      bsCustomFileInput.init();
     });
   </script>
 </body>

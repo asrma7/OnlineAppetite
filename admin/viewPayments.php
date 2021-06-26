@@ -77,7 +77,7 @@ if(!isset($_SESSION['admin']))
                   <td>Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr</td>
                   <td>Rs. 4000</td>
                   <td>
-                    <div class="row justify-content-around">
+                    <div class="d-flex">
                       <button class="btn btn-info m-1">View</button>
                       <button class="btn btn-primary m-1">Print</button>
                     </div>

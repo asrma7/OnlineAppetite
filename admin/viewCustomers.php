@@ -1,5 +1,6 @@
 <?php
 require_once '../sessionManager.php';
+require_once '../utils/database.php';
 if(!isset($_SESSION['admin']))
 {
   header('Location: /admin/login.php');
@@ -53,6 +54,7 @@ if(!isset($_SESSION['admin']))
     <?php
     $page = "Customers";
     include 'header.php';
+    $customers = fetch_all_row('SELECT * FROM users LEFT JOIN customers ON users.user_id = customers.user_id WHERE user_role = 3');
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -93,21 +95,21 @@ if(!isset($_SESSION['admin']))
               </tr>
             </thead>
             <tbody>
-              <?php for ($i = 0; $i < 50; $i++) { ?>
+              <?php foreach ($customers as $customer) { ?>
                 <tr>
-                  <td>1</td>
-                  <td>Ashutosh Sharma</td>
-                  <td>04-12-2021</td>
-                  <td>asrma.sharma@gmail.com</td>
-                  <td>04-12-2021</td>
-                  <td>Male</td>
+                  <td><?= $customer['user_id'] ?></td>
+                  <td><?= $customer['full_name'] ?></td>
+                  <td><?= $customer['created_at'] ?></td>
+                  <td><?= $customer['email'] ?></td>
+                  <td class="text-center"><?= $customer['email_verified_at']??'-' ?></td>
+                  <td><?= $customer['gender'] ?></td>
                   <td>
                     <div class="image-preview">
-                      <img class="abs-image" src="/assets/images/placeholder.png" alt="User Image">
+                      <img class="abs-image" src="<?= $customer['image'] ?>" alt="User Image">
                     </div>
                   </td>
                   <td>
-                    <div class="row justify-content-around">
+                    <div class="d-flex">
                       <button class="btn btn-warning m-1">Edit</button>
                       <button class="btn btn-danger m-1">Delete</button>
                     </div>

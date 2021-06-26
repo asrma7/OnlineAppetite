@@ -5,6 +5,8 @@ $old = $_POST;
 extract($_POST);
 $errors = [];
 
+$trader_id = $_SESSION['trader']['user_id'];
+
 //shop name
 if (empty($shopName)) {
     $errors['shopName'] = "Shop Name is required.";  
@@ -41,14 +43,12 @@ elseif (strlen($description) < 20) {
 
 //error size
 if (sizeof($errors) == 0) {
-   
-    
-    if (!$res1)
-        $_SESSION['message'] = ["message" => "Error while user registeration", 'color' => "danger"];
-    else if(!query($sql2))
-        $_SESSION['message'] = ["message" => "Error while trader registeration", 'color' => "danger"];
+   $sql = "INSERT INTO shops (trader_id, shop_name, gov_no, address, contact_no, shop_type, description) VALUES ('$trader_id', '$shopName', '$govNum', '$address', '$contact', '$shop_type', '$description')";
+   $res = query($sql);
+    if (!$res)
+        $_SESSION['message'] = ["message" => "Error while inserting Shop", 'color' => "danger"];
     else
-        $_SESSION['message'] = ["message" => "Registered Successfully! Wait for verification", 'color' => "success"];
+        $_SESSION['message'] = ["message" => "Shop added Successfully!", 'color' => "success"];
 } else {
     $_SESSION['message'] = ["message" => "Please fix the following errors", 'color' => "danger"];
     $_SESSION['errors'] = $errors;

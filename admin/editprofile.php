@@ -86,8 +86,8 @@ if (!isset($_SESSION['admin'])) {
                       <input type="file" name="profileImage" class="custom-file-input  <?= isset($errors['profileImage']) ? 'is-invalid' : ''; ?>" id="profileImage">
                       <label class="custom-file-label" for="profileImage">Choose image</label>
                     </div>
-                    <?= isset($errors['profileImage']) ? '<div class="text-danger">' . $errors['profileImage'] . '</div>' : ''; ?>
                   </div>
+                  <?= isset($errors['profileImage']) ? '<div class="text-danger">' . $errors['profileImage'] . '</div>' : ''; ?>
                 </div>
               </div>
               <div class="col-md-8 offset-md-1 col-sm-6 col-12">
@@ -149,9 +149,14 @@ if (!isset($_SESSION['admin'])) {
   <script src="/js/adminlte/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
   <script src="/js/adminlte/adminlte.min.js"></script>
+  <!-- bs-custom-file-input -->
+  <script src="/js/bs-custom-file-input/bs-custom-file-input.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="/js/adminlte/demo.js"></script>
   <script>
+    $(function() {
+      bsCustomFileInput.init();
+    });
     document.getElementById('profileImage').onchange = evt => {
       const [file] = document.getElementById('profileImage').files
       if (file) {

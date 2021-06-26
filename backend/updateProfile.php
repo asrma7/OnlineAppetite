@@ -57,19 +57,17 @@ if (file_exists($image["tmp_name"])) {
             $errors['profileImage'] = "Image size exceeds 2MB.";
         }    // Validate image file dimension
         else if ($width > "250" || $height > "250") {
-            $errors['profileImage'] = "Image dimension should be within 300X200.";
-        }
-        if (empty($errors['profileImage'])) {
-            $target = "../uploads/users/" . $user_id . '.' . $file_extension;
-            if (move_uploaded_file($image["tmp_name"], $target)) {
-                $profileImage = '/uploads/users/'. $user_id . '.' . $file_extension;
-            } else {
-                $errors['profileImage'] = "Problem in uploading image files.";
-            }
+            $errors['profileImage'] = "Image dimension should be within 250X250.";
         }
     }
 }
 if (sizeof($errors) == 0) {
+    $target = "../uploads/users/" . $user_id . '.' . $file_extension;
+    if (move_uploaded_file($image["tmp_name"], $target)) {
+        $profileImage = '/uploads/users/' . $user_id . '.' . $file_extension;
+    } else {
+        $errors['profileImage'] = "Problem in uploading image files.";
+    }
     $sql1 = "UPDATE users SET";
     if (!empty($full_name))
         $sql1 .= " full_name = '$full_name',";

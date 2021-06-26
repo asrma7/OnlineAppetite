@@ -7,7 +7,7 @@ $errors = [];
 
 //product name
 if (empty($productName)) {
-    $errors['productName'] = "Product Name is required.";  
+    $errors['productName'] = "Product Name is required.";
 } elseif (strlen($productName) < 3) {
     $errors['productName'] = "Product Name must be atleast 3 characters long.";
 } elseif (!preg_match('/^[a-zA-Z ]+$/', $productName)) {
@@ -16,42 +16,115 @@ if (empty($productName)) {
 //price
 if (empty($price)) {
     $errors['price'] = "Price is required.";
-} 
-elseif (!is_numeric($price)) {
-    $errors['price'] = "Price must be in numeric format."; 
+} elseif (!is_numeric($price)) {
+    $errors['price'] = "Price must be numeric.";
 }
 //category
 if (empty($category)) {
     $errors['category'] = "Category is required.";
-} 
+}
 //quantity
-if (empty($quantity)) {
-    $errors['quantity'] = "Quantity is required.";
-} 
-elseif (!is_numeric($quantity)) {
-    $errors['quantity'] = "Please enter a valid quantity."; 
+if (empty($stock)) {
+    $errors['stock'] = "Stock is required.";
+} elseif (!is_numeric($stock)) {
+    $errors['stock'] = "Please enter a valid stock.";
 }
 //shop
 if (empty($shop)) {
     $errors['shop'] = "Shop is required.";
-} 
+}
 //description
 if (empty($description)) {
     $errors['description'] = "Description is required.";
+} elseif (strlen($description) < 20) {
+    $errors['description'] = "Description must be atleast 20 characters long.";
 }
-elseif (strlen($description) < 3) {
-    $errors['description'] = "Description must be atleast 3 characters long.";
+if (file_exists($_FILES['productImage1']["tmp_name"])) {
+
+    $allowed_image_extension = array(
+        "png",
+        "jpg",
+        "jpeg"
+    );
+
+    // Get image file extension
+    $file_extension = pathinfo($_FILES['productImage1']["name"], PATHINFO_EXTENSION);
+
+    // Validate file input to check if is with valid extension
+    if (!in_array($file_extension, $allowed_image_extension)) {
+        $errors['productImage1'] = "Upload valid images. Only PNG and JPEG are allowed.";
+    }    // Validate image file size
+    else {
+        $fileinfo = getimagesize($_FILES['productImage1']["tmp_name"]);
+        $width = $fileinfo[0];
+        $height = $fileinfo[1];
+
+        if (($_FILES['productImage1']["size"] > 2000000)) {
+            $errors['productImage1'] = "Image size exceeds 2MB.";
+        }    // Validate image file dimension
+        else if ($width > "250" || $height > "250") {
+            $errors['productImage1'] = "Image dimension should be within 300X200.";
+        }
+    }
+} else {
+    $errors['productImage1'] = "Product Image 1 is required.";
 }
 
+if (file_exists($_FILES['productImage2']["tmp_name"])) {
+
+    $allowed_image_extension = array(
+        "png",
+        "jpg",
+        "jpeg"
+    );
+
+    // Get image file extension
+    $file_extension = pathinfo($_FILES['productImage2']["name"], PATHINFO_EXTENSION);
+
+    // Validate file input to check if is with valid extension
+    if (!in_array($file_extension, $allowed_image_extension)) {
+        $errors['productImage2'] = "Upload valid images. Only PNG and JPEG are allowed.";
+    }    // Validate image file size
+    else {
+        $fileinfo = getimagesize($_FILES['productImage2']["tmp_name"]);
+        $width = $fileinfo[0];
+        $height = $fileinfo[1];
+
+        if (($_FILES['productImage2']["size"] > 2000000)) {
+            $errors['productImage2'] = "Image size exceeds 2MB.";
+        }    // Validate image file dimension
+        else if ($width > "250" || $height > "250") {
+            $errors['productImage2'] = "Image dimension should be within 300X200.";
+        }
+    }
+} else {
+    $errors['productImage2'] = "Product Image 2 is required.";
+}
 
 //error size
 if (sizeof($errors) == 0) {
-   if (!$res1)
-        $_SESSION['message'] = ["message" => "Error while user registeration", 'color' => "danger"];
-    else if(!query($sql2))
-        $_SESSION['message'] = ["message" => "Error while trader registeration", 'color' => "danger"];
+    $filename = uniqid('ProductImage_');
+    $target = "../uploads/products/" . $filename . '.' . $file_extension;
+    if (move_uploaded_file($_FILES['productImage1']["tmp_name"], $target)) {
+        $productImage1 = '/uploads/products/' . $filename . '.' . $file_extension;
+    } else {
+        $errors['productImage1'] = "Problem in uploading image files.";
+    }
+    $filename = uniqid('ProductImage_');
+    $target = "../uploads/products/" . $filename . '.' . $file_extension;
+    if (move_uploaded_file($_FILES['productImage2']["tmp_name"], $target)) {
+        $productImage2 = '/uploads/products/' . $filename . '.' . $file_extension;
+    } else {
+        $errors['productImage2'] = "Problem in uploading image files.";
+    }
+    $sql = "INSERT INTO products (product_name, category_id, price, stock, shop_id, description, image1, image2)
+    VALUES
+    ('$productName', '$category', '$price', '$stock', '$shop', '$description', '$productImage1', '$productImage2')";
+    $res = query($sql);
+    if (!$res)
+        $_SESSION['message'] = ["message" => "Error while inserting Product", 'color' => "danger"];
     else
-        $_SESSION['message'] = ["message" => "Registered Successfully! Wait for verification", 'color' => "success"];
+        $_SESSION['message'] = ["message" => "Product added Successfully!", 'color' => "success"];
 } else {
     $_SESSION['message'] = ["message" => "Please fix the following errors", 'color' => "danger"];
     $_SESSION['errors'] = $errors;

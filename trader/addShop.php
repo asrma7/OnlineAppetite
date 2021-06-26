@@ -75,6 +75,11 @@ if (!isset($_SESSION['trader'])) {
           <h5 class="mb-2">Add Shop</h5>
 
           <form class="addForm" action="insertShop.php" method="POST">
+            <?php if (isset($message)) { ?>
+              <div class="alert alert-<?= $message['color'] ?> text-center" role="alert">
+                <?= $message['message']; ?>
+              </div>
+            <?php } ?>
             <!--shop name-->
             <div class="form-group">
               <label for="shopName">Shop Name</label>
@@ -104,16 +109,16 @@ if (!isset($_SESSION['trader'])) {
               <label for="shop_type">Shop Type</label>
               <select class="form-control select2 select2-danger <?= isset($errors['shop_type']) ? 'is-invalid' : ''; ?>" id="shop_type" name="shop_type" data-dropdown-css-class="select2-danger" style="width: 100%;">
                 <option <?php echo !isset($old['shop_type']) ? 'selected' : ''; ?> disabled>Select one</option>
-                <option <?php if (isset($old['shop_type'])) echo $old['shop_type'] == 'small' ? 'selected' : '';?> value="small">Small</option>
-                <option  <?php if (isset($old['shop_type'])) echo $old['shop_type'] == 'medium' ? 'selected' : '';?> value="medium">Medium</option>
-                <option <?php if (isset($old['shop_type'])) echo $old['shop_type'] == 'large' ? 'selected' : '';?> value="large">Large</option>
+                <option <?php if (isset($old['shop_type'])) echo $old['shop_type'] == 'small' ? 'selected' : ''; ?> value="small">Small</option>
+                <option <?php if (isset($old['shop_type'])) echo $old['shop_type'] == 'medium' ? 'selected' : ''; ?> value="medium">Medium</option>
+                <option <?php if (isset($old['shop_type'])) echo $old['shop_type'] == 'large' ? 'selected' : ''; ?> value="large">Large</option>
               </select>
               <?= isset($errors['shop_type']) ? '<div class="invalid-feedback">' . $errors['shop_type'] . '</div>' : ''; ?>
             </div>
             <!--description-->
             <div class="form-group">
               <label for="inputDescription">Description</label>
-              <textarea id="inputDescription" name="description" rows="4" class="form-control <?= isset($errors['description']) ? 'is-invalid' : ''; ?>" value="<?= $old['description'] ?? ''; ?>">  </textarea>
+              <textarea id="inputDescription" name="description" rows="4" class="form-control <?= isset($errors['description']) ? 'is-invalid' : ''; ?>"><?= $old['description'] ?? ''; ?></textarea>
               <?= isset($errors['description']) ? '<div class="invalid-feedback">' . $errors['description'] . '</div>' : ''; ?>
 
             </div>

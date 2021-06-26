@@ -26,14 +26,35 @@ if(!isset($_SESSION['admin']))
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/css/adminlte/adminlte.min.css">
+  <style>
+    .image-preview {
+      position: relative;
+      width: 50px;
+      height: 50px;
+    }
+
+    .image-preview .abs-image {
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      max-width: 50px;
+      max-height: 50px;
+      transition: transform 250ms ease-in;
+    }
+
+    .image-preview .abs-image:hover {
+      transform: scale(400%);
+      z-index: 10;
+    }
+  </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
     <?php
-    $page = "Shops";
+    $page = "ViewCategories";
     include 'header.php';
-    $shops = fetch_all_row("SELECT shops.*, (SELECT COUNT(*) FROM products WHERE products.shop_id = shops.shop_id) AS products FROM shops");
+    $categories = fetch_all_row("SELECT * FROM categories");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -48,7 +69,7 @@ if(!isset($_SESSION['admin']))
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Shops</li>
+                <li class="breadcrumb-item active">Products</li>
               </ol>
             </div>
           </div>
@@ -58,35 +79,22 @@ if(!isset($_SESSION['admin']))
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <h5 class="mb-2">Shops</h5>
+          <h5 class="mb-2">Products</h5>
           <table id="shopTable" class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>Shop ID</th>
-                <th>Shop Name</th>
-                <th>Verified on</th>
-                <th class="no-sort">Verify</th>
-                <th class="no-sort">Pan no./Vat no.</th>
-                <th>Shop Type</th>
-                <th>Products</th>
+                <th>Category ID</th>
+                <th>Category Name</th>
+                <th class="no-sort">Description</th>
                 <th class="no-sort no-search">Edit/Delete</th>
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($shops as $shop) { ?>
+              <?php foreach ($categories as $category) { ?>
                 <tr>
-                <td><?= $shop['shop_id'] ?></td>
-                  <td><?= $shop['shop_name'] ?></td>
-                  <td class="text-center"><?= $shop['verified_on']??'-' ?></td>
-                  <td style="text-align: center;">
-                  <?= isset($product['verified_on']) ?
-                      '<button class="btn btn-danger m-1">Remove</button>':
-                      '<button class="btn btn-primary m-1">Verify</button>'
-                    ?>
-                  </td>
-                  <td><?= $shop['gov_no'] ?></td>
-                  <td><?= $shop['shop_type'] ?></td>
-                  <td><?= $shop['products'] ?></td>
+                  <td><?=$category['category_id']?></td>
+                  <td><?=$category['category_name']?></td>
+                  <td><?=$category['description']?></td>
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-warning m-1">Edit</button>
@@ -98,13 +106,10 @@ if(!isset($_SESSION['admin']))
             </tbody>
             <tfoot>
               <tr>
-                <th>Shop ID</th>
-                <th>Shop Name</th>
-                <th>Verified on</th>
-                <th>Verify</th>
-                <th>Pan no./Vat no.</th>
-                <th>Shop Type</th>
-                <th>Products</th>
+                
+              <th>Category ID</th>
+                <th>Category Name</th>
+                <th>Description</th>
                 <th>Edit/Delete</th>
               </tr>
             </tfoot>
@@ -143,7 +148,7 @@ if(!isset($_SESSION['admin']))
       $("#shopTable").DataTable({
         "responsive": true,
         "lengthChange": false,
-        "autoWidth": false,
+        "autoWidth": true,
         "buttons": [{
           extend: "csv",
           exportOptions: {

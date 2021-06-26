@@ -1,7 +1,7 @@
 <?php
 require_once '../sessionManager.php';
-if(!isset($_SESSION['admin']))
-{
+require_once '../utils/database.php';
+if (!isset($_SESSION['admin'])) {
   header('Location: /admin/login.php');
 }
 ?>
@@ -32,6 +32,7 @@ if(!isset($_SESSION['admin']))
     <?php
     $page = "Traders";
     include 'header.php';
+    $traders = fetch_all_row("SELECT *, (SELECT COUNT(*) FROM shops WHERE shops.trader_id = traders.user_id) AS shops FROM users LEFT JOIN traders ON users.user_id = traders.user_id WHERE user_role=='2'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -67,38 +68,45 @@ if(!isset($_SESSION['admin']))
                 <th class="no-sort">Verify</th>
                 <th>Shops</th>
                 <th>Business Type</th>
-                <th>Products</th>
+                <th>Contact No</th>
                 <th>Trading Since</th>
                 <th>Status</th>
                 <th class="no-sort no-search">View/Suspend</th>
               </tr>
             </thead>
             <tbody>
-              <?php for ($i = 0; $i < 50; $i++) { ?>
+              <?php foreach ($traders as $trader) { ?>
                 <tr>
-                  <td>1</td>
-                  <td>John Doe</td>
+                  <td><?= $trader['user_id'] ?></td>
+                  <td><?= $trader['full_name'] ?></td>
+                  <td><?= $trader['verified_on'] ?? '-' ?></td>
                   <td style="text-align: center;">
-                    <?php if ($i % 2 == 0) { ?>
-                      04-12-2021
-                    <?php } else { ?>
-                      -
-                    <?php } ?>
+                    <?= isset($product['verified_on']) ?
+                      '<button class="btn btn-danger m-1">Remove</button>' :
+                      '<button class="btn btn-primary m-1">Verify</button>'
+                    ?>
                   </td>
-                  <td style="text-align: center;">
-                    <?php if ($i % 2 == 0) { ?>
-                      <button class="btn btn-danger m-1">Remove</button>
-                    <?php } else { ?>
-                      <button class="btn btn-primary m-1">Verify</button>
-                    <?php } ?>
-                  </td>
-                  <td>12</td>
-                  <td>Small</td>
-                  <td>12</td>
-                  <td>04-12-2021</td>
-                  <td>Suspended</td>
+                  <td><?= $trader['shops'] ?></td>
+                  <td><?= $trader['business_type'] ?></td>
+                  <td><?= $trader['contact_no'] ?></td>
+                  <td><?= $trader['trading_since'] ?></td>
                   <td>
-                    <div class="row justify-content-around">
+                  <?php
+                  switch($trader['status']){
+                    case 1:
+                      echo 'Pending';
+                      break;
+                      case 2:
+                      echo 'Active';
+                      break;
+                      case 3:
+                      echo 'Suspended';
+                      break;
+                  }
+                  ?>
+                  </td>
+                  <td>
+                    <div class="d-flex">
                       <button class="btn btn-info m-1">View</button>
                       <button class="btn btn-danger m-1">Suspend</button>
                     </div>
@@ -114,7 +122,7 @@ if(!isset($_SESSION['admin']))
                 <th>Verify</th>
                 <th>Shops</th>
                 <th>Business Type</th>
-                <th>Products</th>
+                <th>Contact No</th>
                 <th>Trading Since</th>
                 <th>Status</th>
                 <th>View/Suspend</th>

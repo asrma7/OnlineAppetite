@@ -45,7 +45,7 @@ if (!isset($_SESSION['trader'])) {
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
     <?php
-    $page = "AddShop";
+    $page = "AddCategory";
     include 'header.php';
     ?>
 
@@ -61,8 +61,8 @@ if (!isset($_SESSION['trader'])) {
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item">Shops</li>
-                <li class="breadcrumb-item active">Add Shop</li>
+                <li class="breadcrumb-item">Category</li>
+                <li class="breadcrumb-item active">Add Category</li>
               </ol>
             </div>
           </div>
@@ -72,53 +72,29 @@ if (!isset($_SESSION['trader'])) {
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <h5 class="mb-2">Add Shop</h5>
+          <h5 class="mb-2">Add Category</h5>
 
-          <form class="addForm" action="insertShop.php" method="POST">
-            <!--shop name-->
+          <form class="addForm" action="insertCategory.php" method="POST">
+            <?php if (isset($message)) { ?>
+              <div class="alert alert-<?= $message['color'] ?> text-center" role="alert">
+                <?= $message['message']; ?>
+              </div>
+            <?php } ?>
+            <!--category name-->
             <div class="form-group">
-              <label for="shopName">Shop Name</label>
-              <input type="text" id="shopName" name="shopName" class="form-control <?= isset($errors['shopName']) ? 'is-invalid' : ''; ?>" value="<?= $old['shopName'] ?? ''; ?>">
-              <?= isset($errors['shopName']) ? '<div class="invalid-feedback">' . $errors['shopName'] . '</div>' : ''; ?>
-            </div>
-            <!--pan no.-->
-            <div class="form-group">
-              <label for="govNum">Pan no./Vat no.</label>
-              <input type="text" id="govNum" name="govNum" class="form-control <?= isset($errors['govNum']) ? 'is-invalid' : ''; ?>" value="<?= $old['govNum'] ?? ''; ?>">
-              <?= isset($errors['govNum']) ? '<div class="invalid-feedback">' . $errors['govNum'] . '</div>' : ''; ?>
-            </div>
-            <!--address-->
-            <div class="form-group">
-              <label for="address">Address</label>
-              <input type="text" id="address" name="address" class="form-control <?= isset($errors['address']) ? 'is-invalid' : ''; ?>" value="<?= $old['address'] ?? ''; ?>">
-              <?= isset($errors['address']) ? '<div class="invalid-feedback">' . $errors['address'] . '</div>' : ''; ?>
-            </div>
-            <!--contact number-->
-            <div class="form-group">
-              <label for="contact">Contact Number</label>
-              <input type="text" id="contact" name="contact" class="form-control <?= isset($errors['contact']) ? 'is-invalid' : ''; ?>" value="<?= $old['contact'] ?? ''; ?>">
-              <?= isset($errors['contact']) ? '<div class="invalid-feedback">' . $errors['contact'] . '</div>' : ''; ?>
-            </div>
-            <!--Business type / no validation-->
-            <div class="form-group">
-              <label for="shop_type">Shop Type</label>
-              <select class="form-control select2 select2-danger <?= isset($errors['shop_type']) ? 'is-invalid' : ''; ?>" id="shop_type" name="shop_type" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                <option <?php echo !isset($old['shop_type']) ? 'selected' : ''; ?> disabled>Select one</option>
-                <option <?php if (isset($old['shop_type'])) echo $old['shop_type'] == 'small' ? 'selected' : '';?> value="small">Small</option>
-                <option  <?php if (isset($old['shop_type'])) echo $old['shop_type'] == 'medium' ? 'selected' : '';?> value="medium">Medium</option>
-                <option <?php if (isset($old['shop_type'])) echo $old['shop_type'] == 'large' ? 'selected' : '';?> value="large">Large</option>
-              </select>
-              <?= isset($errors['shop_type']) ? '<div class="invalid-feedback">' . $errors['shop_type'] . '</div>' : ''; ?>
+              <label for="categoryName">Category Name</label>
+              <input type="text" id="categoryName" name="categoryName" class="form-control <?= isset($errors['categoryName']) ? 'is-invalid' : ''; ?>" value="<?= $old['categoryName'] ?? ''; ?>">
+              <?= isset($errors['categoryName']) ? '<div class="invalid-feedback">' . $errors['categoryName'] . '</div>' : ''; ?>
             </div>
             <!--description-->
             <div class="form-group">
               <label for="inputDescription">Description</label>
-              <textarea id="inputDescription" name="description" rows="4" class="form-control <?= isset($errors['description']) ? 'is-invalid' : ''; ?>" value="<?= $old['description'] ?? ''; ?>">  </textarea>
+              <textarea id="inputDescription" name="description" rows="4" class="form-control <?= isset($errors['description']) ? 'is-invalid' : ''; ?>"><?= $old['description'] ?? ''; ?></textarea>
               <?= isset($errors['description']) ? '<div class="invalid-feedback">' . $errors['description'] . '</div>' : ''; ?>
 
             </div>
             <!--submit button-->
-            <button type="submit" class="btn btn-outline-secondary mb-3">Add Shop</button>
+            <button type="submit" class="btn btn-outline-secondary mb-3">Add Category</button>
           </form>
 
         </div><!-- /.container-fluid -->

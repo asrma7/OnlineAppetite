@@ -1,7 +1,7 @@
 <?php
 require_once '../sessionManager.php';
-if(!isset($_SESSION['admin']))
-{
+require_once '../utils/database.php';
+if (!isset($_SESSION['admin'])) {
   header('Location: /admin/login.php');
 }
 ?>
@@ -53,6 +53,7 @@ if(!isset($_SESSION['admin']))
     <?php
     $page = "Products";
     include 'header.php';
+    $products = fetch_all_row('SELECT products.*, category_name FROM products INNER JOIN categories ON products.category_id = categories.category_id');
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -94,38 +95,32 @@ if(!isset($_SESSION['admin']))
               </tr>
             </thead>
             <tbody>
-              <?php for ($i = 0; $i < 50; $i++) { ?>
+              <?php foreach ($products as $product) { ?>
                 <tr>
-                  <td>1</td>
-                  <td>Apple 1kg</td>
+                  <td><?= $product['product_id'] ?></td>
+                  <td><?= $product['product_name'] ?></td>
+                  <td class="text-center"><?= $product['confirmed_on'] ?? '-' ?></td>
                   <td style="text-align: center;">
-                    <?php if ($i % 2 == 0) { ?>
-                      04-12-2021
-                    <?php } else { ?>
-                      -
-                    <?php } ?>
+                    <?= isset($product['confirmed_on']) ?
+                      '<button class="btn btn-danger m-1">Remove</button>' :
+                      '<button class="btn btn-primary m-1">Confirm</button>' ?>
                   </td>
-                  <td style="text-align: center;">
-                    <?php if ($i % 2 == 0) { ?>
-                      <button class="btn btn-danger m-1">Remove</button>
-                    <?php } else { ?>
-                      <button class="btn btn-primary m-1">Confirm</button>
-                    <?php } ?>
-                  </td>
-                  <td>Rs. 300</td>
-                  <td>20</td>
-                  <td>Food</td>
-                  <td>1</td>
+                  <td><?= $product['price'] ?></td>
+                  <td><?= $product['stock'] ?></td>
+                  <td><?= $product['category_name'] ?></td>
+                  <td><?= $product['shop_id'] ?></td>
                   <td>
+                  <div class="d-flex">
                     <div class="image-preview">
-                      <img class="abs-image" src="/assets/images/placeholder.png" alt="User Image">
+                      <img class="abs-image px-1" src="<?= $product['image1'] ?>" alt="Product Image">
                     </div>
                     <div class="image-preview">
-                      <img class="abs-image" src="/assets/images/placeholder.png" alt="User Image">
+                      <img class="abs-image px-1" src="<?= $product['image2'] ?>" alt="Product Image">
+                    </div>
                     </div>
                   </td>
                   <td>
-                    <div class="row justify-content-around">
+                    <div class="d-flex">
                       <button class="btn btn-warning m-1">Edit</button>
                       <button class="btn btn-danger m-1">Delete</button>
                     </div>
