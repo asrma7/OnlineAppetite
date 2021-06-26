@@ -4,7 +4,21 @@ if(!isset($_SESSION['trader']))
 {
   header('Location: /trader/login.php');
 }
+else{
+  if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']);
+}
+ if (isset($_SESSION['errors'])) {
+    $errors = $_SESSION['errors'];
+    $old = $_SESSION['old'];
+    unset($_SESSION['errors']);
+    unset($_SESSION['old']);
+}
+
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,23 +76,33 @@ if(!isset($_SESSION['trader']))
       <section class="content">
         <div class="container-fluid">
           <h5 class="mb-2">Add Shop</h5>
-          <form class="addForm">
+      
+          <form class="addForm" action="insertShop.php" method="POST">
+            <!--shop name-->
             <div class="form-group">
               <label for="shopName">Shop Name</label>
-              <input type="text" id="shopName" name="shopName" class="form-control">
+              <input type="text" id="shopName" name="shopName" class="form-control <?= isset($errors['shopName']) ? 'is-invalid' : ''; ?>"  value="<?= $old['shopName'] ?? ''; ?>">
+              <?= isset($errors['shopName']) ? '<div class="invalid-feedback">' . $errors['shopName'] . '</div>' : ''; ?> 
             </div>
+            <!--pan no.-->
             <div class="form-group">
               <label for="govNum">Pan no./Vat no.</label>
-              <input type="text" id="govNum" name="govNum" class="form-control">
+              <input type="text" id="govNum" name="govNum" class="form-control <?= isset($errors['govNum']) ? 'is-invalid' : ''; ?>"  value="<?= $old['govNum'] ?? ''; ?>">
+              <?= isset($errors['govNum']) ? '<div class="invalid-feedback">' . $errors['govNum'] . '</div>' : ''; ?> 
             </div>
+            <!--address-->
             <div class="form-group">
               <label for="address">Address</label>
-              <input type="text" id="address" name="address" class="form-control">
+              <input type="text" id="address" name="address" class="form-control <?= isset($errors['address']) ? 'is-invalid' : ''; ?>"  value="<?= $old['address'] ?? ''; ?>">
+              <?= isset($errors['address']) ? '<div class="invalid-feedback">' . $errors['address'] . '</div>' : ''; ?> 
             </div>
+            <!--contact number-->
             <div class="form-group">
               <label for="contact">Contact Number</label>
-              <input type="text" id="contact" name="contact" class="form-control">
+              <input type="text" id="contact" name="contact" class="form-control <?= isset($errors['contact']) ? 'is-invalid' : ''; ?>"  value="<?= $old['contact'] ?? ''; ?>">
+              <?= isset($errors['contact']) ? '<div class="invalid-feedback">' . $errors['contact'] . '</div>' : ''; ?> 
             </div>
+            <!--Business type / no validation-->
             <div class="form-group">
               <label for="type">Business Type</label>
               <select class="form-control select2 select2-danger" id="type" name="type" data-dropdown-css-class="select2-danger" style="width: 100%;">
@@ -88,12 +112,17 @@ if(!isset($_SESSION['trader']))
                 <option>Large</option>
               </select>
             </div>
+            <!--description-->
             <div class="form-group">
               <label for="inputDescription">Description</label>
-              <textarea id="inputDescription" class="form-control" rows="4"></textarea>
+              <textarea id="inputDescription" name="description" rows="4" class="form-control <?= isset($errors['description']) ? 'is-invalid' : ''; ?>"  value="<?= $old['description'] ?? ''; ?>">  </textarea>
+              <?= isset($errors['description']) ? '<div class="invalid-feedback">' . $errors['description'] . '</div>' : ''; ?> 
+             
             </div>
+            <!--submit button-->
             <button type="submit" class="btn btn-outline-secondary mb-3">Add Shop</button>
           </form>
+
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->

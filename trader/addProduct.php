@@ -4,6 +4,18 @@ if(!isset($_SESSION['trader']))
 {
   header('Location: /trader/login.php');
 }
+else{
+  if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']);
+}
+if (isset($_SESSION['errors'])) {
+    $errors = $_SESSION['errors'];
+    $old = $_SESSION['old'];
+    unset($_SESSION['errors']);
+    unset($_SESSION['old']);
+}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,15 +74,21 @@ if(!isset($_SESSION['trader']))
       <section class="content">
         <div class="container-fluid">
           <h5 class="mb-2">Add Product</h5>
-          <form class="addForm">
+         
+          <form class="addForm" action="insertProduct.php" method="POST">
+             <!--product name-->
             <div class="form-group">
               <label for="productName">Product Name</label>
-              <input type="text" id="productName" name="productName" class="form-control">
+              <input type="text" id="productName" name="productName" class="form-control <?= isset($errors['productName']) ? 'is-invalid' : ''; ?>"  value="<?= $old['productName'] ?? ''; ?>">  
+              <?= isset($errors['productName']) ? '<div class="invalid-feedback">' . $errors['productName'] . '</div>' : ''; ?> 
             </div>
+             <!--price-->
             <div class="form-group">
               <label for="price">Price</label>
-              <input type="text" id="price" name="price" class="form-control">
+              <input type="text" id="price" name="price" class="form-control <?= isset($errors['price']) ? 'is-invalid' : ''; ?>"  value="<?= $old['price'] ?? ''; ?>">
+              <?= isset($errors['price']) ? '<div class="invalid-feedback">' . $errors['price'] . '</div>' : ''; ?> 
             </div>
+             <!--category-->
             <div class="form-group">
               <label for="category">Category</label>
               <select class="form-control select2 select2-danger" id="category" name="category" data-dropdown-css-class="select2-danger" style="width: 100%;">
@@ -80,10 +98,13 @@ if(!isset($_SESSION['trader']))
                 <option>Delaware</option>
               </select>
             </div>
+             <!--quantity-->
             <div class="form-group">
               <label for="quantity">Quantity</label>
-              <input type="number" id="quantity" name="quantity" class="form-control">
+              <input type="number" id="quantity" name="quantity" class="form-control <?= isset($errors['quantity']) ? 'is-invalid' : ''; ?>"  value="<?= $old['quantity'] ?? ''; ?>">
+              <?= isset($errors['quantity']) ? '<div class="invalid-feedback">' . $errors['quantity'] . '</div>' : ''; ?> 
             </div>
+             <!--shop-->
             <div class="form-group">
               <label for="shop">Shop</label>
               <select class="form-control select2 select2-danger" id="shop" name="shop" data-dropdown-css-class="select2-danger" style="width: 100%;">
@@ -93,10 +114,13 @@ if(!isset($_SESSION['trader']))
                 <option>Delaware</option>
               </select>
             </div>
+            <!--description-->
             <div class="form-group">
               <label for="inputDescription">Description</label>
-              <textarea id="inputDescription" class="form-control" rows="4"></textarea>
+              <textarea id="inputDescription" class="form-control <?= isset($errors['description']) ? 'is-invalid' : ''; ?>"  value="<?= $old['description'] ?? ''; ?>"  name="description" rows="4"></textarea>
+              <?= isset($errors['description']) ? '<div class="invalid-feedback">' . $errors['description'] . '</div>' : ''; ?> 
             </div>
+            <!--product image-->
             <div class="form-group">
               <label for="productImage">Product Image</label>
               <div class="input-group">
@@ -106,8 +130,10 @@ if(!isset($_SESSION['trader']))
                 </div>
               </div>
             </div>
+            <!--submit button-->
             <button type="submit" class="btn btn-outline-secondary mb-3">Add Product</button>
           </form>
+
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->

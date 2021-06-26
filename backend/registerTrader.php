@@ -3,7 +3,7 @@ include '../utils/database.php';
 session_start();
 $old = $_POST;
 extract($_POST);
-$errors = [];
+$errors = [];  //declaration  of array named errors
 if (empty($name)) {
     $errors['name'] = "Business Name is required.";
 } elseif (strlen($name) < 3) {
