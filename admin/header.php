@@ -74,10 +74,10 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="<?=$_SESSION['admin']['image']??"/assets/images/adminlte/avatar2.png"?>" class="img-circle elevation-2" alt="User Image">
+        <img src="<?= $_SESSION['admin']['image'] ?? "/assets/images/adminlte/avatar2.png" ?>" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="/admin/profile.php" class="d-block"><?=$_SESSION['admin']['full_name']?></a>
+        <a href="/admin/profile.php" class="d-block"><?= $_SESSION['admin']['full_name'] ?></a>
       </div>
     </div>
 
@@ -99,46 +99,61 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="/admin" class="nav-link <?=$page=='Dashboard'?'active':''?>">
+          <a href="/admin" class="nav-link <?= $page == 'Dashboard' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
             </p>
           </a>
         </li>
-        <li class="nav-item <?=$page=='Traders'||$page=='Customers'?'menu-open':''?>">
-            <a href="#" class="nav-link <?=$page=='Traders'||$page=='Customers'?'active':''?>">
+        <li class="nav-item <?= $page == 'Traders' || $page == 'Customers' ? 'menu-open' : '' ?>">
+          <a href="#" class="nav-link <?= $page == 'Traders' || $page == 'Customers' ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-friends"></i>
+            <p>
+              Users
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/admin/viewTraders.php" class="nav-link <?= $page == 'Traders' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Traders</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/admin/viewCustomers.php" class="nav-link <?= $page == 'Customers' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Customers</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item <?=$page=='addCategory'||$page=='viewCategories'?'menu-open':''?>">
+            <a href="#" class="nav-link <?=$page=='addCategory'||$page=='viewCategories'?'active':''?>">
               <i class="nav-icon fas fa-user-friends"></i>
               <p>
-                Users
+                Category
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/viewTraders.php" class="nav-link <?=$page=='Traders'?'active':''?>">
+                <a href="/admin/addCategory.php" class="nav-link <?=$page=='addCategory'?'active':''?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Traders</p>
+                  <p>Add Category</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/viewCustomers.php" class="nav-link <?=$page=='Customers'?'active':''?>">
+                <a href="/admin/viewCategories.php" class="nav-link <?=$page=='viewCategories'?'active':''?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Customers</p>
+                  <p>View Categories</p>
                 </a>
               </li>
             </ul>
           </li>
         <li class="nav-item">
-          <a href="/admin/viewShops.php" class="nav-link <?=$page=='Shops'?'active':''?>">
-            <i class="nav-icon fas fa-store-alt"></i>
-            <p>
-              Shops
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="/admin/viewOrders.php" class="nav-link <?=$page=='Orders'?'active':''?>">
+          <a href="/admin/viewOrders.php" class="nav-link <?= $page == 'Orders' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-shopping-cart"></i>
             <p>
               Orders
@@ -146,7 +161,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="/admin/viewProducts.php" class="nav-link <?=$page=='Products'?'active':''?>">
+          <a href="/admin/viewProducts.php" class="nav-link <?= $page == 'Products' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-gifts"></i>
             <p>
               Products
@@ -154,7 +169,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="/admin/viewPayments.php" class="nav-link <?=$page=='Payments'?'active':''?>">
+          <a href="/admin/viewPayments.php" class="nav-link <?= $page == 'Payments' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-receipt"></i>
             <p>
               Payments

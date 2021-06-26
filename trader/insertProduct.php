@@ -20,6 +20,10 @@ if (empty($price)) {
 elseif (!is_numeric($price)) {
     $errors['price'] = "Price must be in numeric format."; 
 }
+//category
+if (empty($category)) {
+    $errors['category'] = "Category is required.";
+} 
 //quantity
 if (empty($quantity)) {
     $errors['quantity'] = "Quantity is required.";
@@ -27,6 +31,10 @@ if (empty($quantity)) {
 elseif (!is_numeric($quantity)) {
     $errors['quantity'] = "Please enter a valid quantity."; 
 }
+//shop
+if (empty($shop)) {
+    $errors['shop'] = "Shop is required.";
+} 
 //description
 if (empty($description)) {
     $errors['description'] = "Description is required.";

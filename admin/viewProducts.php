@@ -83,7 +83,8 @@ if(!isset($_SESSION['admin']))
               <tr>
                 <th>Product ID</th>
                 <th>Product Name</th>
-                <th class="no-sort">Is Confirmed</th>
+                <th>Confirmed on</th>
+                <th class="no-sort">Confirm</th>
                 <th>Price</th>
                 <th>Stock</th>
                 <th>Category</th>
@@ -136,7 +137,8 @@ if(!isset($_SESSION['admin']))
               <tr>
                 <th>Product ID</th>
                 <th>Product Name</th>
-                <th>Is Confirmed</th>
+                <th>Confirmed on</th>
+                <th>Confirm</th>
                 <th>Price</th>
                 <th>Stock</th>
                 <th>Category</th>
