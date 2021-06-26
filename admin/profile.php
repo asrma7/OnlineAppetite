@@ -28,8 +28,8 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "Profile";
     include 'header.php';
-    $username = $_SESSION['admin']['username'];
-    $user = fetch_row("SELECT * FROM users LEFT JOIN managements ON users.user_id = managements.user_id WHERE username =='$username'");
+    $user_id = $_SESSION['admin']['user_id'];
+    $user = fetch_row("SELECT * FROM users LEFT JOIN managements ON users.user_id = managements.user_id WHERE users.user_id =='$user_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -58,7 +58,7 @@ if (!isset($_SESSION['admin'])) {
           <div class="row">
             <div class="col-md-3 col-sm-6 col-12">
               <div class="img">
-                <img src="<?= $user['image'] ?? '/assets//images/adminlte//avatar2.png' ?>" alt="" class="img-circle elevation-2">
+                <img src="<?= $user['image'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2">
               </div>
             </div>
             <div class="col-md-8 offset-md-1 col-sm-6 col-12">
@@ -87,7 +87,7 @@ if (!isset($_SESSION['admin'])) {
                   <a href="/admin/editprofile.php"><button class="btn btn-secondary mb-2">Edit Profile</button></a>
                 </div>
                 <div class="col-6">
-                  <a href="changepass.php"><button class="btn btn-secondary mb-2">Change Password</button></a>
+                  <a href="changepassword.php"><button class="btn btn-secondary mb-2">Change Password</button></a>
                 </div>
               </div>
             </div>

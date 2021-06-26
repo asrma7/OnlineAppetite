@@ -38,8 +38,7 @@ if (empty($password)) {
 }
 if (empty($number)) {
     $errors['number'] = "Contact number is required.";
-}
-else if (strlen($number)>15) {
+} else if (strlen($number) > 15) {
     $errors['number'] = "Enter a valid contact number";
 }
 if (empty($type)) {
@@ -60,16 +59,16 @@ if (sizeof($errors) == 0) {
     (full_name, username, email, street, city, state, postal, country, gender, user_role, password_hash)
      VALUES 
      ('$name', '$username', '$email', '$street', '$city', '$state', '$postal', '$country', '$gender', 2, '$password')";
-     $res1 = query($sql1);
-     $user_id = fetch_row("SELECT user_id FROM users WHERE username == '$username'")['user_id'];
-     $tradingSince = makeDate($month, $day, $year);
-     $payments = implode(', ', $payments);
-     $sql2 = "INSERT INTO traders (user_id, contact_no, trading_since, business_type, preferred_payments, message)
+    $res1 = query($sql1);
+    $user_id = fetch_row("SELECT user_id FROM users WHERE username == '$username'")['user_id'];
+    $tradingSince = makeDate($month, $day, $year);
+    $payments = implode(', ', $payments);
+    $sql2 = "INSERT INTO traders (user_id, contact_no, trading_since, business_type, preferred_payments, message)
     VALUES
-    ('$user_id', '$number', '".toDate($tradingSince, 'MM/DD/YYYY')."', '$type', '$payments', '$message')";
+    ('$user_id', '$number', '" . toDate($tradingSince, 'YYYY-MM-DD') . "', '$type', '$payments', '$message')";
     if (!$res1)
         $_SESSION['message'] = ["message" => "Error while user registeration", 'color' => "danger"];
-    else if(!query($sql2))
+    else if (!query($sql2))
         $_SESSION['message'] = ["message" => "Error while trader registeration", 'color' => "danger"];
     else
         $_SESSION['message'] = ["message" => "Registered Successfully! Wait for verification", 'color' => "success"];
@@ -95,7 +94,8 @@ function checkEmailUnique($email)
     return true;
 }
 
-function makeDate($month, $day, $year) {
-    $date = (strlen($month)==1?'0'.$month:$month).'/'.(strlen($day)==1?'0'.$day:$day).'/'.$year;
+function makeDate($month, $day, $year)
+{
+    $date = $year . '-' . (strlen($month) == 1 ? '0' . $month : $month) . '-' . (strlen($day) == 1 ? '0' . $day : $day);
     return $date;
 }

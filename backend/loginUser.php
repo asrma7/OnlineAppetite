@@ -8,7 +8,7 @@ $errors = [];
 if (empty($login)) {
     $errors['login'] = "Username/Email is required.";
 } else {
-    $sql = "SELECT full_name, username, email, password_hash, image FROM users WHERE (username=='$login' OR email =='$login') AND user_role=='3'";
+    $sql = "SELECT user_id, full_name, username, email, password_hash, image FROM users WHERE (username=='$login' OR email =='$login') AND user_role=='3'";
     $user = fetch_row($sql);
     if (!$user) {
         $errors['login'] = "Username/Email does not exists.";

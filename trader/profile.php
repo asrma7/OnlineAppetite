@@ -28,8 +28,8 @@ if (!isset($_SESSION['trader'])) {
     <?php
     $page = "Profile";
     include 'header.php';
-    $username = $_SESSION['trader']['username'];
-    $user = fetch_row("SELECT * FROM users LEFT JOIN traders on users.user_id = traders.user_id WHERE username =='$username'");
+    $user_id = $_SESSION['trader']['user_id'];
+    $user = fetch_row("SELECT * FROM users LEFT JOIN traders on users.user_id = traders.user_id WHERE users.user_id =='$user_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -58,7 +58,7 @@ if (!isset($_SESSION['trader'])) {
           <div class="row">
             <div class="col-md-3 col-sm-6 col-12">
               <div class="img">
-                <img src="<?= $user['image'] ?? '/assets/images/adminlte//avatar2.png' ?>" alt="" class="img-circle elevation-2">
+                <img src="<?= $user['image'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2">
               </div>
               <div class="mt-4">
                 <strong>Registered on: </strong>
@@ -132,7 +132,7 @@ if (!isset($_SESSION['trader'])) {
                   <a href="/trader/editprofile.php"><button class="btn btn-secondary mb-2">Edit Profile</button></a>
                 </div>
                 <div class="col-6">
-                  <a href="changepass.php"><button class="btn btn-secondary mb-2">Change Password</button></a>
+                  <a href="changepassword.php"><button class="btn btn-secondary mb-2">Change Password</button></a>
                 </div>
               </div>
             </div>

@@ -14,7 +14,6 @@
 
 <body>
     <?php
-    $page = 'customerCare';
     include 'header.php';
     ?>
     <div class="backgroundslide" id="backgroundslide">

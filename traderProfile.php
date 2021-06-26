@@ -83,14 +83,6 @@ if (!$user || $user['user_role'] != 2) {
                             <p><?= $user['preferred_payments']; ?></p>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <a href="/trader/editprofile.php"><button class="btn btn-secondary mb-2">Edit Profile</button></a>
-                        </div>
-                        <div class="col-6">
-                            <a href="changepass.php"><button class="btn btn-secondary mb-2">Change Password</button></a>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- /.row -->
