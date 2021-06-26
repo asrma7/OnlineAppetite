@@ -15,7 +15,7 @@
     // function query($sql){
     //     global $conn;
     //     $stmt = oci_parse($conn, $sql);
-    //     oci_execute($stmt);
+    //     return oci_execute($stmt);
     // }
 
     // function fetch_all_row($sql){
@@ -33,13 +33,17 @@
     //     $res = oci_fetch_assoc($stmt);
     //     return $res;
     // }
+
+    // function toDate($date, $format) {
+    //     return "to_date('$date',$format)";
+    // }
     
     /////////////////////////////////////////
     ///////////////////PDO///////////////////
     ////////////////////////////////////////
 
     try {
-        $conn = new PDO("sqlite:database.sqlite");
+        $conn = new PDO("sqlite:".__DIR__."/../database.sqlite");
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }catch(PDOException $e) {
         die("Connection failed: " . $e->getMessage());
@@ -48,7 +52,7 @@
     function query($sql){
         global $conn;
         $stmt = $conn->prepare($sql);
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     function fetch_all_row($sql){
@@ -65,4 +69,8 @@
         $res = $stmt->execute();
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
         return $res;
+    }
+
+    function toDate($date, $format) {
+        return $date;
     }

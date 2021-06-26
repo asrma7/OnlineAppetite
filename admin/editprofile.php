@@ -1,3 +1,10 @@
+<?php
+require_once '../sessionManager.php';
+if(!isset($_SESSION['admin']))
+{
+  header('Location: /admin/login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,21 +58,24 @@
               <div class="img">
                 <img src="/assets//images/adminlte//avatar5.png" alt="" class="img-circle elevation-2">
               </div>
+              <div class="form-group mt-4">
+                <label for="profileImage">Profile Image</label>
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" name="profileImage" class="custom-file-input" id="profileImage">
+                    <label class="custom-file-label" for="profileImage">Choose image</label>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="col-md-8 offset-md-1 col-sm-6 col-12">
-              <div class="row">
-                <div class="col-6">
                   <div class="form-group">
-                    <label for="firstname">First Name</label>
-                    <input type="text" id="firstname" name="firstname" class="form-control">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-control">
                   </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="name">Last Name</label>
-                    <input type="text" id="lastname" name="lastname" class="form-control">
-                  </div>
-                </div>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="form-control">
               </div>
               <div class="form-group">
                 <label for="email">Email</label>

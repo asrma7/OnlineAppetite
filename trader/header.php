@@ -6,7 +6,7 @@
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="../index3.html" class="nav-link">Home</a>
+      <a href="/trader" class="nav-link">Home</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
       <a href="#" class="nav-link">Contact</a>
@@ -48,6 +48,11 @@
       </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="/trader/logout.php">
+        <i class="fas fa-power-off"></i>
+      </a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
         <i class="fas fa-th-large"></i>
       </a>
@@ -69,10 +74,10 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="/assets/images/adminlte/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <img src="<?=$_SESSION['trader']['image']??"/assets/images/adminlte/avatar2.png"?>" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="profile.php" class="d-block">Alexander Pierce</a>
+        <a href="/trader/profile.php" class="d-block"><?=$_SESSION['trader']['full_name']?></a>
       </div>
     </div>
 
@@ -94,7 +99,7 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="dashboard.php" class="nav-link <?= $page == 'Dashboard' ? 'active' : '' ?>">
+          <a href="/trader" class="nav-link <?= $page == 'Dashboard' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -111,13 +116,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="addShop.php" class="nav-link <?= $page == 'AddShop' ? 'active' : '' ?>">
+              <a href="/trader/addShop.php" class="nav-link <?= $page == 'AddShop' ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Add Shop</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="viewShops.php" class="nav-link <?= $page == 'ViewShops' ? 'active' : '' ?>">
+              <a href="/trader/viewShops.php" class="nav-link <?= $page == 'ViewShops' ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>View Shops</p>
               </a>
@@ -125,7 +130,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="viewOrders.php" class="nav-link <?= $page == 'Orders' ? 'active' : '' ?>">
+          <a href="/trader/viewOrders.php" class="nav-link <?= $page == 'Orders' ? 'active' : '' ?>">
             <i class="nav-icon fas fa-shopping-cart"></i>
             <p>
               Orders
@@ -142,13 +147,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="addProduct.php" class="nav-link <?= $page == 'AddProduct' ? 'active' : '' ?>">
+              <a href="/trader/addProduct.php" class="nav-link <?= $page == 'AddProduct' ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Add Product</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="viewProducts.php" class="nav-link <?= $page == 'ViewProducts' ? 'active' : '' ?>">
+              <a href="/trader/viewProducts.php" class="nav-link <?= $page == 'ViewProducts' ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>View Products</p>
               </a>

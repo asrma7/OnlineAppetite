@@ -15,10 +15,24 @@
             <button type="submit"><img src="assets/images/search.png" alt="search"></button>
         </form>
         <div class="top-buttons">
+            <?php
+            require_once 'sessionManager.php';
+            if(!isset($_SESSION['user'])){
+            ?>
             <div class="buttons">
                 <button onclick="location.href='signin.php'" class="signin">Sign in</button>
                 <button onclick="location.href='signup.php'" class="signup">Sign up</button>
             </div>
+            <?php
+            }else {
+            ?>
+            <div class="buttons">
+                <a href="/profile.php" class="greetings">Hi <?=explode(' ', $_SESSION['user']['full_name'])[0]?></a>
+                <button onclick="location.href='logout.php'" class="signup">Sign Out</button>
+            </div>
+            <?php
+            }
+            ?>
             <div class="cart">
                 <img src="assets/images/cart.png" alt="cart">
                 <span id="cart-count">5</span>
@@ -36,16 +50,24 @@
                 <a href="/">Home</a>
             </li>
             <li class="my-nav-link <?php echo $page == 'deal' ? 'active' : ''; ?>">
-                <a href="index.php">Today's Deal</a>
+                <a href="todaydeal.php">Today's Deal</a>
             </li>
-            <li class="my-nav-link <?php echo $page == 'caregories' ? 'active' : ''; ?>">
-                <a href="index.php">Categories</a>
+            <li class="my-nav-dropdown">
+                <span class="my-dropdown-btn">Categories</span>
+                <div class="my-dropdown-content">
+                    <a href="#">Link 1</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                </div>
             </li>
             <li class="my-nav-link <?php echo $page == 'customerCare' ? 'active' : ''; ?>">
                 <a href="customerCare.php">Customer Care</a>
             </li>
             <li class="my-nav-link <?php echo $page == 'seller' ? 'active' : ''; ?>">
-                <a href="index.php">Become a seller</a>
+                <a href="traderregister.php">Become a seller</a>
+            </li>
+            <li class="my-nav-link">
+                <a href="/trader">Trader Login</a>
             </li>
             <li class="my-nav-link nav-small">
                 <a href="signin.php">Sign in</a>

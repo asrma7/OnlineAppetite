@@ -1,3 +1,10 @@
+<?php
+require_once '../sessionManager.php';
+if(!isset($_SESSION['admin']))
+{
+  header('Location: /admin/login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +59,7 @@
                 <span class="info-box-icon bg-info"><i class="fas fa-gifts"></i></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">My Products</span>
+                  <span class="info-box-text">Total Products</span>
                   <span class="info-box-number">1,410</span>
                 </div>
                 <!-- /.info-box-content -->
@@ -62,10 +69,23 @@
             <!-- /.col -->
             <div class="col-md-3 col-sm-6 col-12">
               <div class="info-box">
-                <span class="info-box-icon bg-warning"><i class="fas fa-store-alt"></i></span>
+                <span class="info-box-icon bg-danger"><i class="fas fa-shopping-basket"></i></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">My Shops</span>
+                  <span class="info-box-text">Pending Products</span>
+                  <span class="info-box-number">13,648</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-success"><i class="fas fa-store-alt"></i></span>
+
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Shops</span>
                   <span class="info-box-number">410</span>
                 </div>
                 <!-- /.info-box-content -->
@@ -78,8 +98,21 @@
                 <span class="info-box-icon bg-danger"><i class="fas fa-shopping-basket"></i></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">Pending Orders</span>
+                  <span class="info-box-text">Pending Shop</span>
                   <span class="info-box-number">13,648</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-warning"><i class="fas fa-shipping-fast"></i></span>
+
+                <div class="info-box-content">
+                  <span class="info-box-text">Traders</span>
+                  <span class="info-box-number">93,139</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -91,7 +124,20 @@
                 <span class="info-box-icon bg-success"><i class="fas fa-user"></i></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">Completed Orders</span>
+                  <span class="info-box-text">Registerations</span>
+                  <span class="info-box-number">93,139</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>
+              <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-danger"><i class="fas fa-shopping-cart"></i></span>
+
+                <div class="info-box-content">
+                  <span class="info-box-text">Pending Orders</span>
                   <span class="info-box-number">93,139</span>
                 </div>
                 <!-- /.info-box-content -->

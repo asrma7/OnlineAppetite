@@ -6,7 +6,7 @@
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="../index3.html" class="nav-link">Home</a>
+      <a href="/admin" class="nav-link">Home</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
       <a href="#" class="nav-link">Contact</a>
@@ -48,6 +48,11 @@
       </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="/admin/logout.php">
+        <i class="fas fa-power-off"></i>
+      </a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
         <i class="fas fa-th-large"></i>
       </a>
@@ -69,10 +74,10 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="/assets/images/adminlte/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <img src="<?=$_SESSION['admin']['image']??"/assets/images/adminlte/avatar2.png"?>" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="profile.php" class="d-block">Alexander Pierce</a>
+        <a href="/admin/profile.php" class="d-block"><?=$_SESSION['admin']['full_name']?></a>
       </div>
     </div>
 
@@ -94,7 +99,7 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="dashboard.php" class="nav-link <?=$page=='Dashboard'?'active':''?>">
+          <a href="/admin" class="nav-link <?=$page=='Dashboard'?'active':''?>">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -111,13 +116,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="viewTraders.php" class="nav-link <?=$page=='Traders'?'active':''?>">
+                <a href="/admin/viewTraders.php" class="nav-link <?=$page=='Traders'?'active':''?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Traders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="viewCustomers.php" class="nav-link <?=$page=='Customers'?'active':''?>">
+                <a href="/admin/viewCustomers.php" class="nav-link <?=$page=='Customers'?'active':''?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Customers</p>
                 </a>
@@ -125,7 +130,7 @@
             </ul>
           </li>
         <li class="nav-item">
-          <a href="viewShops.php" class="nav-link <?=$page=='Shops'?'active':''?>">
+          <a href="/admin/viewShops.php" class="nav-link <?=$page=='Shops'?'active':''?>">
             <i class="nav-icon fas fa-store-alt"></i>
             <p>
               Shops
@@ -133,7 +138,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="viewOrders.php" class="nav-link <?=$page=='Orders'?'active':''?>">
+          <a href="/admin/viewOrders.php" class="nav-link <?=$page=='Orders'?'active':''?>">
             <i class="nav-icon fas fa-shopping-cart"></i>
             <p>
               Orders
@@ -141,7 +146,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="viewProducts.php" class="nav-link <?=$page=='Products'?'active':''?>">
+          <a href="/admin/viewProducts.php" class="nav-link <?=$page=='Products'?'active':''?>">
             <i class="nav-icon fas fa-gifts"></i>
             <p>
               Products
@@ -149,7 +154,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="viewPayments.php" class="nav-link <?=$page=='Payments'?'active':''?>">
+          <a href="/admin/viewPayments.php" class="nav-link <?=$page=='Payments'?'active':''?>">
             <i class="nav-icon fas fa-receipt"></i>
             <p>
               Payments

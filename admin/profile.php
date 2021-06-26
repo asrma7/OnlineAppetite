@@ -1,3 +1,10 @@
+<?php
+require_once '../sessionManager.php';
+require_once '../utils/database.php';
+if (!isset($_SESSION['admin'])) {
+  header('Location: /admin/login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +28,8 @@
     <?php
     $page = "Profile";
     include 'header.php';
+    $username = $_SESSION['admin']['username'];
+    $user = fetch_row("SELECT * FROM users LEFT JOIN managements ON users.user_id = managements.user_id WHERE username =='$username'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -49,46 +58,36 @@
           <div class="row">
             <div class="col-md-3 col-sm-6 col-12">
               <div class="img">
-                <img src="/assets//images/adminlte//avatar5.png" alt="" class="img-circle elevation-2">
+                <img src="<?= $user['image'] ?? '/assets//images/adminlte//avatar2.png' ?>" alt="" class="img-circle elevation-2">
               </div>
             </div>
             <div class="col-md-8 offset-md-1 col-sm-6 col-12">
               <div class="row">
                 <div class="col-6">
                   <strong>First Name</strong>
-                  <p>Ashutosh</p>
+                  <p><?= $user['full_name'] ?></p>
                 </div>
-                <div class="col-6">
-                  <strong>Last Name</strong>
-                  <p>Sharma</p>
-                </div>
-              </div>
-              <div class="row">
                 <div class="col-6">
                   <strong>Email</strong>
-                  <p>asrma.sharma@gmail.com</p>
-                </div>
-                <div class="col-6">
-                  <strong>Contact No.</strong>
-                  <p>+977-9868288387</p>
+                  <p><?= $user['email'] ?></p>
                 </div>
               </div>
               <div class="row">
+                <div class="col-6">
+                  <strong>Contact No.</strong>
+                  <p><?= $user['contact_no'] ?></p>
+                </div>
                 <div class="col-6">
                   <strong>Gender</strong>
                   <p>Male</p>
                 </div>
-                <div class="col-6">
-                  <strong>Role</strong>
-                  <p>Administrator</p>
-                </div>
               </div>
               <div class="row">
                 <div class="col-6">
-                <a href="editprofile.php"><button class="btn btn-secondary mb-2">Edit Profile</button></a>
+                  <a href="/admin/editprofile.php"><button class="btn btn-secondary mb-2">Edit Profile</button></a>
                 </div>
                 <div class="col-6">
-                <a href="changepass.php"><button class="btn btn-secondary mb-2">Change Password</button></a>
+                  <a href="changepass.php"><button class="btn btn-secondary mb-2">Change Password</button></a>
                 </div>
               </div>
             </div>

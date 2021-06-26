@@ -1,3 +1,10 @@
+<?php
+require_once '../sessionManager.php';
+if(!isset($_SESSION['trader']))
+{
+  header('Location: /trader/login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
