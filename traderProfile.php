@@ -29,7 +29,7 @@ if (!$user || $user['user_role'] != 2) {
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="img">
-                        <img src="<?= $user['image'] ?? '/assets//images/adminlte//avatar2.png' ?>" alt="" class="img-circle elevation-2">
+                        <img src="<?= $user['image'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle w-100 elevation-2">
                     </div>
                     <div class="mt-4 text-center">
                         <strong>Registered on: </strong>

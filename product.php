@@ -1,14 +1,26 @@
+<?php
+require_once 'utils/database.php';
+$product_id = $_GET['id'];
+$product = fetch_row("SELECT * FROM products INNER JOIN shops ON shops.shop_id = products.shop_id WHERE product_id = '$product_id'");
+$discounts = fetch_all_row("SELECT rate FROM discounts WHERE ((discount_type = 'all') OR (discount_type = 'category' AND target_id = '" . $product['category_id'] . "') OR (discount_type = 'product' AND target_id = '" . $product['product_id'] . "') AND starts_on < CURRENT_DATE AND expires_on > CURRENT_DATE)");
+$discounted_price = $product['price'];
+foreach ($discounts as $discount) {
+    $discounted_price = $discounted_price * (100 - $discount['rate']) * 0.01;
+}
+$discount_rate = ($product['price'] - $discounted_price) * 100 / $product['price'];
+$products = fetch_all_row("SELECT * FROM products WHERE product_id != '$product_id' ORDER BY created_at LIMIT 10");
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/product.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
     <title>Product</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -19,86 +31,104 @@
     include 'header.php';
     ?>
     <!-- Product Names -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-lg-3 col-md-5 d-flex align-items-center" style="background-color:#c4c4c4">
-                <div style="display: inline-block;text-align:start;">
-                    <img src="assets/images/adminlte/prod-2.jpg" class="mt-5" id="product1">
-                    <br>
-                    <img src="assets/images/adminlte/prod-2.jpg" onclick="setPreview(this.src)" class="thumbnail">
-                    <img src="assets/images/adminlte/prod-5.jpg" onclick="setPreview(this.src)" class="thumbnail">
-                </div>
-            </div>
-            <div class="col-sm-12 col-lg-4 col-md-7 text-start  d-flex align-items-center" style="background-color:#c4c4c4">
-                <div>
-                    <h1 class="pt-5" style="font-family: Gill Sans, sans-serif;font-size: 28px;margin-top:10%">Product Name</h1>
-                    <div class="stars">
-                        <span class="fas fa-star"></span>
-                        <span class="fas fa-star"></span>
-                        <span class="fas fa-star"></span>
-                        <span class="fas fa-star-half-alt"></span>
-                        <span class="far fa-star"></span><br><br>
-                    </div>
-                    <span style="color:#F1592A; font-weight:500; font-size:20px;"> Price </span><br>
-                    <span style="text-decoration:line-through"> Original Price</span> -
-                    <span>Discount%</span><br><br>
-                    <span>Quantity:</span>
-                    <form class="quantity-form">
-                        <button class="value-button" onclick="decreaseValue()" value="Decrease Value">-</button>
-                        <input type="number" class="number-count" id="number" value="0" />
-                        <button class="value-button" onclick="increaseValue()" value="Increase Value">+</button>
-                    </form>
-                    <div class="product-buttons">
-                        <div style="margin-top:20px">
-                            <button type="button" class="btn btn-primary">Buy Now</button>
-                        </div>
-                        <div style="margin-top:20px">
-                            <button type="button" class="btn btn-primary">Add to cart</button>
-                        </div>
+    <div class="text-center py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-lg-3 col-md-5 d-flex align-items-center" style="background-color:#c4c4c4">
+                    <div style="display:inline-block; text-align:start;">
+                        <img src="<?= $product['image1'] ?>" class="product-preview" id="product1">
+                        <br>
+                        <img src="<?= $product['image1'] ?>" onclick="setPreview(this.src)" class="thumbnail">
+                        <img src="<?= $product['image2'] ?>" onclick="setPreview(this.src)" class="thumbnail">
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-lg-4 col-md-12 offset-lg-1 py-4" style="text-align:start;background-color:#c4c4c4">
-                <div style="color:#5B5B5B">Sold By</div>
-                <h3 style="color:#5B5B5B"> Seller Name and Company</h3>
-                <div style="color:#5B5B5B">Recent Reviews:</div>
-                <?php
-                for ($i = 0; $i < 4; $i++) {
-                ?>
-                    <div class="customer">
-                        <img src="assets/images/placeholder.png" class="profilepic" alt="">
-                        <strong class="customer-name">Customer Name</strong>
-                        <div class="stars d-inline-block px-3">
+                <div class="col-sm-12 col-lg-4 col-md-7 text-start  d-flex align-items-center" style="background-color:#c4c4c4">
+                    <div>
+                        <h1 style="font-family: Gill Sans, sans-serif;font-size: 28px;margin-top:10%"><?= $product['product_name'] ?></h1>
+                        <div class="stars">
                             <span class="fas fa-star"></span>
                             <span class="fas fa-star"></span>
                             <span class="fas fa-star"></span>
                             <span class="fas fa-star-half-alt"></span>
-                            <span class="far fa-star"></span>
+                            <span class="far fa-star"></span><br><br>
                         </div>
-                        <span class="review">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.</span>
+                        <span style="color:#F1592A; font-weight:500; font-size:20px;"> <?= $product['price'] - $discounted_price ?> </span><br>
+                        <span style="text-decoration:line-through"> <?= $product['price'] ?></span> -
+                        <span><?= $discount_rate ?>%</span><br><br>
+                        <span>Quantity:</span>
+                        <form class="quantity-form">
+                            <button class="value-button" onclick="decreaseValue()" value="Decrease Value">-</button>
+                            <input type="number" class="number-count" id="number" value="0" />
+                            <button class="value-button" onclick="increaseValue()" value="Increase Value">+</button>
+                        </form>
+                        <div class="product-buttons">
+                            <div style="margin-top:20px">
+                                <button type="button" class="btn btn-primary">Buy Now</button>
+                            </div>
+                            <div style="margin-top:20px">
+                                <button type="button" class="btn btn-primary">Add to cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-4 col-md-12 offset-lg-1 py-4" style="text-align:start;background-color:#c4c4c4">
+                    <div style="color:#5B5B5B">Sold By</div>
+                    <a href="shopProfile.php?id=<?= $product['shop_id'] ?>">
+                        <h3 style="color:#5B5B5B"><?= $product['shop_name'] ?></h3>
+                    </a>
+                    <div style="color:#5B5B5B">Recent Reviews:</div>
+                    <div class="reviews">
+                        <?php
+                        for ($i = 0; $i < 4; $i++) {
+                        ?>
+                            <div class="customer-review p-2">
+                                <img src="assets/images/placeholder.png" class="profilepic" alt="">
+                                <span class="customer-name">Customer Name</span>
+                                <div class="stars d-inline-block px-3">
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star-half-alt"></span>
+                                    <span class="far fa-star"></span>
+                                </div>
+                                <span class="review">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                                    labore et dolore magna aliqua.</span>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="add-review">
+                        <form>
+                            <textarea name="review" class="reviewbox" placeholder="Enter your review here..." id="reviewbox" rows="4"></textarea>
+                            <button class="btn btn-primary">Post</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Similar Products -->
+        <h1 style="font-family: Gill Sans, sans-serif;font-size: 28px;" class="text-center mt-5">Related Products</h1>
+        <div class="container">
+            <div class="products">
+                <?php
+                foreach ($products as $product) {
+                    $discounts = fetch_all_row("SELECT rate FROM discounts WHERE ((discount_type = 'all') OR (discount_type = 'category' AND target_id = '" . $product['category_id'] . "') OR (discount_type = 'product' AND target_id = '" . $product['product_id'] . "') AND starts_on < CURRENT_DATE AND expires_on > CURRENT_DATE)");
+                    $discounted_price = $product['price'];
+                    foreach ($discounts as $discount) {
+                        $discounted_price = $discounted_price * (100 - $discount['rate']) * 0.01;
+                    }
+                    $discount_rate = ($product['price'] - $discounted_price) * 100 / $product['price'];
+                ?>
+                    <div class="product" onclick="window.location.href='/product.php?id=<?= $product['product_id'] ?>'">
+                        <img class="product-image" src="<?= $product['image1'] ?>" alt="">
+                        <span class="product-name py-2"><?= $product['product_name'] ?></span>
+                        <span class="price pb-2"><?= $product['price'] - $discounted_price ?></span>
+                        <div>
+                            <span class="discount"><?= $product['product_name'] ?></span> -
+                            <span class="rate"><?= $discount_rate ?>%</span>
+                        </div>
                     </div>
                 <?php } ?>
             </div>
-        </div>
-    </div>
-    <!-- Similar Products -->
-    <h1 style="font-family: Gill Sans, sans-serif;font-size: 28px;" class="text-center mt-5">Related Products</h1>
-    <div class="container">
-        <div class="products">
-            <?php
-            for ($i = 0; $i < 12; $i++) {
-            ?>
-                <div class="product">
-                    <img class="product-image" src="assets/images/placeholder.png" alt="">
-                    <span class="product-name">Product Name</span>
-                    <span class="price">750</span>
-                    <div>
-                        <span class="discount">1000</span> -
-                        <span class="rate">25%</span>
-                    </div>
-                </div>
-            <?php } ?>
         </div>
     </div>
     <?php include 'footer.php'; ?>

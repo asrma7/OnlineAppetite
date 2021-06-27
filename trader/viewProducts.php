@@ -54,7 +54,8 @@ if(!isset($_SESSION['trader']))
     <?php
     $page = "ViewProducts";
     include 'header.php';
-    $products = fetch_all_row('SELECT products.*, category_name FROM products INNER JOIN categories ON products.category_id = categories.category_id');
+    $user_id = $_SESSION['trader']['user_id'];
+    $products = fetch_all_row("SELECT products.*, (SELECT category_name FROM categories WHERE categories.category_id = products.category_id) AS category_name FROM shops INNER JOIN products ON products.shop_id = shops.shop_id WHERE trader_id = '$user_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->

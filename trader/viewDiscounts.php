@@ -1,8 +1,7 @@
 <?php
 require_once '../sessionManager.php';
 require_once '../utils/database.php';
-if(!isset($_SESSION['trader']))
-{
+if (!isset($_SESSION['trader'])) {
   header('Location: /trader/login.php');
 }
 ?>
@@ -31,10 +30,10 @@ if(!isset($_SESSION['trader']))
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
     <?php
-    $page = "ViewShops";
+    $page = "ViewDiscounts";
     include 'header.php';
     $user_id = $_SESSION['trader']['user_id'];
-    $shops = fetch_all_row("SELECT shops.*, (SELECT COUNT(*) FROM products WHERE products.shop_id = shops.shop_id) AS products FROM shops WHERE trader_id = '$user_id'");
+    $discounts = fetch_all_row("SELECT * FROM discounts WHERE created_by = '$user_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -49,8 +48,8 @@ if(!isset($_SESSION['trader']))
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item">Shops</li>
-                <li class="breadcrumb-item active">View Shops</li>
+                <li class="breadcrumb-item">Discounts</li>
+                <li class="breadcrumb-item active">View Discounts</li>
               </ol>
             </div>
           </div>
@@ -60,28 +59,30 @@ if(!isset($_SESSION['trader']))
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <h5 class="mb-2">Shops</h5>
+          <h5 class="mb-2">Discounts</h5>
           <table id="shopTable" class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>Shop ID</th>
-                <th>Shop Name</th>
-                <th>Verified on</th>
-                <th class="no-sort">Pan no./Vat no.</th>
-                <th>Shop Type</th>
-                <th>Products</th>
+                <th>Discount ID</th>
+                <th>Discount Name</th>
+                <th>Discount Type</th>
+                <th class="no-sort">Target</th>
+                <th class="no-sort">Start On</th>
+                <th>Expire On</th>
                 <th class="no-sort no-search">Edit/Delete</th>
               </tr>
             </thead>
             <tbody>
-              <?php foreach($shops as $shop) { ?>
+              <?php foreach ($discounts as $discount) { ?>
                 <tr>
-                  <td><?= $shop['shop_id'] ?></td>
-                  <td><?= $shop['shop_name'] ?></td>
-                  <td class="text-center"><?= $shop['verified_on']??'-' ?></td>
-                  <td><?= $shop['gov_no'] ?></td>
-                  <td><?= $shop['shop_type'] ?></td>
-                  <td><?= $shop['products'] ?></td>
+                  <td><?= $discount['discount_id'] ?></td>
+                  <td><?= $discount['discount_name'] ?></td>
+                  <td><?= $discount['discount_type'] ?></td>
+                  <td class="text-center"><?= $discount['target_id'] ?? '-' ?></td>
+                  <td>
+                    <?= $discount['starts_on'] ?>
+                  </td>
+                  <td><?= $discount['expires_on'] ?></td>
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-warning m-1">Edit</button>
@@ -93,12 +94,12 @@ if(!isset($_SESSION['trader']))
             </tbody>
             <tfoot>
               <tr>
-                <th>Shop ID</th>
-                <th>Shop Name</th>
-                <th>Verified on</th>
-                <th>Pan no./Vat no.</th>
-                <th>Shop Type</th>
-                <th>Products</th>
+                <th>Discount ID</th>
+                <th>Discount Name</th>
+                <th>Discount Type</th>
+                <th>Target</th>
+                <th>Start On</th>
+                <th>Expire On</th>
                 <th>Edit/Delete</th>
               </tr>
             </tfoot>
@@ -141,17 +142,17 @@ if(!isset($_SESSION['trader']))
         "buttons": [{
           extend: "csv",
           exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5]
+            columns: [0, 1, 2, 4, 5, 6]
           }
         }, {
           extend: "excel",
           exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5]
+            columns: [0, 1, 2, 4, 5, 6]
           }
         }, {
           extend: "print",
           exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5]
+            columns: [0, 1, 2, 4, 5, 6]
           }
         }, "colvis"],
         "columnDefs": [{

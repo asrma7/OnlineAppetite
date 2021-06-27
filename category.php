@@ -1,7 +1,9 @@
 <?php
-require_once 'utils/database.php';
+require 'utils/database.php';
+$category_id = $_GET['id'];
+$pageCategory = fetch_row("SELECT * FROM categories WHERE category_id = '$category_id'")['category_name'];
 $count = $_GET['more'] ?? '' == 'true' ? 30 : 15;
-$products = fetch_all_row("SELECT * FROM products ORDER BY created_at LIMIT '$count'");
+$products = fetch_all_row("SELECT * FROM products WHERE category_id = '$category_id' ORDER BY created_at LIMIT '$count'");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,25 +14,17 @@ $products = fetch_all_row("SELECT * FROM products ORDER BY created_at LIMIT '$co
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/index.css">
-    <title>OnlineAppetite</title>
+
+    <title><?= $pageCategory ?></title>
 </head>
 
 <body>
     <?php
-    $page = 'home';
+    $page = 'category';
     include 'header.php';
     ?>
-    <div class="slider">
-        <img id="sliderimage">
-        <div id="sliderpoints">
-            <div class="sliderpoint active" data-index="0"></div>
-            <div class="sliderpoint" data-index="1"></div>
-            <div class="sliderpoint" data-index="2"></div>
-            <div class="sliderpoint" data-index="3"></div>
-        </div>
-    </div>
     <div class="text-center py-5">
+        <h2>Category: <?= $pageCategory ?></h2>
         <div class="products">
             <?php
             foreach ($products as $product) {
@@ -52,11 +46,11 @@ $products = fetch_all_row("SELECT * FROM products ORDER BY created_at LIMIT '$co
                 </div>
             <?php } ?>
         </div>
-        <button class="loadmore" onclick="window.location.href='/?more=true'">LOAD MORE</button>
+        <button class="loadmore" onclick="window.location.href='/category.php?id=<?= $category_id ?>&more=true'">LOAD MORE</button>
     </div>
     <?php include 'footer.php'; ?>
     <script src="js/script.js"></script>
-    <script src="js/index.js"></script>
+    </script>
 </body>
 
 </html>

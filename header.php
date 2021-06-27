@@ -1,3 +1,9 @@
+<?php
+require_once 'sessionManager.php';
+require_once 'utils/database.php';
+$categories = fetch_all_row("SELECT * FROM categories");
+$page = $page??'';
+?>
 <header>
     <div class="top-row">
         <div class="header-logo">
@@ -16,20 +22,19 @@
         </form>
         <div class="top-buttons">
             <?php
-            require_once 'sessionManager.php';
-            if(!isset($_SESSION['user'])){
+            if (!isset($_SESSION['user'])) {
             ?>
-            <div class="buttons">
-                <button onclick="location.href='signin.php'" class="signin">Sign in</button>
-                <button onclick="location.href='signup.php'" class="signup">Sign up</button>
-            </div>
+                <div class="buttons">
+                    <button onclick="location.href='signin.php'" class="signin">Sign in</button>
+                    <button onclick="location.href='signup.php'" class="signup">Sign up</button>
+                </div>
             <?php
-            }else {
+            } else {
             ?>
-            <div class="buttons">
-                <a href="/profile.php" class="greetings">Hi <?=explode(' ', $_SESSION['user']['full_name'])[0]?></a>
-                <button onclick="location.href='logout.php'" class="signup">Sign Out</button>
-            </div>
+                <div class="buttons">
+                    <a href="/profile.php" class="greetings">Hi <?= explode(' ', $_SESSION['user']['full_name'])[0] ?></a>
+                    <button onclick="location.href='logout.php'" class="signup">Sign Out</button>
+                </div>
             <?php
             }
             ?>
@@ -52,12 +57,16 @@
             <li class="my-nav-link <?php echo $page == 'deal' ? 'active' : ''; ?>">
                 <a href="todaydeal.php">Today's Deal</a>
             </li>
-            <li class="my-nav-dropdown">
+            <li class="my-nav-dropdown <?php echo $page == 'category' ? 'active' : ''; ?>">
                 <span class="my-dropdown-btn">Categories</span>
                 <div class="my-dropdown-content">
-                    <a href="#">Link 1</a>
-                    <a href="#">Link 2</a>
-                    <a href="#">Link 3</a>
+                    <?php
+                    foreach ($categories as $category) {
+                    ?>
+                        <a href="/category.php?id=<?= $category['category_id'] ?>"><?= $category['category_name'] ?></a>
+                    <?php
+                    }
+                    ?>
                 </div>
             </li>
             <li class="my-nav-link <?php echo $page == 'customerCare' ? 'active' : ''; ?>">

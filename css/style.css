@@ -108,7 +108,7 @@ li.my-nav-link.nav-small {
     display: none;
 }
 
-li.my-nav-link.active{
+li.my-nav-link.active, li.my-nav-dropdown.active{
     border-bottom: 2px solid #8CC63F;
 }
 .my-dropdown-content {
@@ -235,11 +235,14 @@ li.my-nav-link.active{
 .product{
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin: 10px 25px;
+    cursor: pointer;
 }
 
 .product .product-image{
     height: 150px;
+    width: 150px;
+    object-fit: cover;
     grid-area: image;
 }
 

@@ -61,7 +61,9 @@ if (file_exists($image["tmp_name"])) {
         if (($image["size"] > 2000000)) {
             $errors['profileImage'] = "Image size exceeds 2MB.";
         }    // Validate image file dimension
-        else if ($width > "250" || $height > "250") {
+        else if ($width != $height) {
+            $errors['productImage2'] = "Image should be a square iamge.";
+        } else if ($width > "250" || $height > "250") {
             $errors['profileImage'] = "Image dimension should be within 250X250.";
         }
     }

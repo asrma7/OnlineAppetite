@@ -108,7 +108,7 @@ if (!isset($_SESSION['trader'])) {
               </select>
               <?= isset($errors['category']) ? '<div class="invalid-feedback">' . $errors['category'] . '</div>' : ''; ?>
             </div>
-            <!--quantity-->
+            <!--stock-->
             <div class="form-group">
               <label for="stock">Stock</label>
               <input type="number" id="stock" name="stock" class="form-control <?= isset($errors['stock']) ? 'is-invalid' : ''; ?>" value="<?= $old['stock'] ?? ''; ?>">

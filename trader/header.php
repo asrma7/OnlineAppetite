@@ -170,13 +170,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/admin/addDiscount.php" class="nav-link <?= $page == 'AddDiscount' ? 'active' : '' ?>">
+              <a href="/trader/addDiscount.php" class="nav-link <?= $page == 'AddDiscount' ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Add Discount</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/admin/viewDiscounts.php" class="nav-link <?= $page == 'ViewDiscounts' ? 'active' : '' ?>">
+              <a href="/trader/viewDiscounts.php" class="nav-link <?= $page == 'ViewDiscounts' ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>View Discounts</p>
               </a>

@@ -6,10 +6,13 @@
     max-height: 50px;
     object-fit: cover;
 }
-#product1 {
-    height: 200px;
-    width: 300px;
+.product-preview {
+    width: 250px;
     object-fit: cover;
+}
+
+a {
+    text-decoration: none;
 }
 
 .profilepic {
@@ -20,6 +23,7 @@
 }
 
 .review {
+    font-size: .9em;
     display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -81,8 +85,14 @@ input[type=number]::-webkit-outer-spin-button {
   position: absolute;
   z-index: 20;
   background-repeat: no-repeat;
-  background-color: white;
+  background-color: #c4c4c4;
   box-shadow: inset 0 0 20px rgba(0,0,0,.5);
   display: none;
   cursor: none;
+}
+
+.reviewbox {
+    width: 100%;
+    margin-top: 10px;
+    resize: none;
 }
