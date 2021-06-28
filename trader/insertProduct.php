@@ -3,7 +3,7 @@ include '../utils/database.php';
 session_start();
 if (!isset($_SESSION['trader'])) {
     header('Location: /trader/login.php');
-  }
+}
 $old = $_POST;
 extract($_POST);
 $errors = [];

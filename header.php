@@ -3,6 +3,13 @@ require_once 'sessionManager.php';
 require_once 'utils/database.php';
 $categories = fetch_all_row("SELECT * FROM categories");
 $page = $page??'';
+$userCart = $_SESSION['user']['cart']??[];
+$cartSize = 0;
+foreach($userCart as $cartShop)
+{
+    $cartSize += count($cartShop['products']);
+}
+
 ?>
 <header>
     <div class="top-row">
@@ -40,7 +47,7 @@ $page = $page??'';
             ?>
             <div class="cart" onclick="window.location.href='/cart.php'">
                 <img src="assets/images/cart.png" alt="cart">
-                <span id="cart-count">5</span>
+                <span id="cart-count"><?= $cartSize ?></span>
             </div>
         </div>
     </div>

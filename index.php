@@ -44,12 +44,12 @@ $products = fetch_all_row("SELECT * FROM products ORDER BY created_at LIMIT '$co
                 <div class="product" onclick="window.location.href='/product.php?id=<?= $product['product_id'] ?>'">
                     <img class="product-image" src="<?= $product['image1'] ?>" alt="">
                     <span class="product-name py-2"><?= $product['product_name'] ?></span>
-                    <span class="price pb-2">£ <?= round($discounted_price, 2) ?></span>
+                    <span class="price pb-2">£ <?= number_format((float)$discounted_price, 2, '.', '') ?></span>
                     <?php
                     if ($product['price'] != $discounted_price) {
                     ?>
                         <div>
-                            <span class="discount">£ <?= round($product['price'] / 100.0, 2) ?></span> -
+                            <span class="discount">£ <?= number_format((float)$product['price'] / 100, 2, '.', '') ?></span> -
                             <span class="rate"><?= round($discount_rate, 2) ?>%</span>
                         </div>
                     <?php

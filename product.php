@@ -3,14 +3,14 @@ require_once 'sessionManager.php';
 require_once 'utils/database.php';
 $product_id = $_GET['id'];
 $user_id = $_SESSION['user']['user_id'] ?? "";
-$product = fetch_row("SELECT * FROM products INNER JOIN shops ON shops.shop_id = products.shop_id WHERE product_id = '$product_id'");
-$discounts = fetch_all_row("SELECT rate FROM discounts WHERE ((discount_type = 'all') OR (discount_type = 'category' AND target_id = '" . $product['category_id'] . "') OR (discount_type = 'product' AND target_id = '" . $product['product_id'] . "') AND starts_on < CURRENT_DATE AND expires_on > CURRENT_DATE)");
-$discounted_price = round($product['price'] / 100, 2);
+$currentProduct = fetch_row("SELECT * FROM products INNER JOIN shops ON shops.shop_id = products.shop_id WHERE product_id = '$product_id'");
+$discounts = fetch_all_row("SELECT rate FROM discounts WHERE ((discount_type = 'all') OR (discount_type = 'category' AND target_id = '" . $currentProduct['category_id'] . "') OR (discount_type = 'product' AND target_id = '" . $currentProduct['product_id'] . "') AND starts_on < CURRENT_DATE AND expires_on > CURRENT_DATE)");
+$current_discounted_price = round($currentProduct['price'] / 100, 2);
 foreach ($discounts as $discount) {
-    $discounted_price = $discounted_price * (100 - $discount['rate']) * 0.01;
+    $current_discounted_price = $current_discounted_price * (100 - $discount['rate']) * 0.01;
 }
-$discount_rate = (round($product['price'] / 100, 2) - $discounted_price) * 100 / round($product['price'] / 100, 2);
-$products = fetch_all_row("SELECT * FROM products WHERE product_id != '$product_id' AND category_id == '" . $product['category_id'] . "' ORDER BY created_at LIMIT 10");
+$current_discount_rate = (round($currentProduct['price'] / 100, 2) - $current_discounted_price) * 100 / round($currentProduct['price'] / 100, 2);
+$products = fetch_all_row("SELECT * FROM products WHERE product_id != '$product_id' AND category_id == '" . $currentProduct['category_id'] . "' ORDER BY created_at LIMIT 10");
 $reviews = fetch_all_row("SELECT * FROM reviews INNER JOIN users ON users.user_id = reviews.user_id WHERE product_id == '$product_id' ORDER BY created_at LIMIT 4");
 ?>
 <!doctype html>
@@ -41,15 +41,15 @@ $reviews = fetch_all_row("SELECT * FROM reviews INNER JOIN users ON users.user_i
             <div class="row">
                 <div class="col-sm-12 col-lg-3 col-md-5 d-flex align-items-center justify-content-center" style="background-color:#c4c4c4">
                     <div style="display:inline-block; text-align:start;">
-                        <img src="<?= $product['image1'] ?>" class="product-preview" id="product1">
+                        <img src="<?= $currentProduct['image1'] ?>" class="product-preview" id="product1">
                         <br>
-                        <img src="<?= $product['image1'] ?>" onclick="setPreview(this.src)" class="thumbnail">
-                        <img src="<?= $product['image2'] ?>" onclick="setPreview(this.src)" class="thumbnail">
+                        <img src="<?= $currentProduct['image1'] ?>" onclick="setPreview(this.src)" class="thumbnail">
+                        <img src="<?= $currentProduct['image2'] ?>" onclick="setPreview(this.src)" class="thumbnail">
                     </div>
                 </div>
                 <div class="col-sm-12 col-lg-4 col-md-7 text-start  d-flex align-items-center justify-content-center" style="background-color:#c4c4c4">
                     <div>
-                        <h1 style="font-family: Gill Sans, sans-serif;font-size: 28px;margin-top:10%"><?= $product['product_name'] ?></h1>
+                        <h1 style="font-family: Gill Sans, sans-serif;font-size: 28px;margin-top:10%"><?= $currentProduct['product_name'] ?></h1>
                         <div class="stars">
                             <span class="fas fa-star"></span>
                             <span class="fas fa-star"></span>
@@ -57,13 +57,13 @@ $reviews = fetch_all_row("SELECT * FROM reviews INNER JOIN users ON users.user_i
                             <span class="fas fa-star-half-alt"></span>
                             <span class="far fa-star"></span><br><br>
                         </div>
-                        <span style="color:#F1592A; font-weight:500; font-size:20px;"> £ <?= round($discounted_price, 2) ?> </span><br>
+                        <span style="color:#F1592A; font-weight:500; font-size:20px;"> £ <?= number_format((float)$current_discounted_price, 2, '.', '') ?> </span><br>
                         <?php
-                        if ($product['price'] != $discounted_price) {
+                        if ($currentProduct['price'] != $current_discounted_price) {
                         ?>
                             <div>
-                                <span class="discount">£ <?= round($product['price'] / 100.0, 2) ?></span> -
-                                <span class="rate"><?= round($discount_rate, 2) ?>%</span>
+                                <span class="discount">£ <?= number_format((float)$currentProduct['price'] / 100.0, 2, '.', '') ?></span> -
+                                <span class="rate"><?= round($current_discount_rate, 2) ?>%</span>
                             </div>
                         <?php
                         }
@@ -71,15 +71,16 @@ $reviews = fetch_all_row("SELECT * FROM reviews INNER JOIN users ON users.user_i
                         <span>Quantity:</span>
                         <form class="quantity-form">
                             <button class="value-button" onclick="decreaseValue()" value="Decrease Value">-</button>
-                            <input type="number" class="number-count" id="number" value="0" />
-                            <button class="value-button" onclick="increaseValue()" value="Increase Value">+</button>
+                            <input type="number" class="number-count" id="number" value="1" />
+                            <button class="value-button" onclick="increaseValue(<?= $currentProduct['stock'] ?>)" value="Increase Value">+</button>
                         </form>
+                        <div class="stock"><?= $currentProduct['stock'] ?> items in stock</div>
                         <div class="product-buttons">
                             <div>
-                                <button type="button" class="btn btn-secondary">Buy Now</button>
+                                <button type="button" class="btn btn-secondary" onclick="addCart()">Buy Now</button>
                             </div>
                             <div>
-                                <button type="button" class="btn btn-secondary">Add to cart</button>
+                                <button type="button" class="btn btn-secondary" onclick="addCart()">Add to cart</button>
                             </div>
                         </div>
                     </div>
@@ -87,8 +88,8 @@ $reviews = fetch_all_row("SELECT * FROM reviews INNER JOIN users ON users.user_i
                 <div class="col-sm-12 col-lg-4 col-md-12 offset-lg-1 py-4 d-flex flex-column justify-content-between" style="text-align:start;background-color:#c4c4c4">
                     <div>
                         <div style="color:#5B5B5B">Sold By</div>
-                        <a href="shopProfile.php?id=<?= $product['shop_id'] ?>">
-                            <h3 style="color:#5B5B5B"><?= $product['shop_name'] ?></h3>
+                        <a href="shopProfile.php?id=<?= $currentProduct['shop_id'] ?>">
+                            <h3 style="color:#5B5B5B"><?= $currentProduct['shop_name'] ?></h3>
                         </a>
                         <div style="color:#5B5B5B">Recent Reviews:</div>
                         <div class="reviews">
@@ -122,7 +123,7 @@ $reviews = fetch_all_row("SELECT * FROM reviews INNER JOIN users ON users.user_i
                                 <button class="btn btn-outline-secondary">Post</button>
                                 <?php
                                 if (!empty($user_review))
-                                    echo '<button class="btn btn-outline-danger" onclick="event.preventDefault();window.location.href=\'/backend/deleteReview.php?id='.$user_review['review_id'].'\'">remove</button>';
+                                    echo '<button class="btn btn-outline-danger" onclick="event.preventDefault();window.location.href=\'/backend/deleteReview.php?id=' . $user_review['review_id'] . '\'">remove</button>';
                                 ?>
                             </div>
                         </form>
@@ -146,12 +147,12 @@ $reviews = fetch_all_row("SELECT * FROM reviews INNER JOIN users ON users.user_i
                     <div class="product" onclick="window.location.href='/product.php?id=<?= $product['product_id'] ?>'">
                         <img class="product-image" src="<?= $product['image1'] ?>" alt="">
                         <span class="product-name py-2"><?= $product['product_name'] ?></span>
-                        <span class="price pb-2">£ <?= round($discounted_price, 2) ?></span>
+                        <span class="price pb-2">£ <?= number_format((float)$discounted_price, 2, '.', '') ?></span>
                         <?php
                         if ($product['price'] != $discounted_price) {
                         ?>
                             <div>
-                                <span class="discount">£ <?= round($product['price'] / 100.0, 2) ?></span> -
+                                <span class="discount">£ <?= number_format((float)$product['price'] / 100, 2, '.', '') ?></span> -
                                 <span class="rate"><?= round($discount_rate, 2) ?>%</span>
                             </div>
                         <?php
@@ -167,29 +168,51 @@ $reviews = fetch_all_row("SELECT * FROM reviews INNER JOIN users ON users.user_i
     <script src="js/bootstrap.min.js"></script>
     <script src="js/adminlte/jquery.min.js"></script>
     <script src="js/star-rating.min.js"></script>
+
+    <!-- Quantity button script -->
     <script>
         function setPreview(src) {
             preview = document.getElementById('product1');
             preview.src = src;
         }
 
-        function increaseValue() {
+        function increaseValue(stock) {
             event.preventDefault();
             var value = parseInt(document.getElementById('number').value, 10);
-            value = isNaN(value) ? 0 : value;
-            value++;
-            document.getElementById('number').value = value;
+            value = isNaN(value) ? 1 : value;
+            if (value >= stock) {
+                alert('Out of stock');
+            } else if (value >= 20) {
+                alert('Only 20 items allowed at a time');
+            } else {
+                value++;
+                document.getElementById('number').value = value;
+            }
         }
+
+        $('#number').change(function() {
+            var stock = $(this).data('stock');
+            if ($(this).val() > stock) {
+                alert('Out of stock');
+                $(this).val(stock);
+            } else if ($(this).val() > 20) {
+                alert('Only 20 items allowed at a time');
+                $(this).val(20);
+            }
+        });
 
         function decreaseValue() {
             event.preventDefault();
             var value = parseInt(document.getElementById('number').value, 10);
-            value = isNaN(value) ? 0 : value;
-            value < 1 ? value = 1 : '';
+            value = isNaN(value) ? 1 : value;
+            value < 2 ? value = 2 : '';
             value--;
             document.getElementById('number').value = value;
         }
+    </script>
 
+    <!-- Product magnification script -->
+    <script>
         function magnifier() {
 
             this.magnifyImg = function(ptr, magnification, magnifierSize) {
@@ -252,7 +275,7 @@ $reviews = fetch_all_row("SELECT * FROM reviews INNER JOIN users ON users.user_i
         }
 
         var magnify = new magnifier();
-        magnify.magnifyImg('#product1', 3, 400);
+        magnify.magnifyImg('#product1', 2, 200);
         $(document).ready(function() {
             $('#rating').rating({
                 step: 1,
@@ -273,6 +296,51 @@ $reviews = fetch_all_row("SELECT * FROM reviews INNER JOIN users ON users.user_i
                 }
             });
         });
+    </script>
+
+    <!-- ajax call to add to cart -->
+    <script>
+        function addCart() {
+            var quantity = document.getElementById('number').value;
+            var product = {
+                'product_id': '<?= $currentProduct['product_id'] ?>',
+                'product_name': '<?= $currentProduct['product_name'] ?>',
+                'image': '<?= $currentProduct['image1'] ?>',
+                'stock': '<?= $currentProduct['stock'] ?>',
+                'price': '<?= round($currentProduct['price'] / 100, 2) ?>',
+                'discounted_price': '<?= round($current_discounted_price, 2) ?>',
+                'discount_rate': '<?= round($current_discount_rate, 2) ?>',
+                'quantity': quantity,
+            };
+            var shop = {
+                'shop_id': '<?= $currentProduct['shop_id'] ?>',
+                'shop_name': '<?= $currentProduct['shop_name'] ?>',
+            }
+            if (quantity == 0) {
+                alert("Product quantity cannot be 0");
+            } else {
+                $.post('cart/addItem.php', {
+                        'shop': shop,
+                        'product': product
+                    },
+                    function(data) {
+                        response = JSON.parse(data);
+                        if (response['status'] == 'success') {
+                            cart_counter = $('#cart-count');
+                            cart_counter.text(parseInt(cart_counter.text(), 10) + 1);
+                            r = confirm(response['message']);
+                            if (r == true) {
+                                window.location.href = "/cart.php";
+                            }
+                        } else {
+                            r = confirm(response['message']);
+                            if (r == true) {
+                                window.location.href = "/cart.php";
+                            }
+                        }
+                    });
+            }
+        }
     </script>
 </body>
 
