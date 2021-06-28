@@ -1,6 +1,9 @@
 <?php
 include '../utils/database.php';
 session_start();
+if (!isset($_SESSION['admin'])) {
+    header('Location: /admin/login.php');
+}
 $old = $_POST;
 extract($_POST);
 $errors = [];

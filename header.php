@@ -38,7 +38,7 @@ $page = $page??'';
             <?php
             }
             ?>
-            <div class="cart">
+            <div class="cart" onclick="window.location.href='/cart.php'">
                 <img src="assets/images/cart.png" alt="cart">
                 <span id="cart-count">5</span>
             </div>

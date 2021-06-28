@@ -1,9 +1,14 @@
 <?php
 include '../utils/database.php';
 session_start();
+if (!isset($_SESSION['trader'])) {
+    header('Location: /trader/login.php');
+  }
 $old = $_POST;
 extract($_POST);
 $errors = [];
+
+$user_id = $_SESSION['trader']['user_id'];
 
 //product name
 if (empty($productName)) {
@@ -119,9 +124,10 @@ if (sizeof($errors) == 0) {
     } else {
         $errors['productImage2'] = "Problem in uploading image files.";
     }
-    $sql = "INSERT INTO products (product_name, category_id, price, stock, shop_id, description, image1, image2)
+    $price = $price * 100;
+    $sql = "INSERT INTO products (product_name, category_id, price, stock, trader_id, shop_id, description, image1, image2)
     VALUES
-    ('$productName', '$category', '$price', '$stock', '$shop', '$description', '$productImage1', '$productImage2')";
+    ('$productName', '$category', '$price', '$stock', '$user_id', '$shop', '$description', '$productImage1', '$productImage2')";
     $res = query($sql);
     if (!$res)
         $_SESSION['message'] = ["message" => "Error while inserting Product", 'color' => "danger"];

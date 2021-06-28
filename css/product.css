@@ -7,7 +7,7 @@
     object-fit: cover;
 }
 .product-preview {
-    width: 250px;
+    width: 230px;
     object-fit: cover;
 }
 
@@ -36,21 +36,20 @@ a {
 
 .product-buttons {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
-    margin-bottom: 20px;
 }
 
 .quantity-form {
     text-align: center;
-    margin-right:10px;
     display: inline-block;
     padding-left: 30px;
+    margin: 20px 0;
 }
 .value-button {
     border: 1px solid #ddd;
     margin: 0px;
-    width: 75px;
+    width: 50px;
     height: 25px;
     vertical-align: middle;
     background: #eee;
@@ -91,8 +90,11 @@ input[type=number]::-webkit-outer-spin-button {
   cursor: none;
 }
 
+.add-review {
+    margin-top: 10px;
+}
+
 .reviewbox {
     width: 100%;
-    margin-top: 10px;
     resize: none;
 }

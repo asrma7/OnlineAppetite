@@ -210,12 +210,13 @@ li.my-nav-link.active, li.my-nav-dropdown.active{
 
 .cart {
     position: relative;
+    cursor: pointer;
 }
 
 .cart #cart-count{
     position: absolute;
-    top: -10px;
-    right: -10px;
+    top: -5px;
+    right: -5px;
     background-color: #F84343;
     color: #FFFFFF;
     height: 18px;
@@ -223,7 +224,7 @@ li.my-nav-link.active, li.my-nav-dropdown.active{
     text-align: center;
     line-height: 18px;
     border-radius: 50%;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .products{
@@ -376,4 +377,8 @@ footer {
     color: #fff;
     background-color: #dc3545;
     border-color: #d32535;
+}
+
+.btn {
+    border-radius: 0;
 }

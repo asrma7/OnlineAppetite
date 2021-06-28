@@ -1,8 +1,7 @@
 <?php
 require_once '../sessionManager.php';
 require_once '../utils/database.php';
-if(!isset($_SESSION['trader']))
-{
+if (!isset($_SESSION['trader'])) {
   header('Location: /trader/login.php');
 }
 ?>
@@ -101,20 +100,20 @@ if(!isset($_SESSION['trader']))
                 <tr>
                   <td><?= $product['product_id'] ?></td>
                   <td><?= $product['product_name'] ?></td>
-                  <td class="text-center"><?= $product['confirmed_on']??'-' ?></td>
-                  <td><?= $product['price'] ?></td>
+                  <td class="text-center"><?= $product['confirmed_on'] ?? '-' ?></td>
+                  <td><?= round($product['price'] / 100.0, 2) ?></td>
                   <td><?= $product['stock'] ?></td>
                   <td><?= $product['category_name'] ?></td>
                   <td><?= $product['shop_id'] ?></td>
                   <td>
-                  <div class="d-flex">
-                    <div class="image-preview">
-                      <img class="abs-image px-1" src="<?= $product['image1'] ?>" alt="Product Image">
+                    <div class="d-flex">
+                      <div class="image-preview">
+                        <img class="abs-image px-1" src="<?= $product['image1'] ?>" alt="Product Image">
+                      </div>
+                      <div class="image-preview">
+                        <img class="abs-image px-1" src="<?= $product['image2'] ?>" alt="Product Image">
+                      </div>
                     </div>
-                    <div class="image-preview">
-                      <img class="abs-image px-1" src="<?= $product['image2'] ?>" alt="Product Image">
-                    </div>
-                  </div>
                   </td>
                   <td>
                     <div class="d-flex">

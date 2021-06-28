@@ -3,6 +3,9 @@ include '../utils/database.php';
 session_start();
 if (!isset($_SESSION['trader'])) {
     header('Location: /trader/login.php');
+  }
+if (!isset($_SESSION['trader'])) {
+    header('Location: /trader/login.php');
 } else {
     $user_id = $_SESSION['trader']['user_id'];
 }

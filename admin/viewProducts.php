@@ -105,7 +105,7 @@ if (!isset($_SESSION['admin'])) {
                       '<button class="btn btn-danger m-1">Remove</button>' :
                       '<button class="btn btn-primary m-1">Confirm</button>' ?>
                   </td>
-                  <td><?= $product['price'] ?></td>
+                  <td><?= round($product['price'] / 100.0, 2) ?></td>
                   <td><?= $product['stock'] ?></td>
                   <td><?= $product['category_name'] ?></td>
                   <td><?= $product['shop_id'] ?></td>
