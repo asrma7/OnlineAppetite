@@ -25,27 +25,6 @@ if (!isset($_SESSION['admin'])) {
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/css/adminlte/adminlte.min.css">
-  <style>
-    .image-preview {
-      position: relative;
-      width: 50px;
-      height: 50px;
-    }
-
-    .image-preview .abs-image {
-      position: absolute;
-      top: 0%;
-      left: 0%;
-      max-width: 50px;
-      max-height: 50px;
-      transition: transform 250ms ease-in;
-    }
-
-    .image-preview .abs-image:hover {
-      transform: scale(400%);
-      z-index: 10;
-    }
-  </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -54,9 +33,9 @@ if (!isset($_SESSION['admin'])) {
       <img class="animation__shake" src="/assets/images/logoSmall.png" alt="DFOS" height="60" width="60">
     </div>
     <?php
-    $page = "ViewCategories";
+    $page = "ViewVouchers";
     include 'header.php';
-    $categories = fetch_all_row("SELECT * FROM categories");
+    $vouchers = fetch_all_row("SELECT * FROM vouchers");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -71,7 +50,8 @@ if (!isset($_SESSION['admin'])) {
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Products</li>
+                <li class="breadcrumb-item">Vouchers</li>
+                <li class="breadcrumb-item active">View Vouchers</li>
               </ol>
             </div>
           </div>
@@ -81,28 +61,24 @@ if (!isset($_SESSION['admin'])) {
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <h5 class="mb-2">Products</h5>
+          <h5 class="mb-2">Vouchers</h5>
           <table id="shopTable" class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>Category ID</th>
-                <th>Category Name</th>
-                <th class="no-sort">Description</th>
-                <th class="no-sort">Image</th>
+                <th>Voucher ID</th>
+                <th>Voucher Code</th>
+                <th>Discount Amount</th>
+                <th>Minimum</th>
                 <th class="no-sort no-search">Edit/Delete</th>
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($categories as $category) { ?>
+              <?php foreach ($vouchers as $voucher) { ?>
                 <tr>
-                  <td><?= $category['category_id'] ?></td>
-                  <td><?= $category['category_name'] ?></td>
-                  <td><?= $category['description'] ?></td>
-                  <td>
-                    <div class="image-preview">
-                      <img class="abs-image" src="<?= $customer['image'] ?>" alt="User Image">
-                    </div>
-                  </td>
+                  <td><?= $voucher['voucher_id'] ?></td>
+                  <td><?= $voucher['voucher_code'] ?></td>
+                  <td><?= number_format((float)$voucher['discount_amount'] / 100, 2, '.', '') ?></td>
+                  <td><?= number_format((float)$voucher['minimum'] / 100, 2, '.', '') ?></td>
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-warning m-1">Edit</button>
@@ -115,10 +91,10 @@ if (!isset($_SESSION['admin'])) {
             <tfoot>
               <tr>
 
-                <th>Category ID</th>
-                <th>Category Name</th>
-                <th>Description</th>
-                <th>Image</th>
+                <th>Voucher ID</th>
+                <th>Voucher Code</th>
+                <th>Discount Amount</th>
+                <th>Minimum</th>
                 <th>Edit/Delete</th>
               </tr>
             </tfoot>
@@ -157,7 +133,7 @@ if (!isset($_SESSION['admin'])) {
       $("#shopTable").DataTable({
         "responsive": true,
         "lengthChange": false,
-        "autoWidth": true,
+        "autoWidth": false,
         "buttons": [{
           extend: "csv",
           exportOptions: {

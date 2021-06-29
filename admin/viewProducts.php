@@ -1,5 +1,5 @@
 <?php
-require_once '../sessionManager.php';
+require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
 if (!isset($_SESSION['admin'])) {
   header('Location: /admin/login.php');
@@ -50,6 +50,9 @@ if (!isset($_SESSION['admin'])) {
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="/assets/images/logoSmall.png" alt="DFOS" height="60" width="60">
+    </div>
     <?php
     $page = "Products";
     include 'header.php';
@@ -105,7 +108,7 @@ if (!isset($_SESSION['admin'])) {
                       '<button class="btn btn-danger m-1">Remove</button>' :
                       '<button class="btn btn-primary m-1">Confirm</button>' ?>
                   </td>
-                  <td><?= round($product['price'] / 100.0, 2) ?></td>
+                  <td><?= number_format((float)$product['price'] / 100.0, 2, '.', '') ?></td>
                   <td><?= $product['stock'] ?></td>
                   <td><?= $product['category_name'] ?></td>
                   <td><?= $product['shop_id'] ?></td>

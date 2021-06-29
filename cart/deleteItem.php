@@ -1,5 +1,5 @@
 <?php
-require_once '../sessionManager.php';
+require_once '../utils/sessionManager.php';
 
 if (!isset($_SESSION['user'])) {
     header('Location: /signin.php');
@@ -8,6 +8,23 @@ if (!isset($_SESSION['user'])) {
     $cart = $_SESSION['user']['cart'] ?? [];
 }
 
-$products = $_POST['product'];
+$products = $_POST['product'] ?? [];
 
-echo json_encode($products);
+foreach ($products as $product) {
+    foreach ($cart as $shop_id => $shop) {
+        if (array_key_exists($product, $shop['products'])) {
+            unset($shop['products'][$product]);
+            if(count($shop['products'])==0){
+                unset($cart[$shop_id]);
+            }
+            else {
+                $cart[$shop_id] = $shop;
+            }
+            break;
+        }
+    }
+}
+
+$_SESSION['user']['cart'] = $cart;
+
+header('Location: /cart.php');

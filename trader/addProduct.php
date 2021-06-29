@@ -1,5 +1,5 @@
 <?php
-require_once '../sessionManager.php';
+require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
 if (!isset($_SESSION['trader'])) {
   header('Location: /trader/login.php');
@@ -44,6 +44,9 @@ if (!isset($_SESSION['trader'])) {
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="/assets/images/logoSmall.png" alt="DFOS" height="60" width="60">
+    </div>
     <?php
     $page = "AddProduct";
     include 'header.php';
@@ -138,7 +141,7 @@ if (!isset($_SESSION['trader'])) {
               <label for="productImage1">Product Image 1</label>
               <div class="input-group">
                 <div class="custom-file">
-                  <input type="file" name="productImage1" class="custom-file-input <?= isset($errors['profileImage']) ? 'is-invalid' : ''; ?>" id="productImage1">
+                  <input type="file" name="productImage1" class="custom-file-input <?= isset($errors['productImage1']) ? 'is-invalid' : ''; ?>" id="productImage1">
                   <label class="custom-file-label" for="productImage1">Choose product image</label>
                 </div>
               </div>
@@ -149,7 +152,7 @@ if (!isset($_SESSION['trader'])) {
               <label for="productImage2">Product Image 2</label>
               <div class="input-group">
                 <div class="custom-file">
-                  <input type="file" name="productImage2" class="custom-file-input <?= isset($errors['profileImage']) ? 'is-invalid' : ''; ?>" id="productImage2">
+                  <input type="file" name="productImage2" class="custom-file-input <?= isset($errors['productImage2']) ? 'is-invalid' : ''; ?>" id="productImage2">
                   <label class="custom-file-label" for="productImage2">Choose product image</label>
                 </div>
               </div>

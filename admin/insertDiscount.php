@@ -1,6 +1,6 @@
 <?php
 include '../utils/database.php';
-session_start();
+require_once '../utils/sessionManager.php';
 if (!isset($_SESSION['admin'])) {
     header('Location: /admin/login.php');
 }

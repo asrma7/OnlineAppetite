@@ -1,6 +1,6 @@
 <?php
 include '../utils/database.php';
-session_start();
+require_once '../utils/sessionManager.php';
 if (!isset($_SESSION['trader'])) {
     header('Location: /trader/login.php');
 }
@@ -44,6 +44,7 @@ if (empty($description)) {
 } elseif (strlen($description) < 20) {
     $errors['description'] = "Description must be atleast 20 characters long.";
 }
+//category
 if (file_exists($_FILES['productImage1']["tmp_name"])) {
 
     $allowed_image_extension = array(
@@ -68,7 +69,7 @@ if (file_exists($_FILES['productImage1']["tmp_name"])) {
             $errors['productImage1'] = "Image size exceeds 2MB.";
         }    // Validate image file dimension
         else if ($width > "250" || $height > "250") {
-            $errors['productImage1'] = "Image dimension should be within 300X200.";
+            $errors['productImage1'] = "Image dimension should be within 250X250.";
         }
     }
 } else {
@@ -124,6 +125,10 @@ if (sizeof($errors) == 0) {
     } else {
         $errors['productImage2'] = "Problem in uploading image files.";
     }
+}
+
+//error size
+if (sizeof($errors) == 0) {
     $price = $price * 100;
     $sql = "INSERT INTO products (product_name, category_id, price, stock, trader_id, shop_id, description, image1, image2)
     VALUES

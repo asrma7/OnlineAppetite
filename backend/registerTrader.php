@@ -1,6 +1,6 @@
 <?php
 include '../utils/database.php';
-session_start();
+require_once '../utils/sessionManager.php';
 $old = $_POST;
 extract($_POST);
 $errors = [];  //declaration  of array named errors

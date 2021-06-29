@@ -23,8 +23,8 @@ $products = fetch_all_row("SELECT * FROM products WHERE category_id = '$category
     $page = 'category';
     include 'header.php';
     ?>
-    <div class="text-center py-5">
-        <h2>Category: <?= $pageCategory ?></h2>
+    <div class="container text-center py-5">
+        <h2 class="text-start" style="padding-left: 25px;">Category: <?= $pageCategory ?></h2>
         <div class="products">
             <?php
             foreach ($products as $product) {
@@ -37,18 +37,20 @@ $products = fetch_all_row("SELECT * FROM products WHERE category_id = '$category
             ?>
                 <div class="product" onclick="window.location.href='/product.php?id=<?= $product['product_id'] ?>'">
                     <img class="product-image" src="<?= $product['image1'] ?>" alt="">
-                    <span class="product-name py-2"><?= $product['product_name'] ?></span>
-                    <span class="price pb-2">£ <?= number_format((float)$discounted_price, 2, '.', '') ?></span>
-                    <?php
-                    if ($product['price'] != $discounted_price) {
-                    ?>
-                        <div>
-                            <span class="discount">£ <?= number_format((float)$product['price'] / 100, 2, '.', '') ?></span> -
-                            <span class="rate"><?= round($discount_rate, 2) ?>%</span>
-                        </div>
-                    <?php
-                    }
-                    ?>
+                    <div class="product-data">
+                        <span class="product-name py-2"><?= $product['product_name'] ?></span>
+                        <span class="price pb-2">£ <?= number_format((float)$discounted_price, 2, '.', '') ?></span>
+                        <?php
+                        if ($product['price'] != $discounted_price) {
+                        ?>
+                            <div>
+                                <span class="discount">£ <?= number_format((float)$product['price'] / 100, 2, '.', '') ?></span> -
+                                <span class="rate"><?= round($discount_rate, 2) ?>%</span>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
                 </div>
             <?php } ?>
         </div>

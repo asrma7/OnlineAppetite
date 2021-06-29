@@ -65,7 +65,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="/" class="brand-link">
-    <img src="/assets/images/logosmall.png" alt="OnlineAppetite Logo" class="brand-image bg-white img-circle elevation-3" style="opacity: .8">
+    <img src="/assets/images/logo.svg" alt="OnlineAppetite Logo" width="75px" height="75px" class="brand-image p-1 img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">Online Appetite</span>
   </a>
 

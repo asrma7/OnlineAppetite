@@ -1,5 +1,5 @@
 <?php
-require_once '../sessionManager.php';
+require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
 if (!isset($_SESSION['trader'])) {
   header('Location: /trader/login.php');
@@ -45,6 +45,9 @@ if (!isset($_SESSION['trader'])) {
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="/assets/images/logoSmall.png" alt="DFOS" height="60" width="60">
+    </div>
     <?php
     $page = "AddDiscount";
     include 'header.php';
@@ -92,7 +95,7 @@ if (!isset($_SESSION['trader'])) {
             <!--pan no.-->
             <div class="form-group">
               <label for="rate">Discount Rate</label>
-              <input type="text" id="rate" name="rate" class="form-control <?= isset($errors['rate']) ? 'is-invalid' : ''; ?>" value="<?= $old['goratevNum'] ?? ''; ?>">
+              <input type="text" id="rate" name="rate" class="form-control <?= isset($errors['rate']) ? 'is-invalid' : ''; ?>" value="<?= $old['rate'] ?? ''; ?>">
               <?= isset($errors['rate']) ? '<div class="invalid-feedback">' . $errors['rate'] . '</div>' : ''; ?>
             </div>
             <!--target-->

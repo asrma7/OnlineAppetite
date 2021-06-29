@@ -1,6 +1,6 @@
 <?php
 include '../utils/database.php';
-session_start();
+require_once '../utils/sessionManager.php';
 if (!isset($_SESSION['admin'])) {
     header('Location: /admin/login.php');
 } else {
@@ -75,6 +75,10 @@ if (sizeof($errors) == 0) {
     } else {
         $errors['profileImage'] = "Problem in uploading image files.";
     }
+}
+
+//error size
+if (sizeof($errors) == 0) {
     $sql1 = "UPDATE users SET";
     if (!empty($full_name))
         $sql1 .= " full_name = '$full_name',";

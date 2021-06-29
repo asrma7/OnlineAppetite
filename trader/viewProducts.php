@@ -1,5 +1,5 @@
 <?php
-require_once '../sessionManager.php';
+require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
 if (!isset($_SESSION['trader'])) {
   header('Location: /trader/login.php');
@@ -50,6 +50,9 @@ if (!isset($_SESSION['trader'])) {
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="/assets/images/logoSmall.png" alt="DFOS" height="60" width="60">
+    </div>
     <?php
     $page = "ViewProducts";
     include 'header.php';
@@ -101,7 +104,7 @@ if (!isset($_SESSION['trader'])) {
                   <td><?= $product['product_id'] ?></td>
                   <td><?= $product['product_name'] ?></td>
                   <td class="text-center"><?= $product['confirmed_on'] ?? '-' ?></td>
-                  <td><?= round($product['price'] / 100.0, 2) ?></td>
+                  <td><?= number_format((float)$product['price'] / 100.0, 2, '.', '') ?></td>
                   <td><?= $product['stock'] ?></td>
                   <td><?= $product['category_name'] ?></td>
                   <td><?= $product['shop_id'] ?></td>

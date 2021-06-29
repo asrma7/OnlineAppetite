@@ -73,24 +73,19 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     margin: 0;
 }
 
-.voucher-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-}
-
-.voucher-form input{
+#voucher{
     padding: 10px 20px;
     outline: none !important;
     width: 100%;
     margin-bottom: 5px;
+    margin-top: 20px;
 }
 
-.voucher-form .apply{
+.apply{
     padding: 10px 20px;
     width: 100%;
     border: 1px solid #000;
+    margin-bottom: 20px;
 }
 
 .loadmore {

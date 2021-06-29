@@ -1,5 +1,4 @@
 <?php
-require_once 'sessionManager.php';
 require_once 'utils/database.php';
 $user_id = $_GET['id'];
 $user = fetch_row("SELECT * FROM users LEFT JOIN traders on users.user_id = traders.user_id WHERE users.user_id =='$user_id'");

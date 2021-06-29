@@ -13,6 +13,9 @@
 </head>
 
 <body>
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="/assets/images/logoSmall.png" alt="DFOS" height="60" width="60">
+    </div>
     <?php
     $page = 'cart';
     include 'header.php';
@@ -29,7 +32,7 @@
         <div class="row">
 
             <!--CART FLEX 1/2-->
-            <div class="col-md-8 col-12">
+            <form action="cart/deleteItem.php" method="POST" class="col-md-8 col-12">
 
                 <!--flex cart title-->
                 <div class="card-bg d-flex justify-content-between">
@@ -57,7 +60,7 @@
                         <div class="shop-products">
                             <?php
                             foreach ($shop['products'] as $product_id => $product) {
-                                $price += $product['discounted_price'];
+                                $price += $product['discounted_price'] * $product['quantity'];
                             ?>
                                 <!--PRODUCT FLEX-->
                                 <div class="product-flex row p-2">
@@ -94,7 +97,7 @@
                                     <div class="col-md-3 d-flex justify-content-end align-items-center">
                                         <div>
                                             <button class="value-button" onclick="decreaseValue(<?= $product_id ?>)">-</button>
-                                            <input type="number" class="number-count" data-stock="<?= $product['stock'] ?>" id="number-<?= $product_id ?>" value="<?= $product['quantity'] ?>" />
+                                            <input type="number" class="number-count" data-product="<?= $product_id ?>" data-old-value="<?= $product['quantity'] ?>" data-stock="<?= $product['stock'] ?>" id="number-<?= $product_id ?>" value="<?= $product['quantity'] ?>" />
                                             <button class="value-button" onclick="increaseValue(<?= $product_id ?>, <?= $product['stock'] ?>)">+</button>
                                         </div>
                                     </div>
@@ -105,7 +108,7 @@
                         </div>
                     </div>
                 <?php } ?>
-            </div>
+            </form>
 
 
 
@@ -127,26 +130,27 @@
                         </div>
                     </div>
 
-                    <form action="" method="POST" class="voucher-form">
+                    <form action="checkout.php" class="voucher-form">
                         <input type="text" id="voucher" name="voucher" placeholder="Enter voucher code">
-                        <button type="submit" class="apply">Apply</button>
+                        <input type="hidden" id="voucherDiscount" disabled value="0">
+                        <button onclick="applyVoucher()" class="apply">Apply</button>
+
+                        <!--flex for total items and amount -->
+                        <div class="d-flex justify-content-between">
+
+                            <!--flex for total item -->
+                            <div class="total-items">
+                                <p>Total</p>
+                            </div>
+
+                            <!--flex for total amount -->
+                            <div class="total-amt">
+                                <p style="color:#F1592A;">£ <span class="final-total"><?= number_format((float)$price, 2, '.', '') ?></span></p>
+                            </div>
+                        </div>
+
+                        <button class="loadmore" type="submit">Proceed to checkout</button>
                     </form>
-
-                    <!--flex for total items and amount -->
-                    <div class="d-flex justify-content-between">
-
-                        <!--flex for total item -->
-                        <div class="total-items">
-                            <p>Total</p>
-                        </div>
-
-                        <!--flex for total amount -->
-                        <div class="total-amt">
-                            <p style="color:#F1592A;">£ <span class="final-total"><?= number_format((float)$price, 2, '.', '') ?></span></p>
-                        </div>
-                    </div>
-
-                    <button class="loadmore" type="submit">Proceed to checkout</button>
                 </div>
             </div>
 
@@ -169,22 +173,31 @@
             value = isNaN(value) ? 1 : value;
             if (value >= stock) {
                 alert('Out of stock');
-            } else if (value >= 20) {
-                alert('Only 20 items allowed at a time');
             } else {
                 value++;
-                document.getElementById('number-' + i).value = value;
+                updateCart(i, value, $('#number-' + i));
             }
         }
+        $('input[id^="number"]').on("keydown", function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                $(this).blur();
+            }
+        });
 
         $('input[id^="number"]').change(function() {
+            event.preventDefault();
+            var old = $(this).data('oldValue');
+            var product = $(this).data('product');
             var stock = $(this).data('stock');
-            if ($(this).val() > stock) {
+            if ($(this).val() <= 0) {
+                alert('Quantity cannot be 0');
+                $(this).val(old);
+            } else if ($(this).val() > stock) {
                 alert('Out of stock');
-                $(this).val(stock);
-            } else if ($(this).val() > 20) {
-                alert('Only 20 items allowed at a time');
-                $(this).val(20);
+                $(this).val(old);
+            } else {
+                updateCart(product, $(this).val(), $(this));
             }
         });
 
@@ -194,7 +207,7 @@
             value = isNaN(value) ? 1 : value;
             value < 2 ? value = 2 : '';
             value--;
-            document.getElementById('number-' + i).value = value;
+            updateCart(i, value, $('#number-' + i));
         }
     </script>
 
@@ -252,6 +265,76 @@
                 }
             });
         });
+
+        function showPreloader() {
+            preloader = $('.preloader');
+            preloader.css('height', '100vh');
+            preloader.children().show();
+        };
+
+        function hidePreloader() {
+            preloader = $('.preloader');
+            preloader.css('height', '0');
+            setTimeout(function() {
+                preloader.children().hide();
+            }, 200);
+        };
+    </script>
+
+    <!-- Update cart script -->
+    <script>
+        function updateCart(product, quantity, $obj = null) {
+            showPreloader();
+            $.post('cart/updateItem.php', {
+                    'product': product,
+                    'quantity': quantity
+                },
+                function(data) {
+                    response = JSON.parse(data);
+                    setTimeout(function() {
+                        hidePreloader()
+                        if (response['status'] == 'success') {
+                            total = response['totalPrice'];
+                            $('.subtotal-amt').text(total);
+                            $('.final-total').text(total - parseFloat($('#voucherDiscount').val()));
+                            if ($obj != null) {
+                                $obj.data('oldValue', quantity);
+                                $obj.val(quantity);
+                            }
+                        } else {
+                            alert(response['message']);
+                        }
+                    }, 400);
+                });
+        }
+    </script>
+
+    <!-- Apply Voucher Script -->
+    <script>
+        function applyVoucher() {
+            showPreloader();
+            event.preventDefault();
+            $.post('cart/applyVoucher.php', {
+                    'code': $('#voucher').val(),
+                    'subtotal': $('.subtotal-amt').text()
+                },
+                function(data) {
+                    response = JSON.parse(data);
+                    setTimeout(function() {
+                        hidePreloader()
+                        if (response['status'] == 'success') {
+                            $('#voucherDiscount').val(response['amount']);
+                            $('.final-total').text($('.subtotal-amt').text() - parseFloat($('#voucherDiscount').val()));
+                            if ($obj != null) {
+                                $obj.data('oldValue', quantity);
+                                $obj.val(quantity);
+                            }
+                        } else {
+                            alert(response['message']);
+                        }
+                    }, 400);
+                });
+        }
     </script>
 </body>
 

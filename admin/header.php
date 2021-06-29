@@ -65,7 +65,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="/" class="brand-link">
-    <img src="/assets/images/logosmall.png" alt="OnlineAppetite Logo" class="brand-image bg-white img-circle elevation-3" style="opacity: .8">
+
+    <img src="/assets/images/logo.svg" alt="OnlineAppetite Logo" width="75px" height="75px" class="brand-image p-1 img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">Online Appetite</span>
   </a>
 
@@ -195,6 +196,52 @@
               <a href="/admin/viewDiscounts.php" class="nav-link <?= $page == 'ViewDiscounts' ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>View Discounts</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item <?= $page == 'AddVoucher' || $page == 'ViewVouchers' ? 'menu-open' : '' ?>">
+          <a href="#" class="nav-link <?= $page == 'AddVoucher' || $page == 'ViewVouchers' ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-friends"></i>
+            <p>
+              Vouchers
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/admin/addVoucher.php" class="nav-link <?= $page == 'AddVoucher' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Voucher</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/admin/viewVouchers.php" class="nav-link <?= $page == 'ViewVouchers' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>View Vouchers</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item <?= $page == 'AddSlot' || $page == 'ViewSlots' ? 'menu-open' : '' ?>">
+          <a href="#" class="nav-link <?= $page == 'AddSlot' || $page == 'ViewSlots' ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-friends"></i>
+            <p>
+              Slots
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/admin/addSlot.php" class="nav-link <?= $page == 'AddSlot' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Slot</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/admin/viewSlots.php" class="nav-link <?= $page == 'ViewSlots' ? 'active' : '' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>View Slots</p>
               </a>
             </li>
           </ul>

@@ -1,5 +1,5 @@
 <?php
-require_once '../sessionManager.php';
+require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
 if (!isset($_SESSION['user'])) {
     header('Location: /signin.php');

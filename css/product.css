@@ -24,7 +24,9 @@ a {
 }
 
 .review {
+    padding-left: 30px;
     font-size: .9em;
+    line-height: 1.2em;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -35,9 +37,13 @@ a {
     color: #ff7300;
 }
 
+.product-description {
+    text-align: start;
+}
+
 .product-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
 }
 

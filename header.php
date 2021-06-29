@@ -1,5 +1,5 @@
 <?php
-require_once 'sessionManager.php';
+require_once 'utils/sessionManager.php';
 require_once 'utils/database.php';
 $categories = fetch_all_row("SELECT * FROM categories");
 $page = $page??'';

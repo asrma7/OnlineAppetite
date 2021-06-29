@@ -1,6 +1,6 @@
 <?php
 include '../utils/database.php';
-session_start();
+require_once '../utils/sessionManager.php';
 if (!isset($_SESSION['admin'])) {
     header('Location: /admin/login.php');
 }
@@ -22,12 +22,54 @@ if (empty($description)) {
 } else if (strlen($description) < 20) {
     $errors['description'] = "Description must be atleast 20 characters long.";
 }
+//image
+if (file_exists($_FILES['categoryImage']["tmp_name"])) {
+
+    $allowed_image_extension = array(
+        "png",
+        "jpg",
+        "jpeg"
+    );
+
+    // Get image file extension
+    $file_extension = pathinfo($_FILES['categoryImage']["name"], PATHINFO_EXTENSION);
+
+    // Validate file input to check if is with valid extension
+    if (!in_array($file_extension, $allowed_image_extension)) {
+        $errors['categoryImage'] = "Upload valid images. Only PNG and JPEG are allowed.";
+    }    // Validate image file size
+    else {
+        $fileinfo = getimagesize($_FILES['categoryImage']["tmp_name"]);
+        $width = $fileinfo[0];
+        $height = $fileinfo[1];
+
+        if (($_FILES['categoryImage']["size"] > 2000000)) {
+            $errors['categoryImage'] = "Image size exceeds 2MB.";
+        }    // Validate image file dimension
+        else if ($width > "1200" || $height > "1200") {
+            $errors['categoryImage'] = "Image dimension should be within 1200X1200.";
+        }
+    }
+} else {
+    $errors['categoryImage'] = "Category Image is required.";
+}
 
 
 
 //error size
 if (sizeof($errors) == 0) {
-    $sql = "INSERT INTO categories (category_name, description) VALUES ('$categoryName', '$description')";
+    $filename = uniqid('Category_');
+    $target = "../uploads/categories/" . $filename . '.' . $file_extension;
+    if (move_uploaded_file($_FILES['categoryImage']["tmp_name"], $target)) {
+        $categoryImage = '/uploads/categories/' . $filename . '.' . $file_extension;
+    } else {
+        $errors['categoryImage'] = "Problem in uploading image files.";
+    }
+}
+
+//error size
+if (sizeof($errors) == 0) {
+    $sql = "INSERT INTO categories (category_name, description, image) VALUES ('$categoryName', '$description', '$categoryImage')";
     $res = query($sql);
     if (!$res)
         $_SESSION['message'] = ["message" => "Error while inserting Category", 'color' => "danger"];

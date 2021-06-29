@@ -32,6 +32,7 @@
         <div class="container py-4" style="background-color:#cccccc;max-width:600px">
             <h2 class="text-center px-3 mb-3"> Order Summary</h2>
             <div class="amount my-2"><span>Total Amount</span><span>Price</span></div>
+            <div class="amount my-2"><span>Discount Amount</span><span>Price</span></div>
             <div class="amount my-2"><span>Sub Total</span><span>Price</span></div>
         </div>
         <div class="row mt-4" style="max-width:790px">
