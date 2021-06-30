@@ -22,7 +22,7 @@ if (!isset($_SESSION['user'])) {
         $page = 'profile';
         include 'header.php';
         $user_id = $_SESSION['user']['USER_ID'];
-    $user = fetch_row("SELECT * FROM USERS WHERE USER_ID =='$user_id'");
+    $user = fetch_row("SELECT * FROM USERS WHERE USER_ID ='$user_id'");
     ?>
     <div class="container-fluid d-flex justify-content-center">
       <div class="w-75 p-5 my-5 bg-dark text-light">

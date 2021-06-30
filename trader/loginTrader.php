@@ -11,7 +11,7 @@ if (empty($login)) {
     $_SESSION['old'] = $old;
     header('Location: /trader/login.php');
 } else {
-    $sql = "SELECT USER_ID, FULL_NAME, USERNAME, EMAIL, PASSWORD_HASH, IMAGE FROM USERS WHERE (USERNAME=='$login' OR EMAIL =='$login') AND USER_ROLE=='2'";
+    $sql = "SELECT USER_ID, FULL_NAME, USERNAME, EMAIL, PASSWORD_HASH, IMAGE FROM USERS WHERE (USERNAME='$login' OR EMAIL ='$login') AND USER_ROLE='2'";
     $user = fetch_row($sql);
     if (!$user) {
         $errors['login'] = "Username/Email does not exists.";

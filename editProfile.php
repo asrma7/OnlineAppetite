@@ -35,7 +35,7 @@ if (!isset($_SESSION['user'])) {
     $page = 'profile';
     include 'header.php';
     $user_id = $_SESSION['user']['USER_ID'];
-    $user = fetch_row("SELECT * FROM USERS WHERE USER_ID =='$user_id'");
+    $user = fetch_row("SELECT * FROM USERS WHERE USER_ID ='$user_id'");
     $user['GENDER'] = $old['gender'] ?? $user['GENDER'];
     $user['COUNTRY'] = $old['country'] ?? $user['COUNTRY'];
     ?>

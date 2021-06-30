@@ -35,7 +35,7 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "ViewDiscounts";
     include 'header.php';
-    $discounts = fetch_all_row("SELECT *, (SELECT FULL_NAME FROM USERS WHERE USERS.USER_ID = DISCOUNTS.CREATED_BY) AS USER FROM DISCOUNTS");
+    $discounts = fetch_all_row("SELECT * FROM DISCOUNTS INNER JOIN USERS ON USERS.USER_ID = DISCOUNTS.CREATED_BY");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -86,7 +86,7 @@ if (!isset($_SESSION['admin'])) {
                   <td><?= $discount['RATE'] ?></td>
                   <td><?= $discount['STARTS_ON'] ?></td>
                   <td><?= $discount['EXPIRES_ON'] ?></td>
-                  <td><?= $discount['USER'] ?></td>
+                  <td><?= $discount['FULL_NAME'] ?></td>
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-warning m-1">Edit</button>

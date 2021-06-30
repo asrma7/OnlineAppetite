@@ -36,7 +36,7 @@ if(!isset($_SESSION['admin']))
     <?php
     $page = "Shops";
     include 'header.php';
-    $shops = fetch_all_row("SELECT SHOPS.*, (SELECT COUNT(*) FROM PRODUCTS WHERE PRODUCTS.SHOP_ID = SHOPS.SHOP_IS) AS TOTAL_PRODUCTS FROM SHOPS");
+    $shops = fetch_all_row("SELECT SHOPS.*, (SELECT COUNT(*) FROM PRODUCTS WHERE PRODUCTS.SHOP_ID = SHOPS.SHOP_ID) AS TOTAL_PRODUCTS FROM SHOPS");
     ?>
 
     <!-- Content Wrapper. Contains page content -->

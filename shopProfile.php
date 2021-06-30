@@ -2,7 +2,7 @@
 require_once 'utils/sessionManager.php';
 require_once 'utils/database.php';
 $shop_id = $_GET['id'];
-$shop = fetch_row("SELECT SHOPS.*, USERS.FULL_NAME, USERS.EMAIL, USERS.USER_ID FROM SHOPS LEFT JOIN USERS on SHOPS.TRADER_ID = USERS.USER_ID WHERE SHOPS.SHOP_ID =='$shop_id'");
+$shop = fetch_row("SELECT SHOPS.*, USERS.FULL_NAME, USERS.EMAIL, USERS.USER_ID FROM SHOPS LEFT JOIN USERS on SHOPS.TRADER_ID = USERS.USER_ID WHERE SHOPS.SHOP_ID ='$shop_id'");
 if (!$shop) {
     header('Location: 404.php');
 }

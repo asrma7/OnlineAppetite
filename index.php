@@ -1,8 +1,8 @@
 <?php
 require_once 'utils/database.php';
 $count = $_GET['more'] ?? '' == 'true' ? 30 : 15;
-$latestProducts = fetch_all_row("SELECT * FROM products ORDER BY created_at LIMIT 5");
-$products = fetch_all_row("SELECT * FROM products ORDER BY RANDOM() LIMIT '$count'");
+$latestProducts = fetch_all_row("SELECT * FROM PRODUCTS ORDER BY CREATED_AT ".limit_result(5));
+$products = fetch_all_row("SELECT * FROM PRODUCTS ORDER BY ".random_order()." ".limit_result($count));
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -3,15 +3,15 @@ require_once 'utils/sessionManager.php';
 require_once 'utils/database.php';
 $product_id = $_GET['id'];
 $user_id = $_SESSION['user']['USER_ID'] ?? "";
-$currentProduct = fetch_row("SELECT *, (SELECT AVG(RATING) FROM REVIEWS WHERE REVIEWS.PRODUCT_ID = PRODUCTS.PRODUCT_ID) AS RATING FROM PRODUCTS INNER JOIN SHOPS ON SHOPS.SHOP_ID = PRODUCTS.SHOP_ID WHERE PRODUCT_ID = '$product_id'");
-$discounts = fetch_all_row("SELECT RATE FROM DISCOUNTS WHERE ((DISCOUNT_TYPE = 'all') OR (DISCOUNT_TYPE = 'category' AND TARGET_ID = '" . $currentProduct['CATEGORY_ID'] . "') OR (DISCOUNT_TYPE = 'product' AND TARGET_ID = '" . $currentProduct['PRODUCT_ID'] . "') AND START_ON < CURRENT_DATE AND EXPIRES_ON > CURRENT_DATE)");
+$currentProduct = fetch_row("SELECT PRODUCTS.*, SHOPS.SHOP_ID, SHOP_NAME, (SELECT AVG(RATING) FROM REVIEWS WHERE REVIEWS.PRODUCT_ID = PRODUCTS.PRODUCT_ID) AS RATING FROM PRODUCTS INNER JOIN SHOPS ON SHOPS.SHOP_ID = PRODUCTS.SHOP_ID WHERE PRODUCT_ID = '$product_id'");
+$discounts = fetch_all_row("SELECT RATE FROM DISCOUNTS WHERE ((DISCOUNT_TYPE = 'all') OR (DISCOUNT_TYPE = 'category' AND TARGET_ID = '" . $currentProduct['CATEGORY_ID'] . "') OR (DISCOUNT_TYPE = 'product' AND TARGET_ID = '" . $currentProduct['PRODUCT_ID'] . "') AND STARTS_ON < CURRENT_DATE AND EXPIRES_ON > CURRENT_DATE)");
 $current_discounted_price = round($currentProduct['PRICE'] / 100, 2);
 foreach ($discounts as $discount) {
     $current_discounted_price = $current_discounted_price * (100 - $discount['RATE']) * 0.01;
 }
 $current_discount_rate = (round($currentProduct['PRICE'] / 100, 2) - $current_discounted_price) * 100 / round($currentProduct['PRICE'] / 100, 2);
-$products = fetch_all_row("SELECT * FROM PRODUCTS WHERE PRODUCT_ID != '$product_id' AND CAREGORY_ID == '" . $currentProduct['CATEGORY_ID'] . "' ORDER BY CREATED_AT LIMIT 10");
-$reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_ID = REVIEWS.USER_ID WHERE PRODUCT_ID == '$product_id' ORDER BY CREATED_AT LIMIT 4");
+$products = fetch_all_row("SELECT * FROM PRODUCTS WHERE PRODUCT_ID != '$product_id' AND CATEGORY_ID = '" . $currentProduct['CATEGORY_ID'] . "' ORDER BY CREATED_AT " . limit_result(10));
+$reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_ID = REVIEWS.USER_ID WHERE PRODUCT_ID = '$product_id' ORDER BY REVIEWS.CREATED_AT " . limit_result(4));
 ?>
 <!doctype html>
 <html lang="en">
@@ -49,21 +49,26 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                         </div>
                         <div class="col-sm-7 text-start">
                             <h1 style="font-family: Gill Sans, sans-serif;font-size: 28px;margin-top:10%"><?= $currentProduct['PRODUCT_NAME'] ?></h1>
-                            <div class="stars">
-                                <?php
-                                for ($i = 0; $i < (int)$currentProduct['RATING']; $i++) {
-                                    echo '<span class="fas fa-star"></span>';
-                                }
-                                $remaining = 5 - (int)$currentProduct['RATING'];
-                                if ($currentProduct['RATING'] != (int)$currentProduct['RATING']) {
-                                    echo '<span class="fas fa-star-half-alt"></span>';
-                                    $remaining--;
-                                }
-                                for ($i = 0; $i < $remaining; $i++) {
-                                    echo '<span class="far fa-star"></span>';
-                                }
-                                ?>
-                            </div>
+                            <?php if (!isset($currentProduct['RATING'])) {
+                                echo "Not Rated";
+                            } else {
+                            ?>
+                                <div class="stars">
+                                    <?php
+                                    for ($i = 0; $i < (int)$currentProduct['RATING']; $i++) {
+                                        echo '<span class="fas fa-star"></span>';
+                                    }
+                                    $remaining = 5 - (int)$currentProduct['RATING'];
+                                    if ($currentProduct['RATING'] != (int)$currentProduct['RATING']) {
+                                        echo '<span class="fas fa-star-half-alt"></span>';
+                                        $remaining--;
+                                    }
+                                    for ($i = 0; $i < $remaining; $i++) {
+                                        echo '<span class="far fa-star"></span>';
+                                    }
+                                    ?>
+                                </div>
+                            <?php } ?>
                             <br>
                             <span style="color:#F1592A; font-weight:500; font-size:20px;"> £ <?= number_format((float)$current_discounted_price, 2, '.', '') ?> </span><br>
                             <?php
@@ -112,7 +117,7 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                                     $user_review = $review;
                             ?>
                                 <div class="customer-review p-2">
-                                    <img src="<?= $review['IMAGE'] ?>" class="profilepic" alt="">
+                                    <img src="<?= $review['IMAGE']??'/assets/images/adminlte/avatar2.png' ?>" class="profilepic" alt="">
                                     <span class="customer-name"><?= $review['FULL_NAME'] ?></span>
                                     <div class="stars d-inline-block px-3">
                                         <?php
@@ -120,7 +125,7 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                                             echo '<span class="fas fa-star"></span>';
                                         }
                                         $remaining = 5 - (int)$review['RATING'];
-                                        if ($review['rating'] != (int)$review['RATING']) {
+                                        if ($review['RATING'] != (int)$review['RATING']) {
                                             echo '<span class="fas fa-star-half-alt"></span>';
                                             $remaining--;
                                         }
@@ -138,7 +143,7 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                         <hr>
                         <form action="backend/addReview.php" method="POST">
                             <input id="rating" name="rating" class="rating-loading" data-size="sm" value="<?= $user_review['RATING'] ?? '' ?>" required>
-                            <input name="product_id" type="hidden" value="<?= $product['PRODUCT_ID'] ?>">
+                            <input name="product_id" type="hidden" value="<?= $currentProduct['PRODUCT_ID'] ?>">
                             <textarea name="review" class="reviewbox" placeholder="Enter your review here..." id="reviewbox" rows="4" required><?= $user_review['REVIEW'] ?? '' ?></textarea>
                             <div class="d-flex justify-content-between">
                                 <button class="btn btn-outline-secondary">Post</button>
@@ -321,18 +326,18 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
         function addCart() {
             var quantity = document.getElementById('number').value;
             var product = {
-                'product_id': '<?= $currentProduct['product_id'] ?>',
-                'product_name': '<?= $currentProduct['product_name'] ?>',
-                'image': '<?= $currentProduct['image1'] ?>',
-                'stock': '<?= $currentProduct['stock'] ?>',
-                'price': '<?= round($currentProduct['price'] / 100, 2) ?>',
+                'product_id': '<?= $currentProduct['PRODUCT_ID'] ?>',
+                'product_name': '<?= $currentProduct['PRODUCT_NAME'] ?>',
+                'image': '<?= $currentProduct['IMAGE1'] ?>',
+                'stock': '<?= $currentProduct['STOCK'] ?>',
+                'price': '<?= round($currentProduct['PRICE'] / 100, 2) ?>',
                 'discounted_price': '<?= round($current_discounted_price, 2) ?>',
                 'discount_rate': '<?= round($current_discount_rate, 2) ?>',
                 'quantity': quantity,
             };
             var shop = {
-                'shop_id': '<?= $currentProduct['shop_id'] ?>',
-                'shop_name': '<?= $currentProduct['shop_name'] ?>',
+                'shop_id': '<?= $currentProduct['SHOP_ID'] ?>',
+                'shop_name': '<?= $currentProduct['SHOP_NAME'] ?>',
             }
             if (quantity == 0) {
                 alert("Product quantity cannot be 0");

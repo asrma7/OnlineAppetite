@@ -51,7 +51,7 @@ if (!isset($_SESSION['trader'])) {
     include 'header.php';
 
     $user_id = $_SESSION['trader']['USER_ID'];
-    $user = fetch_row("SELECT * FROM USERS LEFT JOIN TRADERS on USERS.USER_ID = TRADERS.USER_ID WHERE USERS.USER_ID =='$user_id'");
+    $user = fetch_row("SELECT * FROM USERS LEFT JOIN TRADERS on USERS.USER_ID = TRADERS.USER_ID WHERE USERS.USER_ID ='$user_id'");
     $user['PAYMENTS'] = isset($old) ? $old['payments'] ?? [] : explode(', ', $user['PREFERRED_PAYMENTS']);
     $user['BUSINESS_TYPE'] = $old['business_type'] ?? $user['BUSINESS_TYPE'];
     $user['GENDER'] = $old['gender'] ?? $user['GENDER'];

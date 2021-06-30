@@ -1,5 +1,5 @@
 <?php
-require_once '../utils/database.php';
+require_once '../utils/sessionManager.php';
 if (!isset($_SESSION['admin'])) {
   header('Location: /admin/login.php');
 } else {

@@ -32,7 +32,7 @@ if (!isset($_SESSION['admin'])) {
     $page = "Profile";
     include 'header.php';
     $user_id = $_SESSION['admin']['USER_ID'];
-    $user = fetch_row("SELECT * FROM USERS LEFT JOIN MANAGEMENTS ON USERS.USER_ID = MANAGEMENTS.USER_ID WHERE USERS.USER_ID =='$user_id'");
+    $user = fetch_row("SELECT * FROM USERS LEFT JOIN MANAGEMENTS ON USERS.USER_ID = MANAGEMENTS.USER_ID WHERE USERS.USER_ID ='$user_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->

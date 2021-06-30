@@ -39,7 +39,7 @@ if (empty($expires)) {
 
 //error size
 if (sizeof($errors) == 0) {
-    $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, TARGET_ID, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$target', 'product', '$starts', '$expires', $user_id)";
+    $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, TARGET_ID, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$target', 'product', ".toDate($starts, "YYYY-MM-DD").", ".toDate($expires, "YYYY-MM-DD").", $user_id)";
     $res = query($sql);
     if (!$res)
         $_SESSION['message'] = ["message" => "Error while inserting Discount", 'color' => "danger"];

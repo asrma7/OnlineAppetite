@@ -44,9 +44,9 @@ if (empty($expires)) {
 //error size
 if (sizeof($errors) == 0) {
     if ($discount_type == "category") {
-        $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, TARGET_ID, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$target', '$discount_type', '$starts', '$expires', $user_id)";
+        $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, TARGET_ID, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$target', '$discount_type', ".toDate($starts, "YYYY-MM-DD").", ".toDate($expires, "YYYY-MM-DD").", $user_id)";
     } else {
-        $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$discount_type', '$starts', '$expires', $user_id)";
+        $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$discount_type', ".toDate($starts, "YYYY-MM-DD").", ".toDate($expires, "YYYY-MM-DD").", $user_id)";
     }
     $res = query($sql);
     if (!$res)

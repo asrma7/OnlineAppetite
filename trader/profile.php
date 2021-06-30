@@ -32,7 +32,7 @@ if (!isset($_SESSION['trader'])) {
     $page = "Profile";
     include 'header.php';
     $user_id = $_SESSION['trader']['USER_ID'];
-    $user = fetch_row("SELECT * FROM USERS LEFT JOIN TRADERS on USERS.USER_ID = TRADERS.USER_ID WHERE USERS.USER_ID =='$user_id'");
+    $user = fetch_row("SELECT * FROM USERS LEFT JOIN TRADERS on USERS.USER_ID = TRADERS.USER_ID WHERE USERS.USER_ID ='$user_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->

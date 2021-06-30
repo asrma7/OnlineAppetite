@@ -60,12 +60,12 @@ if (sizeof($errors) == 0) {
      VALUES 
      ('$name', '$username', '$email', '$street', '$city', '$state', '$postal', '$country', '$gender', 2, '$password')";
     $res1 = query($sql1);
-    $user_id = fetch_row("SELECT USER_ID FROM USERS WHERE USERNAME == '$username'")['USER_ID'];
+    $user_id = fetch_row("SELECT USER_ID FROM USERS WHERE USERNAME = '$username'")['USER_ID'];
     $tradingSince = makeDate($month, $day, $year);
     $payments = implode(', ', $payments);
     $sql2 = "INSERT INTO TRADERS (USER_ID, CONTACT_NO, TRADING_SINCE, BUSINESS_TYPE, PREFERRED_PAYMENTS, MESSAGE)
     VALUES
-    ('$user_id', '$number', '" . toDate($tradingSince, 'YYYY-MM-DD') . "', '$type', '$payments', '$message')";
+    ('$user_id', '$number', " . toDate($tradingSince, 'YYYY-MM-DD') . ", '$type', '$payments', '$message')";
     if (!$res1)
         $_SESSION['message'] = ["message" => "Error while user registeration", 'color' => "danger"];
     else if (!query($sql2))
@@ -80,7 +80,7 @@ if (sizeof($errors) == 0) {
 header('Location:/traderregister.php');
 function checkUsernameUnique($username)
 {
-    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE USERNAME == '$username'");
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE USERNAME = '$username'");
     $count = $row['C'];
     if ($count > 0) return false;
     return true;
@@ -88,7 +88,7 @@ function checkUsernameUnique($username)
 
 function checkEmailUnique($email)
 {
-    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE EMAIL == '$email'");
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE EMAIL = '$email'");
     $count = $row['C'];
     if ($count > 0) return false;
     return true;

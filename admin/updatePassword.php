@@ -9,7 +9,7 @@ if (!isset($_SESSION['admin'])) {
 $old = $_POST;
 extract($_POST);
 $errors = [];
-$user = fetch_row("SELECT PASHWORD_HASH FROM USERS WHERE USER_ID = '$user_id'");
+$user = fetch_row("SELECT PASSWORD_HASH FROM USERS WHERE USER_ID = '$user_id'");
 if(empty($oldpass)) {
     $errors['oldpass'] = "Old password is required.";
 }

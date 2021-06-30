@@ -64,11 +64,13 @@ if (file_exists($image["tmp_name"])) {
     }
 }
 if (sizeof($errors) == 0) {
-    $target = "../uploads/users/" . $user_id . '.' . $file_extension;
-    if (move_uploaded_file($image["tmp_name"], $target)) {
-        $profileImage = '/uploads/users/' . $user_id . '.' . $file_extension;
-    } else {
-        $errors['profileImage'] = "Problem in uploading image files.";
+    if (file_exists($image["tmp_name"])) {
+        $target = "../uploads/users/" . $user_id . '.' . $file_extension;
+        if (move_uploaded_file($image["tmp_name"], $target)) {
+            $profileImage = '/uploads/users/' . $user_id . '.' . $file_extension;
+        } else {
+            $errors['profileImage'] = "Problem in uploading image files.";
+        }
     }
 }
 
@@ -88,7 +90,7 @@ if (sizeof($errors) == 0) {
         $_SESSION['message'] = ["message" => "Error while updating User", 'color' => "danger"];
     else
         $_SESSION['message'] = ["message" => "Profile Updated successfully", 'color' => "success"];
-    $updatedUser = fetch_row("SELECT USER_ID, FULLNAME, USERNAME, EMAIL, IMAGE FROM USERS WHERE USER_ID = '$user_id'");
+    $updatedUser = fetch_row("SELECT USER_ID, FULL_NAME, USERNAME, EMAIL, IMAGE FROM USERS WHERE USER_ID = '$user_id'");
     $_SESSION['user'] = $updatedUser;
 } else {
     $_SESSION['message'] = ["message" => "Please fix the following errors", 'color' => "danger"];
@@ -98,7 +100,7 @@ if (sizeof($errors) == 0) {
 header('Location:/editprofile.php');
 function checkUsernameUnique($username)
 {
-    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE USERNAME == '$username'");
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE USERNAME = '$username'");
     $count = $row['C'];
     if ($count > 0) return false;
     return true;
@@ -106,7 +108,7 @@ function checkUsernameUnique($username)
 
 function checkEmailUnique($email)
 {
-    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE EMAIL == '$email'");
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE EMAIL = '$email'");
     $count = $row['C'];
     if ($count > 0) return false;
     return true;

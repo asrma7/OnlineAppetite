@@ -48,7 +48,7 @@ if (sizeof($errors) == 0) {
 
 function checkCodeUnique($code)
 {
-    $row = fetch_row("SELECT COUNT(*) as C FROM VOUCHERS WHERE VOUCHER_CODE == '$code'");
+    $row = fetch_row("SELECT COUNT(*) as C FROM VOUCHERS WHERE VOUCHER_CODE = '$code'");
     $count = $row['C'];
     if ($count > 0) return false;
     return true;

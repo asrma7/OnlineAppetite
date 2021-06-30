@@ -111,7 +111,7 @@ if (sizeof($errors) == 0) {
 header('Location:/admin/editprofile.php');
 function checkUsernameUnique($username)
 {
-    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE USERNAME == '$username'");
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE USERNAME = '$username'");
     $count = $row['C'];
     if ($count > 0) return false;
     return true;
@@ -119,7 +119,7 @@ function checkUsernameUnique($username)
 
 function checkEmailUnique($email)
 {
-    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE EMAIL == '$email'");
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE EMAIL = '$email'");
     $count = $row['C'];
     if ($count > 0) return false;
     return true;

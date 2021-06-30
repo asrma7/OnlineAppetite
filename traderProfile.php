@@ -1,7 +1,7 @@
 <?php
 require_once 'utils/database.php';
 $user_id = $_GET['id'];
-$user = fetch_row("SELECT * FROM USERS LEFT JOIN TRADERS on USERS.USER_ID = TRADERS.USER_ID WHERE USERS.USER_ID =='$user_id'");
+$user = fetch_row("SELECT * FROM USERS LEFT JOIN TRADERS on USERS.USER_ID = TRADERS.USER_ID WHERE USERS.USER_ID ='$user_id'");
 if (!$user || $user['USER_ROLE'] != 2) {
     header('Location: 404.php');
 }

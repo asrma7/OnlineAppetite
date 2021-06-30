@@ -13,7 +13,7 @@ $user = fetch_row("SELECT PASSWORD_HASH FROM USERS WHERE USER_ID = '$user_id'");
 if(empty($oldpass)) {
     $errors['oldpass'] = "Old password is required.";
 }
-elseif (!password_verify($oldpass, $user['password_hash'])){
+elseif (!password_verify($oldpass, $user['PASSWORD_HASH'])){
     $errors['oldpass'] = "Old password does not match.";
 }
 if (empty($password)) {

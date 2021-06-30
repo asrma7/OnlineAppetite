@@ -46,7 +46,7 @@ if (sizeof($errors) == 0) {
      VALUES 
      ('$name', '$username', '$email', '$street', '$city', '$state', '$postal', '$country', '$gender', '$password')";
      $res1 = query($sql1);
-     $user_id = fetch_row("SELECT USER_ID FROM USERS WHERE USERNAME == '$username'")['USER_ID'];
+     $user_id = fetch_row("SELECT USER_ID FROM USERS WHERE USERNAME = '$username'")['USER_ID'];
      $sql2 = "INSERT INTO CUSTOMERS (USER_ID) VALUES ('$user_id')";
     if (!$res1)
         $_SESSION['message'] = ["message" => "Error while user registeration", 'color' => "danger"];
@@ -62,7 +62,7 @@ if (sizeof($errors) == 0) {
 header('Location:/signup.php');
 function checkUsernameUnique($username)
 {
-    $row = fetch_row("SELECT COUNT(*) as C FROM users WHERE USERNAME == '$username'");
+    $row = fetch_row("SELECT COUNT(*) as C FROM users WHERE USERNAME = '$username'");
     $count = $row['C'];
     if ($count > 0) return false;
     return true;
@@ -70,7 +70,7 @@ function checkUsernameUnique($username)
 
 function checkEmailUnique($email)
 {
-    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE EMAIL == '$email'");
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE EMAIL = '$email'");
     $count = $row['C'];
     if ($count > 0) return false;
     return true;

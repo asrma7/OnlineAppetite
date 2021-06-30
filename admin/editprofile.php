@@ -1,4 +1,4 @@
-<?php
+  <?php
 require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
 if (!isset($_SESSION['admin'])) {
@@ -43,7 +43,7 @@ if (!isset($_SESSION['admin'])) {
     $page = "Profile";
     include 'header.php';
     $user_id = $_SESSION['admin']['USER_ID'];
-    $user = fetch_row("SELECT * FROM USERS LEFT JOIN MANAGEMENTS ON USERS.USER_ID = MANAGEMENTS.USER_ID WHERE USERS.USER_ID =='$user_id'");
+    $user = fetch_row("SELECT * FROM USERS LEFT JOIN MANAGEMENTS ON USERS.USER_ID = MANAGEMENTS.USER_ID WHERE USERS.USER_ID ='$user_id'");
     $user['GENDER'] = $old['gender'] ?? $user['GENDER'];
     ?>
 

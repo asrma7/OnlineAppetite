@@ -7,7 +7,7 @@ if(!$pageCategory){
     exit();
 }
 $count = $_GET['more'] ?? '' == 'true' ? 30 : 15;
-$products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CATEGORY_ID = '$category_id' ORDER BY CREATED_AT LIMIT '$count'");
+$products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CATEGORY_ID = '$category_id' ORDER BY CREATED_AT ".limit_result($count));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +19,7 @@ $products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CATEGORY_ID = '$category
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 
-    <title><?= $pageCategory ?></title>
+    <title><?= $pageCategory['CATEGORY_NAME'] ?></title>
 </head>
 
 <body>
@@ -28,7 +28,7 @@ $products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CATEGORY_ID = '$category
     include 'header.php';
     ?>
     <div class="container text-center py-5">
-        <h2 class="text-start" style="padding-left: 25px;">Category: <?= $pageCategory ?></h2>
+        <h2 class="text-start" style="padding-left: 25px;">Category: <?= $pageCategory['CATEGORY_NAME'] ?></h2>
         <div class="products">
             <?php
             foreach ($products as $product) {
