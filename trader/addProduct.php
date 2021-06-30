@@ -50,9 +50,9 @@ if (!isset($_SESSION['trader'])) {
     <?php
     $page = "AddProduct";
     include 'header.php';
-    $user_id = $_SESSION['trader']['user_id'];
-    $categories = fetch_all_row('SELECT * FROM categories');
-    $shops = fetch_all_row("SELECT * FROM shops WHERE trader_id = '$user_id'");
+    $user_id = $_SESSION['trader']['USER_ID'];
+    $categories = fetch_all_row('SELECT * FROM CATEGORIES');
+    $shops = fetch_all_row("SELECT * FROM SHOPS WHERE TRADER_ID = '$user_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -106,7 +106,7 @@ if (!isset($_SESSION['trader'])) {
                 <?php
                 foreach ($categories as $category) {
                 ?>
-                  <option <?php if (isset($old['category'])) echo $old['category'] == $category['category_id'] ? 'selected' : ''; ?> value="<?= $category['category_id'] ?>"><?= $category['category_name'] ?></option>
+                  <option <?php if (isset($old['category'])) echo $old['category'] == $category['CATEGORY_ID'] ? 'selected' : ''; ?> value="<?= $category['CATEGORY_ID'] ?>"><?= $category['CATEGORY_NAME'] ?></option>
                 <?php } ?>
               </select>
               <?= isset($errors['category']) ? '<div class="invalid-feedback">' . $errors['category'] . '</div>' : ''; ?>
@@ -125,7 +125,7 @@ if (!isset($_SESSION['trader'])) {
                 <?php
                 foreach ($shops as $shop) {
                 ?>
-                  <option <?php if (isset($old['shop'])) echo $old['shop'] == $shop['shop_id'] ? 'selected' : ''; ?> value="<?= $shop['shop_id'] ?>"><?= $shop['shop_name'] ?></option>
+                  <option <?php if (isset($old['shop'])) echo $old['shop'] == $shop['SHOP_ID'] ? 'selected' : ''; ?> value="<?= $shop['SHOP_ID'] ?>"><?= $shop['SHOP_NAME'] ?></option>
                 <?php } ?>
               </select>
               <?= isset($errors['shop']) ? '<div class="invalid-feedback">' . $errors['shop'] . '</div>' : ''; ?>

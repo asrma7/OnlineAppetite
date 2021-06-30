@@ -2,7 +2,7 @@
 require_once 'utils/sessionManager.php';
 require_once 'utils/database.php';
 $shop_id = $_GET['id'];
-$shop = fetch_row("SELECT shops.*, users.full_name, users.email, users.user_id FROM shops LEFT JOIN users on shops.trader_id = users.user_id WHERE shops.shop_id =='$shop_id'");
+$shop = fetch_row("SELECT SHOPS.*, USERS.FULL_NAME, USERS.EMAIL, USERS.USER_ID FROM SHOPS LEFT JOIN USERS on SHOPS.TRADER_ID = USERS.USER_ID WHERE SHOPS.SHOP_ID =='$shop_id'");
 if (!$shop) {
     header('Location: 404.php');
 }
@@ -17,7 +17,7 @@ if (!$shop) {
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 
-    <title><?= $shop['shop_name'] ?></title>
+    <title><?= $shop['SHOP_NAME'] ?></title>
 </head>
 
 <body>
@@ -34,31 +34,31 @@ if (!$shop) {
                     <div class="mt-4 text-center">
                         <strong>Registered on: </strong>
                         <hr>
-                        <span><?= date('jS M Y', strtotime($shop['created_at'])) ?></span>
+                        <span><?= date('jS M Y', strtotime($shop['CREATED_AT'])) ?></span>
                     </div>
                 </div>
                 <div class="col-md-5 offset-md-1 col-sm-6 col-12 d-flex flex-column justify-content-center">
                     <div class="row">
                         <div class="col-6">
                             <i>Shop Name</i>
-                            <p><?= $shop['shop_name'] ?></p>
+                            <p><?= $shop['SHOP_NAME'] ?></p>
                             <i>Address</i><br>
-                            <p><?= $shop['address']; ?></p>
+                            <p><?= $shop['ADDRESS']; ?></p>
                             <i>Shop type</i><br>
-                            <p><?= $shop['shop_type']; ?></p>
+                            <p><?= $shop['SHOP_TYPE']; ?></p>
                         </div>
                         <div class="col-6">
                             <i>Trader Name</i>
-                            <p><a class="text-light" href="traderProfile.php?id=<?= $shop['user_id'] ?>"><?= $shop['full_name'] ?></a></p>
+                            <p><a class="text-light" href="traderProfile.php?id=<?= $shop['USER_ID'] ?>"><?= $shop['FULL_NAME'] ?></a></p>
                             <i>Trader Email</i>
-                            <p><?= $shop['email'] ?></p>
+                            <p><?= $shop['EMAIL'] ?></p>
                             <i>Contact No.</i>
-                            <p><?= $shop['contact_no'] ?></p>
+                            <p><?= $shop['CONTACT_NO'] ?></p>
                         </div>
                     </div>
                     <div class="row">
                         <i>About shop</i>
-                        <p><?= $shop['description'] ?></p>
+                        <p><?= $shop['DESCRIPTION'] ?></p>
                     </div>
                 </div>
             </div>

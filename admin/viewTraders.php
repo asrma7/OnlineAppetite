@@ -35,7 +35,7 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "Traders";
     include 'header.php';
-    $traders = fetch_all_row("SELECT *, (SELECT COUNT(*) FROM shops WHERE shops.trader_id = traders.user_id) AS shops FROM users LEFT JOIN traders ON users.user_id = traders.user_id WHERE user_role=='2'");
+    $traders = fetch_all_row("SELECT *, (SELECT COUNT(*) FROM SHOPS WHERE SHOPS.TRADER_ID = TRADERS.USER_ID) AS TOTAL_SHOPS FROM USERS LEFT JOIN TRADERS ON USERS.USER_ID = TRADERS.USER_ID WHERE USER_ROLE=='2'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -80,22 +80,22 @@ if (!isset($_SESSION['admin'])) {
             <tbody>
               <?php foreach ($traders as $trader) { ?>
                 <tr>
-                  <td><?= $trader['user_id'] ?></td>
-                  <td><?= $trader['full_name'] ?></td>
-                  <td><?= $trader['verified_on'] ?? '-' ?></td>
+                  <td><?= $trader['USER_ID'] ?></td>
+                  <td><?= $trader['FULL_NAME'] ?></td>
+                  <td><?= $trader['VERTIFIED_ON'] ?? '-' ?></td>
                   <td style="text-align: center;">
-                    <?= isset($product['verified_on']) ?
+                    <?= isset($product['VERIFIED_ON']) ?
                       '<button class="btn btn-danger m-1">Remove</button>' :
                       '<button class="btn btn-primary m-1">Verify</button>'
                     ?>
                   </td>
-                  <td><?= $trader['shops'] ?></td>
-                  <td><?= $trader['business_type'] ?></td>
-                  <td><?= $trader['contact_no'] ?></td>
-                  <td><?= $trader['trading_since'] ?></td>
+                  <td><?= $trader['TOTAL_SHOPS'] ?></td>
+                  <td><?= $trader['BUSINESS_TYPE'] ?></td>
+                  <td><?= $trader['CONTACT_NO'] ?></td>
+                  <td><?= $trader['TRADING_SINCE'] ?></td>
                   <td>
                   <?php
-                  switch($trader['status']){
+                  switch($trader['STATUS']){
                     case 1:
                       echo 'Pending';
                       break;

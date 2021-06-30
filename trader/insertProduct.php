@@ -8,7 +8,7 @@ $old = $_POST;
 extract($_POST);
 $errors = [];
 
-$user_id = $_SESSION['trader']['user_id'];
+$user_id = $_SESSION['trader']['USER_ID'];
 
 //product name
 if (empty($productName)) {
@@ -130,7 +130,7 @@ if (sizeof($errors) == 0) {
 //error size
 if (sizeof($errors) == 0) {
     $price = $price * 100;
-    $sql = "INSERT INTO products (product_name, category_id, price, stock, trader_id, shop_id, description, image1, image2)
+    $sql = "INSERT INTO PRODUCTS (PRODUCT_NAME, CATEGORY_ID, PRICE, STOCK, TRADER_ID, SHOP_ID, DESCRIPTION, IMAGE1, IMAGE2)
     VALUES
     ('$productName', '$category', '$price', '$stock', '$user_id', '$shop', '$description', '$productImage1', '$productImage2')";
     $res = query($sql);

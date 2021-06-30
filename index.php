@@ -1,7 +1,7 @@
 <?php
 require_once 'utils/database.php';
 $count = $_GET['more'] ?? '' == 'true' ? 30 : 15;
-$latestproducts = fetch_all_row("SELECT * FROM products ORDER BY created_at LIMIT 5");
+$latestProducts = fetch_all_row("SELECT * FROM products ORDER BY created_at LIMIT 5");
 $products = fetch_all_row("SELECT * FROM products ORDER BY RANDOM() LIMIT '$count'");
 ?>
 <!DOCTYPE html>
@@ -38,10 +38,10 @@ $products = fetch_all_row("SELECT * FROM products ORDER BY RANDOM() LIMIT '$coun
                 <?php
                 foreach ($categories as $category) {
                 ?>
-                    <div class="index-category" onclick="window.location.href='/category.php?id=<?= $category['category_id'] ?>'">
-                        <img class="category-image" src="<?= $category['image'] ?>" alt="Category Image">
+                    <div class="index-category" onclick="window.location.href='/category.php?id=<?= $category['CATEGORY_ID'] ?>'">
+                        <img class="category-image" src="<?= $category['IMAGE'] ?>" alt="Category Image">
                         <div class="category-data">
-                            <span class="category-name py-2"><?= $category['category_name'] ?></span>
+                            <span class="category-name py-2"><?= $category['CATEGORY_NAME'] ?></span>
                         </div>
                     </div>
                 <?php } ?>
@@ -51,24 +51,24 @@ $products = fetch_all_row("SELECT * FROM products ORDER BY RANDOM() LIMIT '$coun
             <h3 class="text-start" style="padding-left: 25px;">Latest Products</h3>
             <div class="products">
                 <?php
-                foreach ($latestproducts as $product) {
-                    $discounts = fetch_all_row("SELECT rate FROM discounts WHERE ((discount_type = 'all') OR (discount_type = 'category' AND target_id = '" . $product['category_id'] . "') OR (discount_type = 'product' AND target_id = '" . $product['product_id'] . "') AND starts_on < CURRENT_DATE AND expires_on > CURRENT_DATE)");
-                    $discounted_price = round($product['price'] / 100.0, 2);
+                foreach ($latestProducts as $product) {
+                    $discounts = fetch_all_row("SELECT RATE FROM DISCOUNTS WHERE ((DISCOUNT_TYPE = 'all') OR (DISCOUNT_TYPE = 'category' AND TARGET_ID = '" . $product['CATEGORY_ID'] . "') OR (DISCOUNT_TYPE = 'product' AND TARGET_ID = '" . $product['PRODUCT_ID'] . "') AND STARTS_ON < CURRENT_DATE AND EXPIRES_ON > CURRENT_DATE)");
+                    $discounted_price = round($product['PRICE'] / 100.0, 2);
                     foreach ($discounts as $discount) {
-                        $discounted_price = $discounted_price * (100 - $discount['rate']) * 0.01;
+                        $discounted_price = $discounted_price * (100 - $discount['RATE']) * 0.01;
                     }
-                    $discount_rate = (round($product['price'] / 100.0, 2) - $discounted_price) * 100 / round($product['price'] / 100.0, 2);
+                    $discount_rate = (round($product['PRICE'] / 100.0, 2) - $discounted_price) * 100 / round($product['PRICE'] / 100.0, 2);
                 ?>
-                    <div class="product" onclick="window.location.href='/product.php?id=<?= $product['product_id'] ?>'">
-                        <img class="product-image" src="<?= $product['image1'] ?>" alt="">
+                    <div class="product" onclick="window.location.href='/product.php?id=<?= $product['PRODUCT_ID'] ?>'">
+                        <img class="product-image" src="<?= $product['IMAGE1'] ?>" alt="">
                         <div class="product-data">
-                            <span class="product-name py-2"><?= $product['product_name'] ?></span>
+                            <span class="product-name py-2"><?= $product['PRODUCT_NAME'] ?></span>
                             <span class="price pb-2">£ <?= number_format((float)$discounted_price, 2, '.', '') ?></span>
                             <?php
-                            if ($product['price'] != $discounted_price) {
+                            if ($product['PRICE'] != $discounted_price) {
                             ?>
                                 <div>
-                                    <span class="discount">£ <?= number_format((float)$product['price'] / 100, 2, '.', '') ?></span> -
+                                    <span class="discount">£ <?= number_format((float)$product['PRICE'] / 100, 2, '.', '') ?></span> -
                                     <span class="rate"><?= round($discount_rate, 2) ?>%</span>
                                 </div>
                             <?php
@@ -84,23 +84,23 @@ $products = fetch_all_row("SELECT * FROM products ORDER BY RANDOM() LIMIT '$coun
             <div class="products">
                 <?php
                 foreach ($products as $product) {
-                    $discounts = fetch_all_row("SELECT rate FROM discounts WHERE ((discount_type = 'all') OR (discount_type = 'category' AND target_id = '" . $product['category_id'] . "') OR (discount_type = 'product' AND target_id = '" . $product['product_id'] . "') AND starts_on < CURRENT_DATE AND expires_on > CURRENT_DATE)");
-                    $discounted_price = round($product['price'] / 100.0, 2);
+                    $discounts = fetch_all_row("SELECT RATE FROM DISCOUNTS WHERE ((DISCOUNT_TYPE = 'all') OR (DISCOUNT_TYPE = 'category' AND TARGET_ID = '" . $product['CATEGORY_ID'] . "') OR (DISCOUNT_TYPE = 'product' AND TARGET_ID = '" . $product['PRODUCT_ID'] . "') AND STARTS_ON < CURRENT_DATE AND EXPIRES_ON > CURRENT_DATE)");
+                    $discounted_price = round($product['PRICE'] / 100.0, 2);
                     foreach ($discounts as $discount) {
-                        $discounted_price = $discounted_price * (100 - $discount['rate']) * 0.01;
+                        $discounted_price = $discounted_price * (100 - $discount['RATE']) * 0.01;
                     }
-                    $discount_rate = (round($product['price'] / 100.0, 2) - $discounted_price) * 100 / round($product['price'] / 100.0, 2);
+                    $discount_rate = (round($product['PRICE'] / 100.0, 2) - $discounted_price) * 100 / round($product['PRICE'] / 100.0, 2);
                 ?>
-                    <div class="product" onclick="window.location.href='/product.php?id=<?= $product['product_id'] ?>'">
-                        <img class="product-image" src="<?= $product['image1'] ?>" alt="">
+                    <div class="product" onclick="window.location.href='/product.php?id=<?= $product['PRODUCT_ID'] ?>'">
+                        <img class="product-image" src="<?= $product['IMAGE1'] ?>" alt="">
                         <div class="product-data">
-                            <span class="product-name py-2"><?= $product['product_name'] ?></span>
+                            <span class="product-name py-2"><?= $product['PRODUCT_NAME'] ?></span>
                             <span class="price pb-2">£ <?= number_format((float)$discounted_price, 2, '.', '') ?></span>
                             <?php
-                            if ($product['price'] != $discounted_price) {
+                            if ($product['PRICE'] != $discounted_price) {
                             ?>
                                 <div>
-                                    <span class="discount">£ <?= number_format((float)$product['price'] / 100, 2, '.', '') ?></span> -
+                                    <span class="discount">£ <?= number_format((float)$product['PRICE'] / 100, 2, '.', '') ?></span> -
                                     <span class="rate"><?= round($discount_rate, 2) ?>%</span>
                                 </div>
                             <?php

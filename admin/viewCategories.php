@@ -56,7 +56,7 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "ViewCategories";
     include 'header.php';
-    $categories = fetch_all_row("SELECT * FROM categories");
+    $categories = fetch_all_row("SELECT * FROM CATEGORIES");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -95,12 +95,12 @@ if (!isset($_SESSION['admin'])) {
             <tbody>
               <?php foreach ($categories as $category) { ?>
                 <tr>
-                  <td><?= $category['category_id'] ?></td>
-                  <td><?= $category['category_name'] ?></td>
-                  <td><?= $category['description'] ?></td>
+                  <td><?= $category['CATEGORY_ID'] ?></td>
+                  <td><?= $category['CATEGORY_NAME'] ?></td>
+                  <td><?= $category['DESCRIPTION'] ?></td>
                   <td>
                     <div class="image-preview">
-                      <img class="abs-image" src="<?= $customer['image'] ?>" alt="User Image">
+                      <img class="abs-image" src="<?= $customer['IMAGE'] ?>" alt="Category Image">
                     </div>
                   </td>
                   <td>

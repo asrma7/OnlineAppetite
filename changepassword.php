@@ -1,6 +1,5 @@
 <?php
 require_once 'utils/sessionManager.php';
-require_once 'utils/database.php';
 if (!isset($_SESSION['user'])) {
   header('Location: /signin.php');
 }else {
@@ -34,8 +33,6 @@ if (!isset($_SESSION['user'])) {
   <?php
   $page = 'profile';
   include 'header.php';
-  $user_id = $_SESSION['user']['user_id'];
-  $user = fetch_row("SELECT * FROM users WHERE user_id =='$user_id'");
   ?>
   <div class="container-fluid d-flex justify-content-center">
     <div class="w-50 p-5 my-5 bg-dark text-light d-flex flex-column align-items-center">

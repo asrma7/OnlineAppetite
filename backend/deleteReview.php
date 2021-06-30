@@ -5,13 +5,13 @@ if (!isset($_SESSION['user'])) {
     header('Location: /signin.php');
     exit();
 } else {
-    $user_id = $_SESSION['user']['user_id'];
+    $user_id = $_SESSION['user']['USER_ID'];
 }
 
 $review_id = $_GET['id'];
-$user_review = fetch_row("SELECT * FROM reviews WHERE review_id = '$review_id' AND user_id = '$user_id'");
+$user_review = fetch_row("SELECT * FROM REVIEWS WHERE REVIEW_ID = '$review_id' AND USER_ID = '$user_id'");
 if (!empty($user_review)) {
-    $sql = "DELETE FROM reviews WHERE review_id = '$review_id'";
+    $sql = "DELETE FROM REVIEWS WHERE REVIEW_ID = '$review_id'";
 }
 query($sql);
 header('Location: ' . $_SERVER['HTTP_REFERER']);

@@ -1,5 +1,4 @@
 <?php
-require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
 if (!isset($_SESSION['admin'])) {
   header('Location: /admin/login.php');
@@ -51,7 +50,6 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "AddVoucher";
     include 'header.php';
-    $categories = fetch_all_row('SELECT * FROM categories');
     ?>
 
     <!-- Content Wrapper. Contains page content -->

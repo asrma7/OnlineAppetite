@@ -50,10 +50,12 @@ if (!isset($_SESSION['trader'])) {
     $page = "Profile";
     include 'header.php';
 
-    $user_id = $_SESSION['trader']['user_id'];
-    $user = fetch_row("SELECT * FROM users LEFT JOIN traders on users.user_id = traders.user_id WHERE users.user_id =='$user_id'");
-    $user['payments'] = isset($old) ? $old['payments'] ?? [] : explode(', ', $user['preferred_payments']);
-    $user['business_type'] = $old['business_type'] ?? $user['business_type'];
+    $user_id = $_SESSION['trader']['USER_ID'];
+    $user = fetch_row("SELECT * FROM USERS LEFT JOIN TRADERS on USERS.USER_ID = TRADERS.USER_ID WHERE USERS.USER_ID =='$user_id'");
+    $user['PAYMENTS'] = isset($old) ? $old['payments'] ?? [] : explode(', ', $user['PREFERRED_PAYMENTS']);
+    $user['BUSINESS_TYPE'] = $old['business_type'] ?? $user['BUSINESS_TYPE'];
+    $user['GENDER'] = $old['gender'] ?? $user['GENDER'];
+    $user['COUNTRY'] = $old['country'] ?? $user['COUNTRY'];
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -89,7 +91,7 @@ if (!isset($_SESSION['trader'])) {
             <div class="row">
               <div class="col-md-3 col-sm-6 col-12">
                 <div class="img">
-                  <img src="<?= $user['image'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2" id="imagePreview"  style="max-width: 250px;">
+                  <img src="<?= $user['IMAGE'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2" id="imagePreview"  style="max-width: 250px;">
                 </div>
                 <div class="form-group mt-4">
                   <label for="profileImage">Profile Image</label>
@@ -105,51 +107,51 @@ if (!isset($_SESSION['trader'])) {
               <div class="col-md-8 offset-md-1 col-sm-6 col-12">
                 <div class="form-group">
                   <label for="name">Business Name</label>
-                  <input type="text" id="name" name="full_name" class="form-control <?= isset($errors['full_name']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['full_name'] ?>" value="<?= $old['full_name'] ?? '' ?>">
+                  <input type="text" id="name" name="full_name" class="form-control <?= isset($errors['full_name']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['FULL_NAME'] ?>" value="<?= $old['full_name'] ?? '' ?>">
                 </div>
                 <div class="form-group">
                   <label for="email">Business Email</label>
-                  <input type="email" id="email" name="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['email'] ?>" value="<?= $old['email'] ?? '' ?>">
+                  <input type="email" id="email" name="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['EMAIL'] ?>" value="<?= $old['email'] ?? '' ?>">
                 </div>
                 <div class="form-group">
                   <label for="username">Username</label>
-                  <input type="text" id="username" name="username" class="form-control <?= isset($errors['username']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['username'] ?>" value="<?= $old['username'] ?? '' ?>">
+                  <input type="text" id="username" name="username" class="form-control <?= isset($errors['username']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['USERNAME'] ?>" value="<?= $old['username'] ?? '' ?>">
                 </div>
                 <div class="form-group">
                   <label for="contact">Contact No.</label>
-                  <input type="text" id="contact" name="contact_no" class="form-control <?= isset($errors['contact_no']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['contact_no'] ?>" value="<?= $old['contact_no'] ?? '' ?>">
+                  <input type="text" id="contact" name="contact_no" class="form-control <?= isset($errors['contact_no']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['CONTACT_NO'] ?>" value="<?= $old['contact_no'] ?? '' ?>">
                 </div>
                 <div class="form-group">
                   <label for="gender">Gender</label>
                   <select id="gender" name="gender" class="form-control <?= isset($errors['gender']) ? 'is-invalid' : ''; ?>">
-                    <option <?= $user['gender'] == '1' ? 'selected' : ''; ?> value="1">Male</option>
-                    <option <?= $user['gender'] == '2' ? 'selected' : ''; ?> value="2">Female</option>
-                    <option <?= $user['gender'] == '3' ? 'selected' : ''; ?> value="3">Others</option>
-                    <option <?= $user['gender'] == '4' ? 'selected' : ''; ?> value="4">Prefer not to specify</option>
+                    <option <?= $user['GENDER'] == '1' ? 'selected' : ''; ?> value="1">Male</option>
+                    <option <?= $user['GENDER'] == '2' ? 'selected' : ''; ?> value="2">Female</option>
+                    <option <?= $user['GENDER'] == '3' ? 'selected' : ''; ?> value="3">Others</option>
+                    <option <?= $user['GENDER'] == '4' ? 'selected' : ''; ?> value="4">Prefer not to specify</option>
                   </select>
                 </div>
                 <div class="form-group">
                   <div class="my-2">
                     <strong>Address</strong>
-                    <input type="text" id="st1" name="street" class="form-control <?= isset($errors['street']) ? 'is-invalid' : ''; ?>" placeholder="Street Address" value="<?= $user['street'] ?>">
+                    <input type="text" id="st1" name="street" class="form-control <?= isset($errors['street']) ? 'is-invalid' : ''; ?>" placeholder="Street Address" value="<?= $user['STREET'] ?>">
                   </div>
                   <div class="row my-2">
                     <div class="col-6">
-                      <input type="text" id="city" name="city" class="form-control <?= isset($errors['city']) ? 'is-invalid' : ''; ?>" placeholder="City" value="<?= $user['city'] ?>">
+                      <input type="text" id="city" name="city" class="form-control <?= isset($errors['city']) ? 'is-invalid' : ''; ?>" placeholder="City" value="<?= $user['CITY'] ?>">
                     </div>
                     <div class="col-6">
-                      <input type="text" id="state" name="state" class="form-control <?= isset($errors['state']) ? 'is-invalid' : ''; ?>" placeholder="State/Province" value="<?= $user['state'] ?>">
+                      <input type="text" id="state" name="state" class="form-control <?= isset($errors['state']) ? 'is-invalid' : ''; ?>" placeholder="State/Province" value="<?= $user['STATE'] ?>">
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-6">
-                      <input type="text" id="postal" name="postal" class="form-control <?= isset($errors['postal']) ? 'is-invalid' : ''; ?>" placeholder="Postal Code" value="<?= $user['postal'] ?>">
+                      <input type="text" id="postal" name="postal" class="form-control <?= isset($errors['postal']) ? 'is-invalid' : ''; ?>" placeholder="Postal Code" value="<?= $user['POSTAL'] ?>">
                     </div>
                     <div class="col-6">
                       <select id="country" name="country" class="form-control <?= isset($errors['country']) ? 'is-invalid' : ''; ?>" required>
-                        <option <?= $user['country'] == 'Nepal' ? 'selected' : ''; ?> value="Nepal">Nepal</option>
-                        <option <?= $user['country'] == 'India' ? 'selected' : ''; ?> value="India">India</option>
-                        <option <?= $user['country'] == 'Bhutan' ? 'selected' : ''; ?> value="Bhutan">Bhutan</option>
+                        <option <?= $user['COUNTRY'] == 'Nepal' ? 'selected' : ''; ?> value="Nepal">Nepal</option>
+                        <option <?= $user['COUNTRY'] == 'India' ? 'selected' : ''; ?> value="India">India</option>
+                        <option <?= $user['COUNTRY'] == 'Bhutan' ? 'selected' : ''; ?> value="Bhutan">Bhutan</option>
                       </select>
                     </div>
                   </div>
@@ -157,20 +159,20 @@ if (!isset($_SESSION['trader'])) {
 
                 <div class="form-group">
                   <label for="trading_since">Trading Since</label>
-                  <input type="date" id="trading_since" name="trading_since" class="form-control <?= isset($errors['trading_since']) ? 'is-invalid' : ''; ?>" value="<?= date('Y-m-d', strtotime($user['trading_since'])) ?>">
+                  <input type="date" id="trading_since" name="trading_since" class="form-control <?= isset($errors['trading_since']) ? 'is-invalid' : ''; ?>" value="<?= date('Y-m-d', strtotime($user['TRADING_SINCE'])) ?>">
                 </div>
                 <div class="form-group">
                   <label>Business Type</label><br>
                   <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="small" name="business_type" value="small" <?= $user['business_type'] == 'small' ? 'checked' : ''; ?> class="custom-control-input <?= isset($errors['business_type']) ? 'is-invalid' : ''; ?>">
+                    <input type="radio" id="small" name="business_type" value="small" <?= $user['BUSINESS_TYPE'] == 'small' ? 'checked' : ''; ?> class="custom-control-input <?= isset($errors['business_type']) ? 'is-invalid' : ''; ?>">
                     <label class="custom-control-label" for="small">Small</label>
                   </div>
                   <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="medium" name="business_type" value="medium" <?= $user['business_type'] == 'medium' ? 'checked' : ''; ?> class="custom-control-input <?= isset($errors['business_type']) ? 'is-invalid' : ''; ?>">
+                    <input type="radio" id="medium" name="business_type" value="medium" <?= $user['BUSINESS_TYPE'] == 'medium' ? 'checked' : ''; ?> class="custom-control-input <?= isset($errors['business_type']) ? 'is-invalid' : ''; ?>">
                     <label class="custom-control-label" for="medium">Medium</label>
                   </div>
                   <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="large" name="business_type" value="large" <?= $user['business_type'] == 'large' ? 'checked' : ''; ?> class="custom-control-input <?= isset($errors['business_type']) ? 'is-invalid' : ''; ?>">
+                    <input type="radio" id="large" name="business_type" value="large" <?= $user['BUSINESS_TYPE'] == 'large' ? 'checked' : ''; ?> class="custom-control-input <?= isset($errors['business_type']) ? 'is-invalid' : ''; ?>">
                     <label class="custom-control-label" for="large">Large</label>
                   </div>
                   <?= isset($errors['business_type']) ? '<div class="text-danger">' . $errors['business_type'] . '</div>' : ''; ?>
@@ -178,15 +180,15 @@ if (!isset($_SESSION['trader'])) {
                 <div class="form-group">
                   <label>Payments</label><br>
                   <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" class="custom-control-input <?= isset($errors['payments']) ? 'is-invalid' : ''; ?>" name="payments[]" value="card" <?= in_array('card', $user['payments']) ? 'checked' : '' ?> id="card">
+                    <input type="checkbox" class="custom-control-input <?= isset($errors['payments']) ? 'is-invalid' : ''; ?>" name="payments[]" value="card" <?= in_array('card', $user['PAYMENTS']) ? 'checked' : '' ?> id="card">
                     <label class="custom-control-label <?= isset($errors['payments']) ? 'is-invalid' : ''; ?>" for="card">Card</label>
                   </div>
                   <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" class="custom-control-input <?= isset($errors['payments']) ? 'is-invalid' : ''; ?>" name="payments[]" value="cash" <?= in_array('cash', $user['payments']) ? 'checked' : '' ?> id="cash">
+                    <input type="checkbox" class="custom-control-input <?= isset($errors['payments']) ? 'is-invalid' : ''; ?>" name="payments[]" value="cash" <?= in_array('cash', $user['PAYMENTS']) ? 'checked' : '' ?> id="cash">
                     <label class="custom-control-label <?= isset($errors['payments']) ? 'is-invalid' : ''; ?>" for="cash">Cash</label>
                   </div>
                   <div class="custom-control custom-checkbox custom-control-inline">
-                    <input type="checkbox" class="custom-control-input <?= isset($errors['payments']) ? 'is-invalid' : ''; ?>" name="payments[]" value="paypal" <?= in_array('paypal', $user['payments']) ? 'checked' : '' ?> id="paypal">
+                    <input type="checkbox" class="custom-control-input <?= isset($errors['payments']) ? 'is-invalid' : ''; ?>" name="payments[]" value="paypal" <?= in_array('paypal', $user['PAYMENTS']) ? 'checked' : '' ?> id="paypal">
                     <label class="custom-control-label" for="paypal">Paypal</label>
                   </div>
                   <?= isset($errors['payments']) ? '<div class="text-danger">' . $errors['payments'] . '</div>' : ''; ?>

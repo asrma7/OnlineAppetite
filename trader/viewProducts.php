@@ -56,8 +56,8 @@ if (!isset($_SESSION['trader'])) {
     <?php
     $page = "ViewProducts";
     include 'header.php';
-    $user_id = $_SESSION['trader']['user_id'];
-    $products = fetch_all_row("SELECT products.*, (SELECT category_name FROM categories WHERE categories.category_id = products.category_id) AS category_name FROM shops INNER JOIN products ON products.shop_id = shops.shop_id WHERE trader_id = '$user_id'");
+    $user_id = $_SESSION['trader']['USER_ID'];
+    $products = fetch_all_row("SELECT PRODUCTS.*, (SELECT CATEGORY_NAME FROM CATEGORIES WHERE CATEGORIES.CATEGORY_ID = PRODUCTS.CATEGORY_ID) AS CATEGORY_NAME FROM SHOPS INNER JOIN PRODUCTS ON PRODUCTS.SHOP_ID = SHOPS.SHOP_ID WHERE TRADER_ID = '$user_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -101,20 +101,20 @@ if (!isset($_SESSION['trader'])) {
             <tbody>
               <?php foreach ($products as $product) { ?>
                 <tr>
-                  <td><?= $product['product_id'] ?></td>
-                  <td><?= $product['product_name'] ?></td>
-                  <td class="text-center"><?= $product['confirmed_on'] ?? '-' ?></td>
-                  <td><?= number_format((float)$product['price'] / 100.0, 2, '.', '') ?></td>
-                  <td><?= $product['stock'] ?></td>
-                  <td><?= $product['category_name'] ?></td>
-                  <td><?= $product['shop_id'] ?></td>
+                  <td><?= $product['PRODUCT_ID'] ?></td>
+                  <td><?= $product['PRODUCT_NAME'] ?></td>
+                  <td class="text-center"><?= $product['CONFRIMED_ON'] ?? '-' ?></td>
+                  <td><?= number_format((float)$product['PRICE'] / 100.0, 2, '.', '') ?></td>
+                  <td><?= $product['STOCK'] ?></td>
+                  <td><?= $product['CATEGORY_NAME'] ?></td>
+                  <td><?= $product['SHOP_ID'] ?></td>
                   <td>
                     <div class="d-flex">
                       <div class="image-preview">
-                        <img class="abs-image px-1" src="<?= $product['image1'] ?>" alt="Product Image">
+                        <img class="abs-image px-1" src="<?= $product['IMAGE1'] ?>" alt="Product Image">
                       </div>
                       <div class="image-preview">
-                        <img class="abs-image px-1" src="<?= $product['image2'] ?>" alt="Product Image">
+                        <img class="abs-image px-1" src="<?= $product['IMAGE2'] ?>" alt="Product Image">
                       </div>
                     </div>
                   </td>

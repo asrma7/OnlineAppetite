@@ -1,6 +1,5 @@
 <?php
 require_once '../utils/sessionManager.php';
-require_once '../utils/database.php';
 if (!isset($_SESSION['trader'])) {
   header('Location: /trader/login.php');
 }else {

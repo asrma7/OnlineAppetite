@@ -51,7 +51,7 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "AddDiscount";
     include 'header.php';
-    $categories = fetch_all_row('SELECT * FROM categories');
+    $categories = fetch_all_row('SELECT * FROM CATEGORIES');
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -115,7 +115,7 @@ if (!isset($_SESSION['admin'])) {
                 <?php
                 foreach ($categories as $category) {
                 ?>
-                  <option <?php if (isset($old['target'])) echo $old['target'] == $category['category_id'] ? 'selected' : ''; ?> value="<?= $category['category_id'] ?>"><?= $category['category_name'] ?></option>
+                  <option <?php if (isset($old['target'])) echo $old['target'] == $category['CATEGORY_ID'] ? 'selected' : ''; ?> value="<?= $category['CATEGORY_ID'] ?>"><?= $category['CATEGORY_NAME'] ?></option>
                 <?php } ?>
               </select>
               <?= isset($errors['target']) ? '<div class="invalid-feedback">' . $errors['target'] . '</div>' : ''; ?>

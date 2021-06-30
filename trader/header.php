@@ -74,10 +74,10 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="<?= $_SESSION['trader']['image'] ?? "/assets/images/adminlte/avatar2.png" ?>" class="img-circle elevation-2" alt="User Image">
+        <img src="<?= $_SESSION['trader']['IMAGE'] ?? "/assets/images/adminlte/avatar2.png" ?>" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="/trader/profile.php" class="d-block"><?= $_SESSION['trader']['full_name'] ?></a>
+        <a href="/trader/profile.php" class="d-block"><?= $_SESSION['trader']['FULL_NAME'] ?></a>
       </div>
     </div>
 

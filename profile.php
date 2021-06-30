@@ -21,39 +21,39 @@ if (!isset($_SESSION['user'])) {
     <?php
         $page = 'profile';
         include 'header.php';
-        $user_id = $_SESSION['user']['user_id'];
-    $user = fetch_row("SELECT * FROM users WHERE user_id =='$user_id'");
+        $user_id = $_SESSION['user']['USER_ID'];
+    $user = fetch_row("SELECT * FROM USERS WHERE USER_ID =='$user_id'");
     ?>
     <div class="container-fluid d-flex justify-content-center">
       <div class="w-75 p-5 my-5 bg-dark text-light">
           <div class="row">
             <div class="col-md-4 col-sm-6 col-12">
               <div class="img">
-                <img src="<?=$user['image']??'/assets//images/adminlte//avatar2.png'?>" alt="" class="img-circle elevation-2">
+                <img src="<?=$user['IMAGE']??'/assets/images/adminlte/avatar2.png'?>" alt="" class="img-circle elevation-2">
               </div>
               <div class="mt-4 text-center">
                 <strong>Registered on: </strong><hr>
-                <span><?= date('jS M Y', strtotime($user['created_at'])) ?></span>
+                <span><?= date('jS M Y', strtotime($user['CREATED_AT'])) ?></span>
               </div>
             </div>
             <div class="col-md-7 offset-md-1 col-sm-6 col-12">
               <div class="row">
                 <div class="col-12">
                   <strong>Full Name</strong>
-                  <p><?= $user['full_name'] ?></p>
+                  <p><?= $user['FULL_NAME'] ?></p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
                   <strong>Email</strong>
-                  <p><?= $user['email'] ?></p>
+                  <p><?= $user['EMAIL'] ?></p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
                   <strong>Gender</strong>
                   <p><?php
-                      switch ($user['gender']) {
+                      switch ($user['GENDER']) {
                         case 1:
                           echo 'Male';
                           break;
@@ -74,18 +74,18 @@ if (!isset($_SESSION['user'])) {
                 <div class="col-6">
                   <strong>Address</strong><br>
                   <i>Street Address</i><br>
-                  <p><?=$user['street'];?></p>
+                  <p><?=$user['STREET'];?></p>
                   <i>City</i><br>
-                  <p><?=$user['city'];?></p>
+                  <p><?=$user['CITY'];?></p>
                   <i>Postal Code</i><br>
-                  <p><?=$user['postal'];?></p>
+                  <p><?=$user['POSTAL'];?></p>
                 </div>
                 <div class="col-6">
                   <br>
                   <i>State/Province</i><br>
-                  <p><?=$user['state'];?></p>
+                  <p><?=$user['STATE'];?></p>
                   <i>Country</i><br>
-                  <p><?=$user['country'];?></p>
+                  <p><?=$user['COUNTRY'];?></p>
                 </div>
               </div>
               <div class="row">

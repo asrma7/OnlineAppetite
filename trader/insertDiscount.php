@@ -8,7 +8,7 @@ $old = $_POST;
 extract($_POST);
 $errors = [];
 
-$user_id = $_SESSION['trader']['user_id'];
+$user_id = $_SESSION['trader']['USER_ID'];
 
 //discount name
 if (empty($discountName)) {
@@ -39,7 +39,7 @@ if (empty($expires)) {
 
 //error size
 if (sizeof($errors) == 0) {
-    $sql = "INSERT INTO discounts (discount_name, rate, target_id, discount_type, starts_on, expires_on, created_by) VALUES ('$discountName', '$rate', '$target', 'product', '$starts', '$expires', $user_id)";
+    $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, TARGET_ID, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$target', 'product', '$starts', '$expires', $user_id)";
     $res = query($sql);
     if (!$res)
         $_SESSION['message'] = ["message" => "Error while inserting Discount", 'color' => "danger"];

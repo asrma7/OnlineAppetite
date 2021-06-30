@@ -36,7 +36,7 @@ if(!isset($_SESSION['admin']))
     <?php
     $page = "Shops";
     include 'header.php';
-    $shops = fetch_all_row("SELECT shops.*, (SELECT COUNT(*) FROM products WHERE products.shop_id = shops.shop_id) AS products FROM shops");
+    $shops = fetch_all_row("SELECT SHOPS.*, (SELECT COUNT(*) FROM PRODUCTS WHERE PRODUCTS.SHOP_ID = SHOPS.SHOP_IS) AS TOTAL_PRODUCTS FROM SHOPS");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -78,18 +78,18 @@ if(!isset($_SESSION['admin']))
             <tbody>
               <?php foreach ($shops as $shop) { ?>
                 <tr>
-                <td><?= $shop['shop_id'] ?></td>
-                  <td><?= $shop['shop_name'] ?></td>
-                  <td class="text-center"><?= $shop['verified_on']??'-' ?></td>
+                <td><?= $shop['SHOP_ID'] ?></td>
+                  <td><?= $shop['SHOP_NAME'] ?></td>
+                  <td class="text-center"><?= $shop['VERIFIED_ON']??'-' ?></td>
                   <td style="text-align: center;">
-                  <?= isset($product['verified_on']) ?
+                  <?= isset($product['VERIFIED_ON']) ?
                       '<button class="btn btn-danger m-1">Remove</button>':
                       '<button class="btn btn-primary m-1">Verify</button>'
                     ?>
                   </td>
-                  <td><?= $shop['gov_no'] ?></td>
-                  <td><?= $shop['shop_type'] ?></td>
-                  <td><?= $shop['products'] ?></td>
+                  <td><?= $shop['GOV_NO'] ?></td>
+                  <td><?= $shop['SHOP_TYPE'] ?></td>
+                  <td><?= $shop['TOTAL_PRODUCTS'] ?></td>
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-warning m-1">Edit</button>

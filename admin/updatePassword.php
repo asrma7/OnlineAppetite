@@ -4,16 +4,16 @@ require_once '../utils/sessionManager.php';
 if (!isset($_SESSION['admin'])) {
     header('Location: /admin/login.php');
 } else {
-    $user_id = $_SESSION['admin']['user_id'];
+    $user_id = $_SESSION['admin']['USER_ID'];
 }
 $old = $_POST;
 extract($_POST);
 $errors = [];
-$user = fetch_row("SELECT password_hash FROM users WHERE user_id = '$user_id'");
+$user = fetch_row("SELECT PASHWORD_HASH FROM USERS WHERE USER_ID = '$user_id'");
 if(empty($oldpass)) {
     $errors['oldpass'] = "Old password is required.";
 }
-elseif (!password_verify($oldpass, $user['password_hash'])){
+elseif (!password_verify($oldpass, $user['PASSWORD_HASH'])){
     $errors['oldpass'] = "Old password does not match.";
 }
 if (empty($password)) {
@@ -27,7 +27,7 @@ if (empty($password)) {
 }
 if(sizeof($errors) == 0){
     $password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "UPDATE users SET password_hash = '$password' WHERE user_id = '$user_id'";
+    $sql = "UPDATE USERS SET PASSWORD_HASH = '$password' WHERE USER_ID = '$user_id'";
     if(!query($sql)){
         $_SESSION['message'] = ["message" => "Error changing password", 'color' => "danger"];
     }

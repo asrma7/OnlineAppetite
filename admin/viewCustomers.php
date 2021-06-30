@@ -57,7 +57,7 @@ if(!isset($_SESSION['admin']))
     <?php
     $page = "Customers";
     include 'header.php';
-    $customers = fetch_all_row('SELECT * FROM users LEFT JOIN customers ON users.user_id = customers.user_id WHERE user_role = 3');
+    $customers = fetch_all_row('SELECT * FROM USERS LEFT JOIN CUSTOMERS ON USERS.USER_ID = CUSTOMERS.USER_ID WHERE USER_ROLE = 3');
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -100,15 +100,15 @@ if(!isset($_SESSION['admin']))
             <tbody>
               <?php foreach ($customers as $customer) { ?>
                 <tr>
-                  <td><?= $customer['user_id'] ?></td>
-                  <td><?= $customer['full_name'] ?></td>
-                  <td><?= $customer['created_at'] ?></td>
-                  <td><?= $customer['email'] ?></td>
-                  <td class="text-center"><?= $customer['email_verified_at']??'-' ?></td>
-                  <td><?= $customer['gender'] ?></td>
+                  <td><?= $customer['USER_ID'] ?></td>
+                  <td><?= $customer['FULL_NAME'] ?></td>
+                  <td><?= $customer['CREATED_AT'] ?></td>
+                  <td><?= $customer['EMAIL'] ?></td>
+                  <td class="text-center"><?= $customer['EMAIL_VERIFIED_AT']??'-' ?></td>
+                  <td><?= $customer['GENDER'] ?></td>
                   <td>
                     <div class="image-preview">
-                      <img class="abs-image" src="<?= $customer['image'] ?>" alt="User Image">
+                      <img class="abs-image" src="<?= $customer['IMAGE'] ?>" alt="User Image">
                     </div>
                   </td>
                   <td>

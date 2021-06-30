@@ -34,8 +34,10 @@ if (!isset($_SESSION['user'])) {
     <?php
     $page = 'profile';
     include 'header.php';
-    $user_id = $_SESSION['user']['user_id'];
-    $user = fetch_row("SELECT * FROM users WHERE user_id =='$user_id'");
+    $user_id = $_SESSION['user']['USER_ID'];
+    $user = fetch_row("SELECT * FROM USERS WHERE USER_ID =='$user_id'");
+    $user['GENDER'] = $old['gender'] ?? $user['GENDER'];
+    $user['COUNTRY'] = $old['country'] ?? $user['COUNTRY'];
     ?>
     <div class="container-fluid d-flex justify-content-center">
         <div class="w-75 p-5 my-5 bg-dark text-light">
@@ -49,7 +51,7 @@ if (!isset($_SESSION['user'])) {
                 <div class="row">
                     <div class="col-md-4 col-sm-6 col-12">
                         <div class="img">
-                            <img src="<?= $user['image'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2" id="imagePreview" style="max-width: 250px;">
+                            <img src="<?= $user['IMAGE'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2" id="imagePreview" style="max-width: 250px;">
                         </div>
                         <div class="form-group mt-4">
                             <label for="profileImage">Profile Image</label>
@@ -65,51 +67,51 @@ if (!isset($_SESSION['user'])) {
                     <div class="col-md-7 offset-md-1 col-sm-6 col-12">
                         <div class="form-group">
                             <label for="name">Full Name</label>
-                            <input type="text" id="name" name="full_name" class="form-control <?= isset($errors['full_name']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['full_name'] ?>" value="<?= $old['full_name'] ?? '' ?>">
+                            <input type="text" id="name" name="full_name" class="form-control <?= isset($errors['full_name']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['FULL_NAME'] ?>" value="<?= $old['full_name'] ?? '' ?>">
                             <?= isset($errors['full_name']) ? '<div class="invalid-feedback">' . $errors['full_name'] . '</div>' : ''; ?>
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" id="username" name="username" class="form-control <?= isset($errors['username']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['username'] ?>" value="<?= $old['username'] ?? '' ?>">
+                            <input type="text" id="username" name="username" class="form-control <?= isset($errors['username']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['USERNAME'] ?>" value="<?= $old['username'] ?? '' ?>">
                             <?= isset($errors['username']) ? '<div class="invalid-feedback">' . $errors['username'] . '</div>' : ''; ?>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['email'] ?>" value="<?= $old['email'] ?? '' ?>">
+                            <input type="email" id="email" name="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['EMAIL'] ?>" value="<?= $old['email'] ?? '' ?>">
                             <?= isset($errors['email']) ? '<div class="invalid-feedback">' . $errors['email'] . '</div>' : ''; ?>
                         </div>
                         <div class="form-group">
                             <label for="gender">Gender</label>
                             <select id="gender" name="gender" class="form-control <?= isset($errors['gender']) ? 'is-invalid' : ''; ?>">
-                                <option <?= $user['gender'] == '1' ? 'selected' : ''; ?> value="1">Male</option>
-                                <option <?= $user['gender'] == '2' ? 'selected' : ''; ?> value="2">Female</option>
-                                <option <?= $user['gender'] == '3' ? 'selected' : ''; ?> value="3">Others</option>
-                                <option <?= $user['gender'] == '4' ? 'selected' : ''; ?> value="4">Prefer Not to Specify</option>
+                                <option <?= $user['GENDER'] == '1' ? 'selected' : ''; ?> value="1">Male</option>
+                                <option <?= $user['GENDER'] == '2' ? 'selected' : ''; ?> value="2">Female</option>
+                                <option <?= $user['GENDER'] == '3' ? 'selected' : ''; ?> value="3">Others</option>
+                                <option <?= $user['GENDER'] == '4' ? 'selected' : ''; ?> value="4">Prefer Not to Specify</option>
                             </select>
                             <?= isset($errors['gender']) ? '<div class="invalid-feedback">' . $errors['gender'] . '</div>' : ''; ?>
                         </div>
                         <div class="form-group">
                             <div class="my-2">
                                 <strong>Address</strong>
-                                <input type="text" id="st1" name="street" class="form-control <?= isset($errors['street']) ? 'is-invalid' : ''; ?>" placeholder="Street Address" value="<?= $user['street'] ?>">
+                                <input type="text" id="st1" name="street" class="form-control <?= isset($errors['street']) ? 'is-invalid' : ''; ?>" placeholder="Street Address" value="<?= $user['STREET'] ?>">
                             </div>
                             <div class="row my-2">
                                 <div class="col-6">
-                                    <input type="text" id="city" name="city" class="form-control <?= isset($errors['city']) ? 'is-invalid' : ''; ?>" placeholder="City" value="<?= $user['city'] ?>">
+                                    <input type="text" id="city" name="city" class="form-control <?= isset($errors['city']) ? 'is-invalid' : ''; ?>" placeholder="City" value="<?= $user['CITY'] ?>">
                                 </div>
                                 <div class="col-6">
-                                    <input type="text" id="state" name="state" class="form-control <?= isset($errors['state']) ? 'is-invalid' : ''; ?>" placeholder="State/Province" value="<?= $user['state'] ?>">
+                                    <input type="text" id="state" name="state" class="form-control <?= isset($errors['state']) ? 'is-invalid' : ''; ?>" placeholder="State/Province" value="<?= $user['STATE'] ?>">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <input type="text" id="postal" name="postal" class="form-control <?= isset($errors['postal']) ? 'is-invalid' : ''; ?>" placeholder="Postal Code" value="<?= $user['postal'] ?>">
+                                    <input type="text" id="postal" name="postal" class="form-control <?= isset($errors['postal']) ? 'is-invalid' : ''; ?>" placeholder="Postal Code" value="<?= $user['POSTAL'] ?>">
                                 </div>
                                 <div class="col-6">
                                     <select id="country" name="country" class="form-control <?= isset($errors['country']) ? 'is-invalid' : ''; ?>" required>
-                                        <option <?= $user['country'] == 'Nepal' ? 'selected' : ''; ?> value="Nepal">Nepal</option>
-                                        <option <?= $user['country'] == 'India' ? 'selected' : ''; ?> value="India">India</option>
-                                        <option <?= $user['country'] == 'Bhutan' ? 'selected' : ''; ?> value="Bhutan">Bhutan</option>
+                                        <option <?= $user['COUNTRY'] == 'Nepal' ? 'selected' : ''; ?> value="Nepal">Nepal</option>
+                                        <option <?= $user['COUNTRY'] == 'India' ? 'selected' : ''; ?> value="India">India</option>
+                                        <option <?= $user['COUNTRY'] == 'Bhutan' ? 'selected' : ''; ?> value="Bhutan">Bhutan</option>
                                     </select>
                                 </div>
                             </div>

@@ -11,20 +11,20 @@ if (empty($login)) {
     $_SESSION['old'] = $old;
     header('Location: /trader/login.php');
 } else {
-    $sql = "SELECT user_id, full_name, username, email, password_hash, image FROM users WHERE (username=='$login' OR email =='$login') AND user_role=='2'";
+    $sql = "SELECT USER_ID, FULL_NAME, USERNAME, EMAIL, PASSWORD_HASH, IMAGE FROM USERS WHERE (USERNAME=='$login' OR EMAIL =='$login') AND USER_ROLE=='2'";
     $user = fetch_row($sql);
     if (!$user) {
         $errors['login'] = "Username/Email does not exists.";
         $_SESSION['errors'] = $errors;
         $_SESSION['old'] = $old;
         header('Location: /trader/login.php');
-    } else if (!password_verify($password, $user['password_hash'])) {
+    } else if (!password_verify($password, $user['PASSWORD_HASH'])) {
         $errors['password'] = "Password Does not match.";
         $_SESSION['errors'] = $errors;
         $_SESSION['old'] = $old;
         header('Location: /trader/login.php');
     } else {
-        unset($user['password']);
+        unset($user['PASSWORD_HASH']);
         $_SESSION['trader'] = $user;
         header('Location: /trader');
     }

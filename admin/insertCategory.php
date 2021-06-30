@@ -69,7 +69,7 @@ if (sizeof($errors) == 0) {
 
 //error size
 if (sizeof($errors) == 0) {
-    $sql = "INSERT INTO categories (category_name, description, image) VALUES ('$categoryName', '$description', '$categoryImage')";
+    $sql = "INSERT INTO CATEGORIES (CATEGORY_NAME, DESCRIPTION, IMAGE) VALUES ('$categoryName', '$description', '$categoryImage')";
     $res = query($sql);
     if (!$res)
         $_SESSION['message'] = ["message" => "Error while inserting Category", 'color' => "danger"];

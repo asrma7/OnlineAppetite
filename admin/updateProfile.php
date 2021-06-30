@@ -4,7 +4,7 @@ require_once '../utils/sessionManager.php';
 if (!isset($_SESSION['admin'])) {
     header('Location: /admin/login.php');
 } else {
-    $user_id = $_SESSION['admin']['user_id'];
+    $user_id = $_SESSION['admin']['USER_ID'];
 }
 $old = $_POST;
 extract($_POST);
@@ -79,18 +79,18 @@ if (sizeof($errors) == 0) {
 
 //error size
 if (sizeof($errors) == 0) {
-    $sql1 = "UPDATE users SET";
+    $sql1 = "UPDATE USERS SET";
     if (!empty($full_name))
-        $sql1 .= " full_name = '$full_name',";
+        $sql1 .= " FULL_NAME = '$full_name',";
     if (!empty($email))
-        $sql1 .= " email = '$email',";
+        $sql1 .= " EMAIL = '$email',";
     if (!empty($username))
-        $sql1 .= " username = '$username',";
+        $sql1 .= " USERNAME = '$username',";
     if (!empty($profileImage))
-        $sql1 .= " image = '$profileImage',";
-    $sql1 .= " gender = '$gender' WHERE user_id = '$user_id'";
+        $sql1 .= " IMAGE = '$profileImage',";
+    $sql1 .= " GENDER = '$gender' WHERE USER_ID = '$user_id'";
     if (!empty($contact_no)) {
-        $sql2 = "UPDATE managements SET contact_no = '$contact_no'";
+        $sql2 = "UPDATE MANAGEMENTS SET CONTACT_NO = '$contact_no'";
         $res2 = query($sql2);
     } else {
         $res2 = true;
@@ -101,7 +101,7 @@ if (sizeof($errors) == 0) {
         $_SESSION['message'] = ["message" => "Error while updating Management", 'color' => "danger"];
     else
         $_SESSION['message'] = ["message" => "Profile Updated successfully", 'color' => "success"];
-    $updatedUser = fetch_row("SELECT user_id, full_name, username, email, image FROM users WHERE user_id = '$user_id'");
+    $updatedUser = fetch_row("SELECT USER_ID, FULL_NAME, USERNAME, EMAIL, IMAGE FROM USERS WHERE USER_ID = '$user_id'");
     $_SESSION['admin'] = $updatedUser;
 } else {
     $_SESSION['message'] = ["message" => "Please fix the following errors", 'color' => "danger"];
@@ -111,16 +111,16 @@ if (sizeof($errors) == 0) {
 header('Location:/admin/editprofile.php');
 function checkUsernameUnique($username)
 {
-    $row = fetch_row("SELECT COUNT(*) as count FROM users WHERE username == '$username'");
-    $count = $row['count'];
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE USERNAME == '$username'");
+    $count = $row['C'];
     if ($count > 0) return false;
     return true;
 }
 
 function checkEmailUnique($email)
 {
-    $row = fetch_row("SELECT COUNT(*) as count FROM users WHERE email == '$email'");
-    $count = $row['count'];
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE EMAIL == '$email'");
+    $count = $row['C'];
     if ($count > 0) return false;
     return true;
 }

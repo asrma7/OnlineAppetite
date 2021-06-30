@@ -51,8 +51,8 @@ if (!isset($_SESSION['trader'])) {
     <?php
     $page = "AddDiscount";
     include 'header.php';
-    $user_id = $_SESSION['trader']['user_id'];
-    $products = fetch_all_row("SELECT product_id, product_name FROM shops INNER JOIN products ON products.shop_id = shops.shop_id WHERE trader_id = $user_id");
+    $user_id = $_SESSION['trader']['USER_ID'];
+    $products = fetch_all_row("SELECT PRODUCT_ID, PRODUCT_NAME FROM PRODUCTS WHERE TRADER_ID = $user_id");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -106,7 +106,7 @@ if (!isset($_SESSION['trader'])) {
                 <?php
                 foreach ($products as $product) {
                 ?>
-                  <option <?php if (isset($old['target'])) echo $old['target'] == $product['product_id'] ? 'selected' : ''; ?> value="<?= $product['product_id'] ?>"><?= $product['product_name'] ?></option>
+                  <option <?php if (isset($old['target'])) echo $old['target'] == $product['PRODUCT_ID'] ? 'selected' : ''; ?> value="<?= $product['PRODUCT_ID'] ?>"><?= $product['PRODUCT_NAME'] ?></option>
                 <?php } ?>
               </select>
               <?= isset($errors['target']) ? '<div class="invalid-feedback">' . $errors['target'] . '</div>' : ''; ?>

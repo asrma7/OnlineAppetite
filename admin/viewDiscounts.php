@@ -35,7 +35,7 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "ViewDiscounts";
     include 'header.php';
-    $discounts = fetch_all_row("SELECT *, (SELECT full_name FROM users WHERE users.user_id = discounts.created_by) AS user FROM discounts");
+    $discounts = fetch_all_row("SELECT *, (SELECT FULL_NAME FROM USERS WHERE USERS.USER_ID = DISCOUNTS.CREATED_BY) AS USER FROM DISCOUNTS");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -69,7 +69,8 @@ if (!isset($_SESSION['admin'])) {
                 <th>Discount Name</th>
                 <th>Discount Type</th>
                 <th class="no-sort">Target</th>
-                <th class="no-sort">Start On</th>
+                <th>Discount Rate</th>
+                <th>Start On</th>
                 <th>Expire On</th>
                 <th>Created by</th>
                 <th class="no-sort no-search">Edit/Delete</th>
@@ -78,15 +79,14 @@ if (!isset($_SESSION['admin'])) {
             <tbody>
               <?php foreach ($discounts as $discount) { ?>
                 <tr>
-                <td><?= $discount['discount_id'] ?></td>
-                  <td><?= $discount['discount_name'] ?></td>
-                  <td><?= $discount['discount_type'] ?></td>
-                  <td class="text-center"><?= $discount['target_id'] ?? '-' ?></td>
-                  <td>
-                    <?= $discount['starts_on'] ?>
-                  </td>
-                  <td><?= $discount['expires_on'] ?></td>
-                  <td><?= $discount['user'] ?></td>
+                <td><?= $discount['DISCOUNT_ID'] ?></td>
+                  <td><?= $discount['DISCOUNT_NAME'] ?></td>
+                  <td><?= $discount['DISCOUNT_TYPE'] ?></td>
+                  <td class="text-center"><?= $discount['TARGET_ID'] ?? '-' ?></td>
+                  <td><?= $discount['RATE'] ?></td>
+                  <td><?= $discount['STARTS_ON'] ?></td>
+                  <td><?= $discount['EXPIRES_ON'] ?></td>
+                  <td><?= $discount['USER'] ?></td>
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-warning m-1">Edit</button>
@@ -102,6 +102,7 @@ if (!isset($_SESSION['admin'])) {
                 <th>Discount Name</th>
                 <th>Discount Type</th>
                 <th>Target</th>
+                <th>Discount Rate</th>
                 <th>Start On</th>
                 <th>Expire On</th>
                 <th>Created By</th>

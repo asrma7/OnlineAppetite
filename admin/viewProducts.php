@@ -56,7 +56,7 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "Products";
     include 'header.php';
-    $products = fetch_all_row('SELECT products.*, category_name FROM products INNER JOIN categories ON products.category_id = categories.category_id');
+    $products = fetch_all_row('SELECT PRODUCTS.*, CATEGORY_NAME FROM PRODUCTS INNER JOIN CATEGORIES ON PRODUCTS.CATEGORY_ID = CATEGORIES.CATEGORY_ID');
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -100,25 +100,25 @@ if (!isset($_SESSION['admin'])) {
             <tbody>
               <?php foreach ($products as $product) { ?>
                 <tr>
-                  <td><?= $product['product_id'] ?></td>
-                  <td><?= $product['product_name'] ?></td>
-                  <td class="text-center"><?= $product['confirmed_on'] ?? '-' ?></td>
+                  <td><?= $product['PRODUCT_ID'] ?></td>
+                  <td><?= $product['PRODUCT_NAME'] ?></td>
+                  <td class="text-center"><?= $product['CONFIRMED_ON'] ?? '-' ?></td>
                   <td style="text-align: center;">
-                    <?= isset($product['confirmed_on']) ?
+                    <?= isset($product['CONFIRMED_ON']) ?
                       '<button class="btn btn-danger m-1">Remove</button>' :
                       '<button class="btn btn-primary m-1">Confirm</button>' ?>
                   </td>
-                  <td><?= number_format((float)$product['price'] / 100.0, 2, '.', '') ?></td>
-                  <td><?= $product['stock'] ?></td>
-                  <td><?= $product['category_name'] ?></td>
-                  <td><?= $product['shop_id'] ?></td>
+                  <td><?= number_format((float)$product['PRICE'] / 100.0, 2, '.', '') ?></td>
+                  <td><?= $product['STOCK'] ?></td>
+                  <td><?= $product['CATEGORY_NAME'] ?></td>
+                  <td><?= $product['SHOP_ID'] ?></td>
                   <td>
                   <div class="d-flex">
                     <div class="image-preview">
-                      <img class="abs-image px-1" src="<?= $product['image1'] ?>" alt="Product Image">
+                      <img class="abs-image px-1" src="<?= $product['IMAGE1'] ?>" alt="Product Image">
                     </div>
                     <div class="image-preview">
-                      <img class="abs-image px-1" src="<?= $product['image2'] ?>" alt="Product Image">
+                      <img class="abs-image px-1" src="<?= $product['IMAGE2'] ?>" alt="Product Image">
                     </div>
                     </div>
                   </td>

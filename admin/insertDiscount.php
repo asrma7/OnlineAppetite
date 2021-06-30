@@ -8,7 +8,7 @@ $old = $_POST;
 extract($_POST);
 $errors = [];
 
-$user_id = $_SESSION['admin']['user_id'];
+$user_id = $_SESSION['admin']['USER_ID'];
 
 //discount name
 if (empty($discountName)) {
@@ -44,9 +44,9 @@ if (empty($expires)) {
 //error size
 if (sizeof($errors) == 0) {
     if ($discount_type == "category") {
-        $sql = "INSERT INTO discounts (discount_name, rate, target_id, discount_type, starts_on, expires_on, created_by) VALUES ('$discountName', '$rate', '$target', '$discount_type', '$starts', '$expires', $user_id)";
+        $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, TARGET_ID, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$target', '$discount_type', '$starts', '$expires', $user_id)";
     } else {
-        $sql = "INSERT INTO discounts (discount_name, rate, discount_type, starts_on, expires_on, created_by) VALUES ('$discountName', '$rate', '$discount_type', '$starts', '$expires', $user_id)";
+        $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$discount_type', '$starts', '$expires', $user_id)";
     }
     $res = query($sql);
     if (!$res)

@@ -39,7 +39,7 @@ foreach($userCart as $cartShop)
             } else {
             ?>
                 <div class="buttons">
-                    <a href="/profile.php" class="greetings">Hi <?= explode(' ', $_SESSION['user']['full_name'])[0] ?></a>
+                    <a href="/profile.php" class="greetings">Hi <?= explode(' ', $_SESSION['user']['FULL_NAME'])[0] ?></a>
                     <button onclick="location.href='logout.php'" class="signup">Sign Out</button>
                 </div>
             <?php
@@ -70,7 +70,7 @@ foreach($userCart as $cartShop)
                     <?php
                     foreach ($categories as $category) {
                     ?>
-                        <a href="/category.php?id=<?= $category['category_id'] ?>"><?= $category['category_name'] ?></a>
+                        <a href="/category.php?id=<?= $category['CATEGORY_ID'] ?>"><?= $category['CATEGORY_NAME'] ?></a>
                     <?php
                     }
                     ?>

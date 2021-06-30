@@ -31,8 +31,8 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "Profile";
     include 'header.php';
-    $user_id = $_SESSION['admin']['user_id'];
-    $user = fetch_row("SELECT * FROM users LEFT JOIN managements ON users.user_id = managements.user_id WHERE users.user_id =='$user_id'");
+    $user_id = $_SESSION['admin']['USER_ID'];
+    $user = fetch_row("SELECT * FROM USERS LEFT JOIN MANAGEMENTS ON USERS.USER_ID = MANAGEMENTS.USER_ID WHERE USERS.USER_ID =='$user_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -61,28 +61,43 @@ if (!isset($_SESSION['admin'])) {
           <div class="row">
             <div class="col-md-3 col-sm-6 col-12">
               <div class="img">
-                <img src="<?= $user['image'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2">
+                <img src="<?= $user['IMAGE'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2">
               </div>
             </div>
             <div class="col-md-8 offset-md-1 col-sm-6 col-12">
               <div class="row">
                 <div class="col-6">
                   <strong>First Name</strong>
-                  <p><?= $user['full_name'] ?></p>
+                  <p><?= $user['FULL_NAME'] ?></p>
                 </div>
                 <div class="col-6">
                   <strong>Email</strong>
-                  <p><?= $user['email'] ?></p>
+                  <p><?= $user['EMAIL'] ?></p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-6">
                   <strong>Contact No.</strong>
-                  <p><?= $user['contact_no'] ?></p>
+                  <p><?= $user['CONTACT_NO'] ?></p>
                 </div>
                 <div class="col-6">
                   <strong>Gender</strong>
-                  <p>Male</p>
+                  <p><?php
+                      switch ($user['GENDER']) {
+                        case 1:
+                          echo 'Male';
+                          break;
+                        case 2:
+                          echo 'Female';
+                          break;
+                        case 3:
+                          echo 'Other';
+                          break;
+                        case 4:
+                          echo 'Not Specified';
+                          break;
+                      }
+                      ?></p>
                 </div>
               </div>
               <div class="row">

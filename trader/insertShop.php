@@ -8,7 +8,7 @@ $old = $_POST;
 extract($_POST);
 $errors = [];
 
-$trader_id = $_SESSION['trader']['user_id'];
+$trader_id = $_SESSION['trader']['USER_ID'];
 
 //shop name
 if (empty($shopName)) {
@@ -46,7 +46,7 @@ elseif (strlen($description) < 20) {
 
 //error size
 if (sizeof($errors) == 0) {
-   $sql = "INSERT INTO shops (trader_id, shop_name, gov_no, address, contact_no, shop_type, description) VALUES ('$trader_id', '$shopName', '$govNum', '$address', '$contact', '$shop_type', '$description')";
+   $sql = "INSERT INTO SHOPS (TRADER_ID, SHOP_NAME, GOV_NO, ADDRESS, CONTACT_NO, SHOP_TYPE, DESCRIPTION) VALUES ('$trader_id', '$shopName', '$govNum', '$address', '$contact', '$shop_type', '$description')";
    $res = query($sql);
     if (!$res)
         $_SESSION['message'] = ["message" => "Error while inserting Shop", 'color' => "danger"];

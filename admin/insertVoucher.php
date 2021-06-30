@@ -8,8 +8,6 @@ $old = $_POST;
 extract($_POST);
 $errors = [];
 
-$user_id = $_SESSION['admin']['user_id'];
-
 //voucher name
 if (empty($voucherCode)) {
     $errors['voucherCode'] = "Voucher Code is required.";
@@ -36,7 +34,7 @@ if (empty($minimum)) {
 
 //error size
 if (sizeof($errors) == 0) {
-    $sql = "INSERT INTO vouchers (voucher_code, discount_amount, minimum) VALUES ('$voucherCode', '$amount'*100, '$minimum'*100)";
+    $sql = "INSERT INTO VOUCHERS (VOUCHER_CODE, DISCOUNT_AMOUNT, MINIMUM) VALUES ('$voucherCode', '$amount'*100, '$minimum'*100)";
     $res = query($sql);
     if (!$res)
         $_SESSION['message'] = ["message" => "Error while inserting Voucher", 'color' => "danger"];
@@ -50,8 +48,8 @@ if (sizeof($errors) == 0) {
 
 function checkCodeUnique($code)
 {
-    $row = fetch_row("SELECT COUNT(*) as count FROM vouchers WHERE voucher_code == '$code'");
-    $count = $row['count'];
+    $row = fetch_row("SELECT COUNT(*) as C FROM VOUCHERS WHERE VOUCHER_CODE == '$code'");
+    $count = $row['C'];
     if ($count > 0) return false;
     return true;
 }

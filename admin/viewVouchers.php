@@ -35,7 +35,7 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "ViewVouchers";
     include 'header.php';
-    $vouchers = fetch_all_row("SELECT * FROM vouchers");
+    $vouchers = fetch_all_row("SELECT * FROM VOUCHERS");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -75,10 +75,10 @@ if (!isset($_SESSION['admin'])) {
             <tbody>
               <?php foreach ($vouchers as $voucher) { ?>
                 <tr>
-                  <td><?= $voucher['voucher_id'] ?></td>
-                  <td><?= $voucher['voucher_code'] ?></td>
-                  <td><?= number_format((float)$voucher['discount_amount'] / 100, 2, '.', '') ?></td>
-                  <td><?= number_format((float)$voucher['minimum'] / 100, 2, '.', '') ?></td>
+                  <td><?= $voucher['VOUCHER_ID'] ?></td>
+                  <td><?= $voucher['VOUCHER_CODE'] ?></td>
+                  <td><?= number_format((float)$voucher['DISCOUNT_AMOUNT'] / 100, 2, '.', '') ?></td>
+                  <td><?= number_format((float)$voucher['MINIMUM'] / 100, 2, '.', '') ?></td>
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-warning m-1">Edit</button>

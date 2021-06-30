@@ -55,15 +55,15 @@ if (empty($toc)) {
 }
 if (sizeof($errors) == 0) {
     $password = password_hash($password, PASSWORD_DEFAULT);
-    $sql1 = "INSERT INTO users
-    (full_name, username, email, street, city, state, postal, country, gender, user_role, password_hash)
+    $sql1 = "INSERT INTO USERS
+    (FULL_NAME, USERNAME, EMAIL, STREET, CITY, STATE, POSTAL, COUNTRY, GENDER, USER_ROLE, PASSWORD_HASH)
      VALUES 
      ('$name', '$username', '$email', '$street', '$city', '$state', '$postal', '$country', '$gender', 2, '$password')";
     $res1 = query($sql1);
-    $user_id = fetch_row("SELECT user_id FROM users WHERE username == '$username'")['user_id'];
+    $user_id = fetch_row("SELECT USER_ID FROM USERS WHERE USERNAME == '$username'")['USER_ID'];
     $tradingSince = makeDate($month, $day, $year);
     $payments = implode(', ', $payments);
-    $sql2 = "INSERT INTO traders (user_id, contact_no, trading_since, business_type, preferred_payments, message)
+    $sql2 = "INSERT INTO TRADERS (USER_ID, CONTACT_NO, TRADING_SINCE, BUSINESS_TYPE, PREFERRED_PAYMENTS, MESSAGE)
     VALUES
     ('$user_id', '$number', '" . toDate($tradingSince, 'YYYY-MM-DD') . "', '$type', '$payments', '$message')";
     if (!$res1)
@@ -80,16 +80,16 @@ if (sizeof($errors) == 0) {
 header('Location:/traderregister.php');
 function checkUsernameUnique($username)
 {
-    $row = fetch_row("SELECT COUNT(*) as count FROM users WHERE username == '$username'");
-    $count = $row['count'];
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE USERNAME == '$username'");
+    $count = $row['C'];
     if ($count > 0) return false;
     return true;
 }
 
 function checkEmailUnique($email)
 {
-    $row = fetch_row("SELECT COUNT(*) as count FROM users WHERE email == '$email'");
-    $count = $row['count'];
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE EMAIL == '$email'");
+    $count = $row['C'];
     if ($count > 0) return false;
     return true;
 }

@@ -42,9 +42,9 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "Profile";
     include 'header.php';
-    $user_id = $_SESSION['admin']['user_id'];
-    $user = fetch_row("SELECT * FROM users LEFT JOIN managements ON users.user_id = managements.user_id WHERE users.user_id =='$user_id'");
-    $user['gender'] = $old['gender'] ?? $user['gender'];
+    $user_id = $_SESSION['admin']['USER_ID'];
+    $user = fetch_row("SELECT * FROM USERS LEFT JOIN MANAGEMENTS ON USERS.USER_ID = MANAGEMENTS.USER_ID WHERE USERS.USER_ID =='$user_id'");
+    $user['GENDER'] = $old['gender'] ?? $user['GENDER'];
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -80,7 +80,7 @@ if (!isset($_SESSION['admin'])) {
             <div class="row">
               <div class="col-md-3 col-sm-6 col-12">
                 <div class="img">
-                  <img src="<?= $user['image'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2" id="imagePreview" style="max-width: 250px;">
+                  <img src="<?= $user['IMAGE'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2" id="imagePreview" style="max-width: 250px;">
                 </div>
                 <div class="form-group mt-4">
                   <label for="profileImage">Profile Image</label>
@@ -96,31 +96,31 @@ if (!isset($_SESSION['admin'])) {
               <div class="col-md-8 offset-md-1 col-sm-6 col-12">
                 <div class="form-group">
                   <label for="name">Full Name</label>
-                  <input type="text" id="name" name="full_name" class="form-control <?= isset($errors['full_name']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['full_name'] ?>" value="<?= $old['full_name'] ?? '' ?>">
+                  <input type="text" id="name" name="full_name" class="form-control <?= isset($errors['full_name']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['FULL_NAME'] ?>" value="<?= $old['full_name'] ?? '' ?>">
                   <?= isset($errors['full_name']) ? '<div class="invalid-feedback">' . $errors['full_name'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
                   <label for="username">Username</label>
-                  <input type="text" id="username" name="username" class="form-control <?= isset($errors['username']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['username'] ?>" value="<?= $old['username'] ?? '' ?>">
+                  <input type="text" id="username" name="username" class="form-control <?= isset($errors['username']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['USERNAME'] ?>" value="<?= $old['username'] ?? '' ?>">
                   <?= isset($errors['username']) ? '<div class="invalid-feedback">' . $errors['username'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
                   <label for="email">Email</label>
-                  <input type="email" id="email" name="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['email'] ?>" value="<?= $old['email'] ?? '' ?>">
+                  <input type="email" id="email" name="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['EMAIL'] ?>" value="<?= $old['email'] ?? '' ?>">
                   <?= isset($errors['email']) ? '<div class="invalid-feedback">' . $errors['email'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
                   <label for="contact">Contact No.</label>
-                  <input type="text" id="contact" name="contact_no" class="form-control <?= isset($errors['contact_no']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['contact_no'] ?>" value="<?= $old['contact_no'] ?? '' ?>">
+                  <input type="text" id="contact" name="contact_no" class="form-control <?= isset($errors['contact_no']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['CONTACT_NO'] ?>" value="<?= $old['contact_no'] ?? '' ?>">
                   <?= isset($errors['contact_no']) ? '<div class="invalid-feedback">' . $errors['contact_no'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
                   <label for="gender">Gender</label>
                   <select id="gender" name="gender" class="form-control <?= isset($errors['gender']) ? 'is-invalid' : ''; ?>">
-                    <option <?= $user['gender'] == '1' ? 'selected' : ''; ?> value="1">Male</option>
-                    <option <?= $user['gender'] == '2' ? 'selected' : ''; ?> value="2">Female</option>
-                    <option <?= $user['gender'] == '3' ? 'selected' : ''; ?> value="3">Others</option>
-                    <option <?= $user['gender'] == '4' ? 'selected' : ''; ?> value="4">Prefer Not to Specify</option>
+                    <option <?= $user['GENDER'] == '1' ? 'selected' : ''; ?> value="1">Male</option>
+                    <option <?= $user['GENDER'] == '2' ? 'selected' : ''; ?> value="2">Female</option>
+                    <option <?= $user['GENDER'] == '3' ? 'selected' : ''; ?> value="3">Others</option>
+                    <option <?= $user['GENDER'] == '4' ? 'selected' : ''; ?> value="4">Prefer Not to Specify</option>
                   </select>
                   <?= isset($errors['gender']) ? '<div class="invalid-feedback">' . $errors['gender'] . '</div>' : ''; ?>
                 </div>

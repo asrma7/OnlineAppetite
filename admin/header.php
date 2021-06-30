@@ -75,10 +75,10 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="<?= $_SESSION['admin']['image'] ?? "/assets/images/adminlte/avatar2.png" ?>" class="img-circle elevation-2" alt="User Image">
+        <img src="<?= $_SESSION['admin']['IMAGE'] ?? "/assets/images/adminlte/avatar2.png" ?>" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="/admin/profile.php" class="d-block"><?= $_SESSION['admin']['full_name'] ?></a>
+        <a href="/admin/profile.php" class="d-block"><?= $_SESSION['admin']['FULL_NAME'] ?></a>
       </div>
     </div>
 
