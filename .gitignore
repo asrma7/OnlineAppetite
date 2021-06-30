@@ -1,2 +1,5 @@
 .DS_Store
 test.php
+uploads/users/*.*
+uploads/products/*.*
+uploads/categories/*.*
