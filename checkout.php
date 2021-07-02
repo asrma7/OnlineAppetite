@@ -17,8 +17,11 @@ if (!isset($_SESSION['user'])) {
             $discountedPrice += $product['discounted_price'] * $product['quantity'];
         }
     }
-    if (isset($voucher) && $total > ($voucher['MINIMUM'] / 100)) {
+    if ($voucher && $total > ($voucher['MINIMUM'] / 100)) {
         $discountedPrice -= ($voucher['DISCOUNT_AMOUNT'] / 100);
+    }
+    else {
+        $code = '';
     }
 }
 ?>
@@ -69,14 +72,12 @@ if (!isset($_SESSION['user'])) {
             </div>
 
             <div class="col-md-4 text-center px-2">
-                <form action="payment/handleOrders.php" method="post">
-                    <input type='hidden' name='method' value='cash'>
+                <form action="payment/handleOrders.php?voucherCode=<?= $code ?>&method=cash" method="post">
                     <input type='hidden' name='payment_gross' value='<?= $discountedPrice ?>'>
-                    <input type='hidden' name='voucher_code' value='<?= $code ?>'>
-                    <input type='hidden' name='slot' value='1' id="slotData">
+                    <input type='hidden' name='custom' value='1' id="slotData">
                     <button class="payment-option" onclick="event.preventDefault();cashSubmit(this)">
                         <img src="assets/images/cash.png" class="image-fluid" style="width:100px;">
-                        <p class="mx-4">Cash On Delivery</p>
+                        <p class="mx-4">Cash On Pickup</p>
                     </button>
                 </form>
             </div>
@@ -87,15 +88,13 @@ if (!isset($_SESSION['user'])) {
                     <input type='hidden' name='item_name' value='OnlineAppetite'>
                     <input type='hidden' name='no_shipping' value='1'>
                     <input type='hidden' name='currency_code' value='GBP'>
-                    <input type='hidden' name='method' value='paypal'>
-                    <input type='hidden' name='slot' value='1' id="slotField">
-                    <input type='hidden' name='voucher_code' value='<?= $code ?>'>
+                    <input type='hidden' name='custom' value='1' id="slotField">
                     <input type='hidden' name='rm' value='2'>
                     <input type="hidden" name="first_name" value="<?= explode(' ', $_SESSION['user']['FULL_NAME'])[0] ?>">
                     <input type="hidden" name="last_name" value="<?= end(explode(' ', $_SESSION['user']['FULL_NAME'])) ?>">
                     <input type="hidden" name="email" value="<?= $_SESSION['user']['EMAIL'] ?>">
                     <input type='hidden' name='cancel_return' value='<?= $siteUrl ?>/paymentCancelled.php'>
-                    <input type='hidden' name='return' value='<?= $siteUrl ?>/test.php?method=paypal'>
+                    <input type='hidden' name='return' value='<?= $siteUrl ?>/payment/handleOrders.php?voucherCode=<?= $code ?>&method=paypal'>
                     <input type="hidden" name="cmd" value="_xclick">
                     <button class="payment-option" onclick="event.preventDefault();paypalSubmit(this)">
                         <img src="assets/images/paypal.png" class="image-fluid" style="width:100px;">

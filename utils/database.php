@@ -50,6 +50,11 @@
 //     return $res;
 // }
 
+// function get_last_id($table) {
+//     global $conn;
+//     return $table."_seq.currval";
+// }
+
 // function toDate($date, $format) {
 //     return "TO_DATE('$date','$format')";
 // }
@@ -99,8 +104,13 @@
 //     return $res;
 // }
 
+// function get_last_id($table) {
+//     global $conn;
+//     return $conn->lastInsertId();
+// }
+
 // function toDate($date, $format) {
-//     return $date;
+//     return "'$date'";
 // }
 
 // function random_order()
@@ -155,6 +165,11 @@ function fetch_row($sql)
     }
     $res = mysqli_fetch_assoc($result);
     return $res;
+}
+
+function get_last_id($table) {
+    global $conn;
+    return mysqli_insert_id($conn);
 }
 
 function toDate($date, $format)

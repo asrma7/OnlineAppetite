@@ -325,10 +325,6 @@
                         if (response['status'] == 'success') {
                             $('#voucherDiscount').val(response['amount']);
                             $('.final-total').text(($('.subtotal-amt').text() - parseFloat($('#voucherDiscount').val())).toFixed(2));
-                            if ($obj != null) {
-                                $obj.data('oldValue', quantity);
-                                $obj.val(quantity);
-                            }
                         } else {
                             alert(response['message']);
                         }
