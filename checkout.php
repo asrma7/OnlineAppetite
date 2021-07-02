@@ -44,9 +44,9 @@ if (!isset($_SESSION['user'])) {
     <div class="py-5">
         <div class="container" style="max-width:700px;background-color:#FFFFFF">
             <h2 class="text-center pt-4"> Select Collection Slot </h1>
-                <select name="slot" id="slot" style="width:85%; height: 30px" class="my-4 mx-5">
+                <select name="slot" id="slot" style="width:85%; height: 30px" class="my-4 mx-5" onchange="slotChanged(this.value)">
                     <?php foreach ($slots as $slot) { ?>
-                        <option value="slot" <?= $slot['ORDER_COUNT'] >= 20 ? 'disabled' : '' ?>><?= $slot['SLOT_TIME'] ?> <?= $slot['ORDER_COUNT'] >= 20 ? '(Full)' : '' ?></option>
+                        <option value="<?= $slot['SLOT_ID'] ?>" <?= $slot['ORDER_COUNT'] >= 20 ? 'disabled' : '' ?>><?= $slot['SLOT_TIME'] ?> <?= $slot['ORDER_COUNT'] >= 20 ? '(Full)' : '' ?></option>
                     <?php } ?>
                 </select>
         </div>
@@ -62,43 +62,67 @@ if (!isset($_SESSION['user'])) {
         </div>
         <div class="row mt-4" style="max-width:790px">
             <div class="col-md-4 text-center">
-                <div class="payment-option">
-                    <a href="#"><img src="assets/images/card.png" class="image-fluid" style="width:100px;"> </a>
+                <div class="payment-option" onclick="alert('Feature not implemented!')">
+                    <img src="assets/images/card.png" class="image-fluid" style="width:100px;">
                     <p>Credit/debit Card</p>
                 </div>
             </div>
 
             <div class="col-md-4 text-center px-2">
-                <div class="payment-option">
-                    <a href="#"><img src="assets/images/cash.png" class="image-fluid" style="width:100px"> </a>
-                    <p>Cash On Delivery</p>
-                </div>
+                <form action="payment/handleOrders.php" method="post">
+                    <input type='hidden' name='method' value='cash'>
+                    <input type='hidden' name='payment_gross' value='<?= $discountedPrice ?>'>
+                    <input type='hidden' name='voucher_code' value='<?= $code ?>'>
+                    <input type='hidden' name='slot' value='1' id="slotData">
+                    <button class="payment-option" onclick="event.preventDefault();cashSubmit(this)">
+                        <img src="assets/images/cash.png" class="image-fluid" style="width:100px;">
+                        <p class="mx-4">Cash On Delivery</p>
+                    </button>
+                </form>
             </div>
             <div class="col-md-4 text-center">
-                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
                     <input type='hidden' name='business' value='<?= $businessEmail ?>'>
                     <input type='hidden' name='amount' value='<?= $discountedPrice ?>'>
                     <input type='hidden' name='item_name' value='OnlineAppetite'>
                     <input type='hidden' name='no_shipping' value='1'>
                     <input type='hidden' name='currency_code' value='GBP'>
+                    <input type='hidden' name='method' value='paypal'>
+                    <input type='hidden' name='slot' value='1' id="slotField">
+                    <input type='hidden' name='voucher_code' value='<?= $code ?>'>
+                    <input type='hidden' name='rm' value='2'>
                     <input type="hidden" name="first_name" value="<?= explode(' ', $_SESSION['user']['FULL_NAME'])[0] ?>">
                     <input type="hidden" name="last_name" value="<?= end(explode(' ', $_SESSION['user']['FULL_NAME'])) ?>">
                     <input type="hidden" name="email" value="<?= $_SESSION['user']['EMAIL'] ?>">
-                    <input type='hidden' name='cancel_return' value='<?= $siteUrl ?>/paypal/cancel.php'>
-                    <input type='hidden' name='return' value='<?= $siteUrl ?>/paypal/return.php'>
+                    <input type='hidden' name='cancel_return' value='<?= $siteUrl ?>/paymentCancelled.php'>
+                    <input type='hidden' name='return' value='<?= $siteUrl ?>/test.php?method=paypal'>
                     <input type="hidden" name="cmd" value="_xclick">
-                    <button class="payment-option">
-                        <a href="#"><img src="assets/images/paypal.png" class="image-fluid" style="width:100px;"> </a>
+                    <button class="payment-option" onclick="event.preventDefault();paypalSubmit(this)">
+                        <img src="assets/images/paypal.png" class="image-fluid" style="width:100px;">
                         <p class="mx-4">PayPal</p>
+                    </button>
+                </form>
             </div>
-            </form>
         </div>
-    </div>
     </div>
     <?php include 'footer.php'; ?>
     <script src="js/script.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script>
+        function slotChanged(val) {
+            document.getElementById("slotData").value = val;
+            document.getElementById("slotField").value = val;
+        }
 
+        function cashSubmit(form) {
+            if (document.getElementById("slotData").value != null)
+                form.parentElement.submit();
+        }
+
+        function paypalSubmit(form) {
+            if (document.getElementById("slotField").value != null)
+                form.parentElement.submit();
+        }
+    </script>
 </body>
 
 </html>

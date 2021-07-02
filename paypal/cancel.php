@@ -1,1 +1,0 @@
-Sorry payment cancelled!!

@@ -1,6 +1,7 @@
 <?php
 require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
+require_once '../utils/utils.php';
 if (!isset($_SESSION['user'])) {
     header('Location: /signin.php');
     exit();
@@ -8,7 +9,8 @@ if (!isset($_SESSION['user'])) {
     $user_id = $_SESSION['user']['USER_ID'];
 }
 
-extract($_POST);
+$data = sanitize_array($_POST);
+extract($data);
 
 if (!empty($rating) && !empty($review)) {
     $user_review = fetch_row("SELECT * FROM REVIEWS WHERE PRODUCT_ID = '$product_id' AND USER_ID = '$user_id'");

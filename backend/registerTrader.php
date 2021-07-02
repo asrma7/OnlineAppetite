@@ -1,9 +1,11 @@
 <?php
 include '../utils/database.php';
 require_once '../utils/sessionManager.php';
+require_once '../utils/utils.php';
 $old = $_POST;
-extract($_POST);
-$errors = [];  //declaration  of array named errors
+$data = sanitize_array($_POST);
+extract($data);
+$errors = [];
 if (empty($name)) {
     $errors['name'] = "Business Name is required.";
 } elseif (strlen($name) < 3) {
@@ -68,8 +70,9 @@ if (sizeof($errors) == 0) {
     ('$user_id', '$number', " . toDate($tradingSince, 'YYYY-MM-DD') . ", '$type', '$payments', '$message')";
     if (!$res1)
         $_SESSION['message'] = ["message" => "Error while user registeration", 'color' => "danger"];
-    else if (!query($sql2))
+    else if (!query($sql2)){
         $_SESSION['message'] = ["message" => "Error while trader registeration", 'color' => "danger"];
+    }
     else
         $_SESSION['message'] = ["message" => "Registered Successfully! Wait for verification", 'color' => "success"];
 } else {

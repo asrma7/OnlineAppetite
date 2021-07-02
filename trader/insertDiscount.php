@@ -1,11 +1,13 @@
 <?php
 include '../utils/database.php';
 require_once '../utils/sessionManager.php';
+require_once '../utils/utils.php';
 if (!isset($_SESSION['trader'])) {
     header('Location: /trader/login.php');
   }
 $old = $_POST;
-extract($_POST);
+$data = sanitize_array($_POST);
+extract($data);
 $errors = [];
 
 $user_id = $_SESSION['trader']['USER_ID'];

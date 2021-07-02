@@ -1,8 +1,10 @@
 <?php
 include '../utils/database.php';
 require_once '../utils/sessionManager.php';
+require_once '../utils/utils.php';
 $old = $_POST;
-extract($_POST);
+$data = sanitize_array($_POST);
+extract($data);
 $errors = [];
 if (empty($name)) {
     $errors['name'] = "Full name is required.";

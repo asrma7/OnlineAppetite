@@ -1,13 +1,15 @@
 <?php
 include '../utils/database.php';
 require_once '../utils/sessionManager.php';
+require_once '../utils/utils.php';
 if (!isset($_SESSION['user'])) {
     header('Location: /signin.php');
 } else {
     $user_id = $_SESSION['user']['USER_ID'];
 }
 $old = $_POST;
-extract($_POST);
+$data = sanitize_array($_POST);
+extract($data);
 $image = $_FILES['profileImage'];
 $errors = [];
 if (!empty($full_name)) {

@@ -1,11 +1,13 @@
 <?php
 include '../utils/database.php';
 require_once '../utils/sessionManager.php';
+require_once '../utils/utils.php';
 if (!isset($_SESSION['admin'])) {
     header('Location: /admin/login.php');
 }
 $old = $_POST;
-extract($_POST);
+$data = sanitize_array($_POST);
+extract($data);
 $errors = [];
 
 //voucher name

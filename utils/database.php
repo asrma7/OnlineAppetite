@@ -125,45 +125,49 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-function query($sql){
-global $conn;
-$result = mysqli_query($conn, $sql);
-if(!$result){
-    die(mysqli_error($conn)." : SQL : ".$sql);
-}
-return $result;
-}
-
-function fetch_all_row($sql){
-global $conn;
-$result = mysqli_query($conn, $sql);
-if(!$result){
-    die(mysqli_error($conn)." : SQL : ".$sql);
-}
-$res = mysqli_fetch_all($result, MYSQLI_ASSOC);
-return $res;
+function query($sql)
+{
+    global $conn;
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+        die(mysqli_error($conn) . " : SQL : " . $sql);
+    }
+    return $result;
 }
 
-function fetch_row($sql){
-global $conn;
-$result = mysqli_query($conn, $sql);
-if(!$result){
-    die(mysqli_error($conn)." : SQL : ".$sql);
-}
-$res = mysqli_fetch_assoc($result);
-return $res;
+function fetch_all_row($sql)
+{
+    global $conn;
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+        die(mysqli_error($conn) . " : SQL : " . $sql);
+    }
+    $res = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $res;
 }
 
-function toDate($date, $format) {
-return "STR_TO_DATE('$date', '%Y-%m-%d')";
+function fetch_row($sql)
+{
+    global $conn;
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+        die(mysqli_error($conn) . " : SQL : " . $sql);
+    }
+    $res = mysqli_fetch_assoc($result);
+    return $res;
+}
+
+function toDate($date, $format)
+{
+    return "STR_TO_DATE('$date', '%Y-%m-%d')";
 }
 
 function random_order()
 {
-return "RAND()";
+    return "RAND()";
 }
 
 function limit_result($row_count)
 {
-return "LIMIT $row_count";
+    return "LIMIT $row_count";
 }

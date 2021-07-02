@@ -1,11 +1,14 @@
 <?php
 include '../utils/database.php';
 require_once '../utils/sessionManager.php';
+require_once '../utils/utils.php';
+
 if (!isset($_SESSION['trader'])) {
     header('Location: /trader/login.php');
 }
 $old = $_POST;
-extract($_POST);
+$data = sanitize_array($_POST);
+extract($data);
 $errors = [];
 
 $user_id = $_SESSION['trader']['USER_ID'];
@@ -15,8 +18,6 @@ if (empty($productName)) {
     $errors['productName'] = "Product Name is required.";
 } elseif (strlen($productName) < 3) {
     $errors['productName'] = "Product Name must be atleast 3 characters long.";
-} elseif (!preg_match('/^[a-zA-Z1-9&.\- ]+$/', $productName)) {
-    $errors['productName'] = "Please enter a valid product name.";
 }
 //price
 if (empty($price)) {
@@ -44,9 +45,6 @@ if (empty($description)) {
 } elseif (strlen($description) < 20) {
     $errors['description'] = "Description must be atleast 20 characters long.";
 }
-else {
-    $description = htmlspecialchars($description, ENT_QUOTES);
-}
 //category
 if (file_exists($_FILES['productImage1']["tmp_name"])) {
 
@@ -71,7 +69,9 @@ if (file_exists($_FILES['productImage1']["tmp_name"])) {
         if (($_FILES['productImage1']["size"] > 2000000)) {
             $errors['productImage1'] = "Image size exceeds 2MB.";
         }    // Validate image file dimension
-        else if ($width > "500" || $height > "500") {
+        else if ($width != $height) {
+            $errors['productImage2'] = "Image should be a square image.";
+        } else if ($width > "500" || $height > "500") {
             $errors['productImage1'] = "Image dimension should be within 500X500.";
         }
     }
@@ -103,7 +103,7 @@ if (file_exists($_FILES['productImage2']["tmp_name"])) {
             $errors['productImage2'] = "Image size exceeds 2MB.";
         }    // Validate image file dimension
         else if ($width != $height) {
-            $errors['productImage2'] = "Image should be a square iamge.";
+            $errors['productImage2'] = "Image should be a square image.";
         } else if ($width > "500" || $height > "500") {
             $errors['productImage2'] = "Image dimension should be within 500X500.";
         }

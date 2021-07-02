@@ -1,11 +1,13 @@
 <?php
 include '../utils/database.php';
 require_once '../utils/sessionManager.php';
+require_once '../utils/utils.php';
 if (!isset($_SESSION['trader'])) {
     header('Location: /trader/login.php');
   }
 $old = $_POST;
-extract($_POST);
+$data = sanitize_array($_POST);
+extract($data);
 $errors = [];
 
 $trader_id = $_SESSION['trader']['USER_ID'];
@@ -15,7 +17,7 @@ if (empty($shopName)) {
     $errors['shopName'] = "Shop Name is required.";  
 } elseif (strlen($shopName) < 3) {
     $errors['shopName'] = "Shop Name must be atleast 3 characters long.";
-} elseif (!preg_match('/^[a-zA-Z0-9.&\- ]+$/', $shopName)) {
+} elseif (!preg_match('/^[a-zA-Z0-9 ]+$/', $shopName)) {
     $errors['shopName'] = "Please enter a valid shop name.";
 }
 //Pan no.

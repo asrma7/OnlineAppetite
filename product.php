@@ -6,8 +6,15 @@ $user_id = $_SESSION['user']['USER_ID'] ?? "";
 $currentProduct = fetch_row("SELECT PRODUCTS.*, SHOPS.SHOP_ID, SHOP_NAME, (SELECT AVG(RATING) FROM REVIEWS WHERE REVIEWS.PRODUCT_ID = PRODUCTS.PRODUCT_ID) AS RATING FROM PRODUCTS INNER JOIN SHOPS ON SHOPS.SHOP_ID = PRODUCTS.SHOP_ID WHERE PRODUCT_ID = '$product_id'");
 $discounts = fetch_all_row("SELECT RATE FROM DISCOUNTS WHERE ((DISCOUNT_TYPE = 'all') OR (DISCOUNT_TYPE = 'category' AND TARGET_ID = '" . $currentProduct['CATEGORY_ID'] . "') OR (DISCOUNT_TYPE = 'product' AND TARGET_ID = '" . $currentProduct['PRODUCT_ID'] . "') AND STARTS_ON < CURRENT_DATE AND EXPIRES_ON > CURRENT_DATE)");
 $current_discounted_price = round($currentProduct['PRICE'] / 100, 2);
+$site_discount = 0.0;
+$product_discount = 0.0;
 foreach ($discounts as $discount) {
     $current_discounted_price = $current_discounted_price * (100 - $discount['RATE']) * 0.01;
+    if($discount['DISCOUNT_TYPE'] == 'product'){
+        $product_discount += $current_discounted_price * $discount['RATE'] * 0.01;
+    } else {
+        $site_discount += $current_discounted_price * $discount['RATE'] * 0.01;
+    }
 }
 $current_discount_rate = (round($currentProduct['PRICE'] / 100, 2) - $current_discounted_price) * 100 / round($currentProduct['PRICE'] / 100, 2);
 $products = fetch_all_row("SELECT * FROM PRODUCTS WHERE PRODUCT_ID != '$product_id' AND CATEGORY_ID = '" . $currentProduct['CATEGORY_ID'] . "' ORDER BY CREATED_AT " . limit_result(10));
@@ -332,6 +339,8 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                 'stock': '<?= $currentProduct['STOCK'] ?>',
                 'price': '<?= round($currentProduct['PRICE'] / 100, 2) ?>',
                 'discounted_price': '<?= round($current_discounted_price, 2) ?>',
+                'site_discount': '<?= round($site_discount, 2) ?>',
+                'product_discount': '<?= round($product_discount, 2) ?>',
                 'discount_rate': '<?= round($current_discount_rate, 2) ?>',
                 'quantity': quantity,
             };
