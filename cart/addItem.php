@@ -2,7 +2,7 @@
 require_once '../utils/sessionManager.php';
 
 if (!isset($_SESSION['user'])) {
-    header('Location: /signin.php');
+    echo json_encode(['status'=>'error', 'message'=>'signin']);
     exit();
 } else {
     $cart = $_SESSION['user']['cart'] ?? [];

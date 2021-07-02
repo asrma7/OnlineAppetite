@@ -15,7 +15,7 @@ if (empty($productName)) {
     $errors['productName'] = "Product Name is required.";
 } elseif (strlen($productName) < 3) {
     $errors['productName'] = "Product Name must be atleast 3 characters long.";
-} elseif (!preg_match('/^[a-zA-Z\- ]+$/', $productName)) {
+} elseif (!preg_match('/^[a-zA-Z1-9&.\- ]+$/', $productName)) {
     $errors['productName'] = "Please enter a valid product name.";
 }
 //price
@@ -44,6 +44,9 @@ if (empty($description)) {
 } elseif (strlen($description) < 20) {
     $errors['description'] = "Description must be atleast 20 characters long.";
 }
+else {
+    $description = htmlspecialchars($description, ENT_QUOTES);
+}
 //category
 if (file_exists($_FILES['productImage1']["tmp_name"])) {
 
@@ -68,8 +71,8 @@ if (file_exists($_FILES['productImage1']["tmp_name"])) {
         if (($_FILES['productImage1']["size"] > 2000000)) {
             $errors['productImage1'] = "Image size exceeds 2MB.";
         }    // Validate image file dimension
-        else if ($width > "250" || $height > "250") {
-            $errors['productImage1'] = "Image dimension should be within 250X250.";
+        else if ($width > "500" || $height > "500") {
+            $errors['productImage1'] = "Image dimension should be within 500X500.";
         }
     }
 } else {

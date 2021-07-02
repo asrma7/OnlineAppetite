@@ -15,7 +15,7 @@ if (empty($shopName)) {
     $errors['shopName'] = "Shop Name is required.";  
 } elseif (strlen($shopName) < 3) {
     $errors['shopName'] = "Shop Name must be atleast 3 characters long.";
-} elseif (!preg_match('/^[a-zA-Z ]+$/', $shopName)) {
+} elseif (!preg_match('/^[a-zA-Z0-9.&\- ]+$/', $shopName)) {
     $errors['shopName'] = "Please enter a valid shop name.";
 }
 //Pan no.

@@ -1,14 +1,19 @@
 <?php
 require_once 'utils/sessionManager.php';
-if (isset($_SESSION['message'])) {
-    $message = $_SESSION['message'];
-    unset($_SESSION['message']);
-}
-if (isset($_SESSION['errors'])) {
-    $errors = $_SESSION['errors'];
-    $old = $_SESSION['old'];
-    unset($_SESSION['errors']);
-    unset($_SESSION['old']);
+if (isset($_SESSION['trader'])) {
+    header('Location: /trader');
+    exit();
+} else {
+    if (isset($_SESSION['message'])) {
+        $message = $_SESSION['message'];
+        unset($_SESSION['message']);
+    }
+    if (isset($_SESSION['errors'])) {
+        $errors = $_SESSION['errors'];
+        $old = $_SESSION['old'];
+        unset($_SESSION['errors']);
+        unset($_SESSION['old']);
+    }
 }
 ?>
 <!DOCTYPE html>

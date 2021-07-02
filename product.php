@@ -39,7 +39,7 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
     <div class="text-center">
         <div class="container-lg py-5">
             <div class="row">
-                <div class="col-md-7 py-5" style="background-color:#c4c4c4">
+                <div class="col-md-7 py-5" style="background-color:#ffffff">
                     <div class="row justify-content-around">
                         <div class="col-sm-5" style="display:inline-block; text-align:start;">
                             <img src="<?= $currentProduct['IMAGE1'] ?>" class="img-fluid" id="product1">
@@ -99,11 +99,11 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                         </div>
                     </div>
                     <div class="product-description p-5">
-                        <h2>Product details of <?= $currentProduct['PRODUCT_NAME'] ?></h2>
+                        <h4>Product details of <?= $currentProduct['PRODUCT_NAME'] ?></h4>
                         <?= $currentProduct['DESCRIPTION'] ?>
                     </div>
                 </div>
-                <div class="col-md-4 offset-md-1 py-4 d-flex flex-column justify-content-between" style="text-align:start;background-color:#c4c4c4">
+                <div class="col-md-4 offset-md-1 py-4 d-flex flex-column justify-content-between" style="text-align:start;background-color:#ffffff">
                     <div>
                         <div style="color:#5B5B5B">Sold By</div>
                         <a href="shopProfile.php?id=<?= $currentProduct['SHOP_ID'] ?>">
@@ -117,7 +117,7 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                                     $user_review = $review;
                             ?>
                                 <div class="customer-review p-2">
-                                    <img src="<?= $review['IMAGE']??'/assets/images/adminlte/avatar2.png' ?>" class="profilepic" alt="">
+                                    <img src="<?= $review['IMAGE'] ?? '/assets/images/adminlte/avatar2.png' ?>" class="profilepic" alt="">
                                     <span class="customer-name"><?= $review['FULL_NAME'] ?></span>
                                     <div class="stars d-inline-block px-3">
                                         <?php
@@ -356,9 +356,13 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                                 window.location.href = "/cart.php";
                             }
                         } else {
-                            r = confirm(response['message']);
-                            if (r == true) {
-                                window.location.href = "/cart.php";
+                            if (response['message'] == 'signin') {
+                                window.location.href = '/signin.php';
+                            } else {
+                                r = confirm(response['message']);
+                                if (r == true) {
+                                    window.location.href = "/cart.php";
+                                }
                             }
                         }
                     });
