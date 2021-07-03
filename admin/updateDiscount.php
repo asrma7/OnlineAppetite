@@ -47,11 +47,10 @@ if (empty($expires)) {
 
 //error size
 if (sizeof($errors) == 0) {
-    if ($discount_type == "category") {
-        $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, TARGET_ID, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$target', '$discount_type', " . toDate($starts, "YYYY-MM-DD") . ", " . toDate($expires, "YYYY-MM-DD") . ", $user_id)";
-    } else {
-        $sql = "INSERT INTO DISCOUNTS (DISCOUNT_NAME, RATE, DISCOUNT_TYPE, STARTS_ON, EXPIRES_ON, CREATED_BY) VALUES ('$discountName', '$rate', '$discount_type', " . toDate($starts, "YYYY-MM-DD") . ", " . toDate($expires, "YYYY-MM-DD") . ", $user_id)";
-    }
+    $sql = "UPDATE DISCOUNTS SET DISCOUNT_NAME = '$discountName', RATE = '$rate'";
+    if ($discount_type == "category")
+        $sql .= ", TARGET_ID = '$target'";
+    $sql .= ", DISCOUNT_TYPE = '$discount_type', STARTS_ON = " . toDate($starts, "YYYY-MM-DD") . ", EXPIRES_ON = " . toDate($expires, "YYYY-MM-DD") . ", CREATED_BY =  '$user_id' WHERE DISCOUNT_ID = '$discountID'";
     $res = query($sql);
     if (!$res)
         $_SESSION['message'] = ["message" => "Error while inserting Discount", 'color' => "danger"];
@@ -62,4 +61,4 @@ if (sizeof($errors) == 0) {
     $_SESSION['errors'] = $errors;
     $_SESSION['old'] = $old;
 }
-header('Location:/admin/addDiscount.php');
+header('Location:/admin/editDiscount.php?id=' . $discountID);

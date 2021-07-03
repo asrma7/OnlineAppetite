@@ -94,7 +94,7 @@ if(!isset($_SESSION['admin']))
                 <th class="no-sort">Email verified at</th>
                 <th>Gender</th>
                 <th>Image</th>
-                <th class="no-sort no-search">Edit/Delete</th>
+                <th class="no-sort no-search">Reset Password</th>
               </tr>
             </thead>
             <tbody>
@@ -108,13 +108,12 @@ if(!isset($_SESSION['admin']))
                   <td><?= $customer['GENDER'] ?></td>
                   <td>
                     <div class="image-preview">
-                      <img class="abs-image" src="<?= $customer['IMAGE'] ?>" alt="User Image">
+                      <img class="abs-image" src="<?= $customer['IMAGE']??'../assets/images/adminlte/avatar2.png' ?>" alt="User Image">
                     </div>
                   </td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-warning m-1">Edit</button>
-                      <button class="btn btn-danger m-1">Delete</button>
+                      <button class="btn btn-danger m-1" onclick="window.location.replace('resetUserPassword.php?id=<?= $customer['USER_ID'] ?>')">Reset Password</button>
                     </div>
                   </td>
                 </tr>
@@ -129,7 +128,7 @@ if(!isset($_SESSION['admin']))
                 <th>Email verified at</th>
                 <th>Gender</th>
                 <th>Image</th>
-                <th>Edit/Delete</th>
+                <th>Reset Password</th>
               </tr>
             </tfoot>
           </table>

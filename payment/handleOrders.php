@@ -10,10 +10,10 @@ if (!isset($_SESSION['user'])) {
 
 $method = $_GET['method'];
 $slot = $_POST['custom'];
-$txn_id = "'" . $_POST['txn_id'] . "'" ?? "NULL";
+$txn_id = isset($_POST['txn_id']) ? "'" . $_POST['txn_id'] . "'" : "NULL";
 $payment_fee = $_POST['payment_fee'] ?? null;
 $payment_fee *= 100;
-$code = "'" . $_GET['voucherCode'] . "'" ?? "NULL";
+$code = isset($_GET['voucherCode']) ? "'" . $_GET['voucherCode'] . "'" : "NULL";
 $amount = $_POST['payment_gross'] * 100;
 $voucher = fetch_row("SELECT * FROM VOUCHERS WHERE VOUCHER_CODE = $code");
 if ($voucher) {

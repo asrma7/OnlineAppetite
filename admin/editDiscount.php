@@ -14,7 +14,20 @@ if (!isset($_SESSION['admin'])) {
     unset($_SESSION['errors']);
     unset($_SESSION['old']);
   }
+  if (isset($_GET['id'])) {
+    $discount_id = $_GET['id'];
+  } else {
+    header('Location: ../404.php');
+    exit();
+  }
 }
+$fetch = fetch_row("SELECT * FROM DISCOUNTS WHERE DISCOUNT_ID = '$discount_id'");
+if (!$fetch) {
+  header('Location: ../404.php');
+  exit();
+}
+$fetch['discount_type'] = $old['discount_type'] ?? $fetch['DISCOUNT_TYPE'];
+$fetch['target'] = $old['target'] ?? $fetch['TARGET_ID'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +62,7 @@ if (!isset($_SESSION['admin'])) {
       <img class="animation__shake" src="/assets/images/logoSmall.png" alt="DFOS" height="60" width="60">
     </div>
     <?php
-    $page = "AddDiscount";
+    $page = "ViewDiscounts";
     include 'header.php';
     $categories = fetch_all_row('SELECT * FROM CATEGORIES');
     ?>
@@ -67,7 +80,7 @@ if (!isset($_SESSION['admin'])) {
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item">Discounts</li>
-                <li class="breadcrumb-item active">Add Discount</li>
+                <li class="breadcrumb-item active">Edit Discount</li>
               </ol>
             </div>
           </div>
@@ -77,9 +90,10 @@ if (!isset($_SESSION['admin'])) {
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <h5 class="mb-2">Add Discount</h5>
+          <h5 class="mb-2">Edit Discount</h5>
 
-          <form class="addForm" action="insertDiscount.php" method="POST">
+          <form class="addForm" action="updateDiscount.php" method="POST">
+            <input type="hidden" name="discountID" value="<?= $discount_id ?>">
             <?php if (isset($message)) { ?>
               <div class="alert alert-<?= $message['color'] ?> text-center" role="alert">
                 <?= $message['message']; ?>
@@ -88,34 +102,33 @@ if (!isset($_SESSION['admin'])) {
             <!--Discount name-->
             <div class="form-group">
               <label for="discountName">Discount Name</label>
-              <input type="text" id="discountName" name="discountName" class="form-control <?= isset($errors['discountName']) ? 'is-invalid' : ''; ?>" value="<?= $old['discountName'] ?? ''; ?>">
+              <input type="text" id="discountName" name="discountName" class="form-control <?= isset($errors['discountName']) ? 'is-invalid' : ''; ?>" value="<?= $old['discountName'] ?? $fetch['DISCOUNT_NAME']; ?>">
               <?= isset($errors['discountName']) ? '<div class="invalid-feedback">' . $errors['discountName'] . '</div>' : ''; ?>
             </div>
             <!--pan no.-->
             <div class="form-group">
               <label for="rate">Discount Rate</label>
-              <input type="text" id="rate" name="rate" class="form-control <?= isset($errors['rate']) ? 'is-invalid' : ''; ?>" value="<?= $old['rate'] ?? ''; ?>">
+              <input type="text" id="rate" name="rate" class="form-control <?= isset($errors['rate']) ? 'is-invalid' : ''; ?>" value="<?= $old['rate'] ?? $fetch['RATE']; ?>">
               <?= isset($errors['rate']) ? '<div class="invalid-feedback">' . $errors['rate'] . '</div>' : ''; ?>
             </div>
             <!--Business type-->
             <div class="form-group">
               <label for="discount_type">Discount Type</label>
               <select class="form-control select2 select2-danger <?= isset($errors['discount_type']) ? 'is-invalid' : ''; ?>" id="discount_type" name="discount_type" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                <option <?php echo !isset($old['discount_type']) ? 'selected' : ''; ?> disabled>Select one</option>
-                <option <?php if (isset($old['discount_type'])) echo $old['discount_type'] == 'all' ? 'selected' : ''; ?> value="all">All Products</option>
-                <option <?php if (isset($old['discount_type'])) echo $old['discount_type'] == 'category' ? 'selected' : ''; ?> value="category">Category</option>
+                <option <?= $fetch['discount_type'] == 'all' ? 'selected' : ''; ?> value="all">All Products</option>
+                <option <?= $fetch['discount_type'] == 'category' ? 'selected' : ''; ?> value="category">Category</option>
               </select>
               <?= isset($errors['discount_type']) ? '<div class="invalid-feedback">' . $errors['discount_type'] . '</div>' : ''; ?>
             </div>
             <!--target-->
             <div class="form-group">
               <label for="target">Target</label>
-              <select <?= isset($old['discount_type'])?($old['discount_type'] == 'all'?'disabled':''):'disabled'?> class="form-control select2 select2-danger <?= isset($errors['target']) ? 'is-invalid' : ''; ?>" id="target" name="target" data-dropdown-css-class="select2-danger" style="width: 100%;">
-                <option <?php echo !isset($old['target']) ? 'selected' : ''; ?> disabled>Select one</option>
+              <select <?= $fetch['discount_type'] == 'all' ? 'disabled' : '' ?> class="form-control select2 select2-danger <?= isset($errors['target']) ? 'is-invalid' : ''; ?>" id="target" name="target" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                <option <?php echo !isset($fetch['target']) ? 'selected' : ''; ?> disabled>Select one</option>
                 <?php
                 foreach ($categories as $category) {
                 ?>
-                  <option <?php if (isset($old['target'])) echo $old['target'] == $category['CATEGORY_ID'] ? 'selected' : ''; ?> value="<?= $category['CATEGORY_ID'] ?>"><?= $category['CATEGORY_NAME'] ?></option>
+                  <option <?= $fetch['target'] == $category['CATEGORY_ID'] ? 'selected' : ''; ?> value="<?= $category['CATEGORY_ID'] ?>"><?= $category['CATEGORY_NAME'] ?></option>
                 <?php } ?>
               </select>
               <?= isset($errors['target']) ? '<div class="invalid-feedback">' . $errors['target'] . '</div>' : ''; ?>
@@ -123,17 +136,17 @@ if (!isset($_SESSION['admin'])) {
             <!--starts on-->
             <div class="form-group">
               <label for="starts">Starts On</label>
-              <input type="date" id="starts" name="starts" class="form-control <?= isset($errors['starts']) ? 'is-invalid' : ''; ?>" value="<?= $old['starts'] ?? ''; ?>">
+              <input type="date" id="starts" name="starts" class="form-control <?= isset($errors['starts']) ? 'is-invalid' : ''; ?>" value="<?= $old['starts'] ?? date('Y-m-d', strtotime($fetch['STARTS_ON'])); ?>">
               <?= isset($errors['starts']) ? '<div class="invalid-feedback">' . $errors['starts'] . '</div>' : ''; ?>
             </div>
             <!--expires on-->
             <div class="form-group">
               <label for="expires">Expires On</label>
-              <input type="date" id="expires" name="expires" class="form-control <?= isset($errors['expires']) ? 'is-invalid' : ''; ?>" value="<?= $old['expires'] ?? ''; ?>">
+              <input type="date" id="expires" name="expires" class="form-control <?= isset($errors['expires']) ? 'is-invalid' : ''; ?>" value="<?= $old['expires'] ?? date('Y-m-d', strtotime($fetch['EXPIRES_ON'])); ?>">
               <?= isset($errors['expires']) ? '<div class="invalid-feedback">' . $errors['expires'] . '</div>' : ''; ?>
             </div>
             <!--submit button-->
-            <button type="submit" class="btn btn-outline-secondary mb-3">Add Discount</button>
+            <button type="submit" class="btn btn-outline-secondary mb-3">Edit Discount</button>
           </form>
 
         </div><!-- /.container-fluid -->

@@ -79,7 +79,7 @@ if (!isset($_SESSION['admin'])) {
             <tbody>
               <?php foreach ($discounts as $discount) { ?>
                 <tr>
-                <td><?= $discount['DISCOUNT_ID'] ?></td>
+                  <td><?= $discount['DISCOUNT_ID'] ?></td>
                   <td><?= $discount['DISCOUNT_NAME'] ?></td>
                   <td><?= $discount['DISCOUNT_TYPE'] ?></td>
                   <td class="text-center"><?= $discount['TARGET_ID'] ?? '-' ?></td>
@@ -89,7 +89,7 @@ if (!isset($_SESSION['admin'])) {
                   <td><?= $discount['FULL_NAME'] ?></td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-warning m-1">Edit</button>
+                      <button class="btn btn-warning m-1" onclick="window.location.href = 'editDiscount.php?id=<?= $discount['DISCOUNT_ID'] ?>'">Edit</button>
                       <button class="btn btn-danger m-1">Delete</button>
                     </div>
                   </td>

@@ -72,7 +72,7 @@ if(!isset($_SESSION['admin']))
                 <th class="no-sort">Pan no./Vat no.</th>
                 <th>Shop Type</th>
                 <th>Products</th>
-                <th class="no-sort no-search">Edit/Delete</th>
+                <th class="no-sort no-search">View</th>
               </tr>
             </thead>
             <tbody>
@@ -92,8 +92,7 @@ if(!isset($_SESSION['admin']))
                   <td><?= $shop['TOTAL_PRODUCTS'] ?></td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-warning m-1">Edit</button>
-                      <button class="btn btn-danger m-1">Delete</button>
+                      <button class="btn btn-info m-1" onclick="window.location.href='../shopProfile.php?id=<?= $shop['SHOP_ID'] ?>'">View</button>
                     </div>
                   </td>
                 </tr>
@@ -108,7 +107,7 @@ if(!isset($_SESSION['admin']))
                 <th>Pan no./Vat no.</th>
                 <th>Shop Type</th>
                 <th>Products</th>
-                <th>Edit/Delete</th>
+                <th>View</th>
               </tr>
             </tfoot>
           </table>

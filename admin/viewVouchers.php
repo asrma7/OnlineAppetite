@@ -81,7 +81,7 @@ if (!isset($_SESSION['admin'])) {
                   <td><?= number_format((float)$voucher['MINIMUM'] / 100, 2, '.', '') ?></td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-warning m-1">Edit</button>
+                      <button class="btn btn-warning m-1" onclick="window.location.href = 'editVoucher.php?id=<?= $voucher['VOUCHER_ID'] ?>'">Edit</button>
                       <button class="btn btn-danger m-1">Delete</button>
                     </div>
                   </td>

@@ -1,7 +1,7 @@
 <?php
 require_once '../utils/sessionManager.php';
-if(!isset($_SESSION['admin']))
-{
+require_once '../utils/database.php';
+if (!isset($_SESSION['admin'])) {
   header('Location: /admin/login.php');
 }
 ?>
@@ -35,6 +35,7 @@ if(!isset($_SESSION['admin']))
     <?php
     $page = "Orders";
     include 'header.php';
+    $orders = fetch_all_row('SELECT * FROM ORDERS INNER JOIN SLOTS USING (SLOT_ID)');
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -64,26 +65,46 @@ if(!isset($_SESSION['admin']))
             <thead>
               <tr>
                 <th>Order ID</th>
-                <th>Order Date</th>
                 <th>Customer ID</th>
-                <th class="no-sort">Products</th>
+                <th>Order Date</th>
+                <th>Slot Time</th>
+                <th>Amount</th>
+                <th>Voucher Code</th>
+                <th>Voucher Discount</th>
                 <th>Status</th>
-                <th class="no-sort no-search">View/Confirm/Cancel</th>
+                <th class="no-sort no-search">View/Print</th>
               </tr>
             </thead>
             <tbody>
-              <?php for ($i = 0; $i < 50; $i++) { ?>
+              <?php foreach ($orders as $order) { ?>
                 <tr>
-                  <td>1</td>
-                  <td>04-12-2021</td>
-                  <td>1</td>
-                  <td>Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr</td>
-                  <td>Pending</td>
+                  <td><?= $order['ORDER_ID'] ?></td>
+                  <td><?= $order['USER_ID'] ?></td>
+                  <td><?= $order['ORDER_DATE'] ?></td>
+                  <td><?= $order['SLOT_TIME'] ?></td>
+                  <td><?= number_format($order['AMOUNT'] / 100, 2) ?></td>
+                  <td><?= $order['VOUCHER_CODE'] ?? '-' ?></td>
+                  <td><?= number_format($order['VOUCHER_DISCOUNT'] / 100, 2) ?></td>
+                  <td><?php
+                      switch ($order['STATUS']) {
+                        case 1:
+                          echo 'Pending';
+                          break;
+                        case 2:
+                          echo 'Confirmed';
+                          break;
+                        case 3:
+                          echo 'Cancelled';
+                          break;
+                      }
+                      ?></td>
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-info m-1">View</button>
-                      <button class="btn btn-success m-1">Confirm</button>
-                      <button class="btn btn-danger m-1">Cancel</button>
+                      <form action="../payment/downloadInvoice.php" method="post">
+                        <input type="hidden" name="order_id" value="<?= $order['ORDER_ID'] ?>">
+                        <button class="btn btn-success m-1">Print</button>
+                      </form>
                     </div>
                   </td>
                 </tr>
@@ -91,13 +112,15 @@ if(!isset($_SESSION['admin']))
             </tbody>
             <tfoot>
               <tr>
-
                 <th>Order ID</th>
-                <th>Order Date</th>
                 <th>Customer ID</th>
-                <th>Products</th>
+                <th>Order Date</th>
+                <th>Slot Time</th>
+                <th>Amount</th>
+                <th>Voucher Code</th>
+                <th>Voucher Discount</th>
                 <th>Status</th>
-                <th>View/Confirm/Cancel</th>
+                <th>View/Print</th>
               </tr>
             </tfoot>
           </table>

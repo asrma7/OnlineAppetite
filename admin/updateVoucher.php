@@ -11,14 +11,14 @@ extract($data);
 $errors = [];
 
 //voucher code
-if (empty($voucherCode)) {
-    $errors['voucherCode'] = "Voucher Code is required.";
-} elseif (strlen($voucherCode) < 3) {
-    $errors['voucherCode'] = "Voucher Code must be atleast 3 characters long.";
-} elseif (!preg_match('/^[a-zA-Z0-9]+$/', $voucherCode)) {
-    $errors['voucherCode'] = "Voucher code can only be alphanumeric";
-} elseif(!checkCodeUnique($voucherCode)) {
-    $errors['voucherCode'] = "Voucher code already exists";
+if (!empty($voucherCode)) {
+    if (strlen($voucherCode) < 3) {
+        $errors['voucherCode'] = "Voucher Code must be atleast 3 characters long.";
+    } elseif (!preg_match('/^[a-zA-Z0-9]+$/', $voucherCode)) {
+        $errors['voucherCode'] = "Voucher code can only be alphanumeric";
+    } elseif (!checkCodeUnique($voucherCode)) {
+        $errors['voucherCode'] = "Voucher code already exists";
+    }
 }
 //amount.
 if (empty($amount)) {
@@ -36,12 +36,15 @@ if (empty($minimum)) {
 
 //error size
 if (sizeof($errors) == 0) {
-    $sql = "INSERT INTO VOUCHERS (VOUCHER_CODE, DISCOUNT_AMOUNT, MINIMUM) VALUES ('$voucherCode', '$amount'*100, '$minimum'*100)";
+    $sql = "UPDATE VOUCHERS SET";
+    if (!empty($voucherCode))
+        $sql .= " VOUCHER_CODE = '$voucherCode',";
+    $sql .= " DISCOUNT_AMOUNT = '$amount'*100, MINIMUM = '$minimum'*100 WHERE VOUCHER_ID = '$voucherID'";
     $res = query($sql);
     if (!$res)
-        $_SESSION['message'] = ["message" => "Error while inserting Voucher", 'color' => "danger"];
+        $_SESSION['message'] = ["message" => "Error while updating Voucher", 'color' => "danger"];
     else
-        $_SESSION['message'] = ["message" => "Voucher added Successfully!", 'color' => "success"];
+        $_SESSION['message'] = ["message" => "Voucher updated Successfully!", 'color' => "success"];
 } else {
     $_SESSION['message'] = ["message" => "Please fix the following errors", 'color' => "danger"];
     $_SESSION['errors'] = $errors;
@@ -55,4 +58,4 @@ function checkCodeUnique($code)
     if ($count > 0) return false;
     return true;
 }
-header('Location:/admin/addVoucher.php');
+header('Location:/admin/editVoucher.php?id=' . $voucherID);

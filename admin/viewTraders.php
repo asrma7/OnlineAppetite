@@ -35,7 +35,7 @@ if (!isset($_SESSION['admin'])) {
     <?php
     $page = "Traders";
     include 'header.php';
-    $traders = fetch_all_row("SELECT *, (SELECT COUNT(*) FROM SHOPS WHERE SHOPS.TRADER_ID = TRADERS.USER_ID) AS TOTAL_SHOPS FROM USERS LEFT JOIN TRADERS ON USERS.USER_ID = TRADERS.USER_ID WHERE USER_ROLE=='2'");
+    $traders = fetch_all_row("SELECT *, (SELECT COUNT(*) FROM SHOPS WHERE SHOPS.TRADER_ID = TRADERS.USER_ID) AS TOTAL_SHOPS FROM USERS LEFT JOIN TRADERS ON USERS.USER_ID = TRADERS.USER_ID WHERE USER_ROLE='2'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -110,7 +110,7 @@ if (!isset($_SESSION['admin'])) {
                   </td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-info m-1">View</button>
+                      <button class="btn btn-info m-1" onclick="window.location.href='../traderProfile.php?id=<?= $trader['USER_ID'] ?>'">View</button>
                       <button class="btn btn-danger m-1">Suspend</button>
                     </div>
                   </td>

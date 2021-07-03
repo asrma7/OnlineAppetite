@@ -77,11 +77,13 @@ if (file_exists($image["tmp_name"])) {
     }
 }
 if (sizeof($errors) == 0) {
-    $target = "../uploads/users/" . $user_id . '.' . $file_extension;
-    if (move_uploaded_file($image["tmp_name"], $target)) {
-        $profileImage = '/uploads/users/' . $user_id . '.' . $file_extension;
-    } else {
-        $errors['profileImage'] = "Problem in uploading image files.";
+    if (file_exists($image['tmp_name'])) {
+        $target = "../uploads/users/" . $user_id . '.' . $file_extension;
+        if (move_uploaded_file($image["tmp_name"], $target)) {
+            $profileImage = '/uploads/users/' . $user_id . '.' . $file_extension;
+        } else {
+            $errors['profileImage'] = "Problem in uploading image files.";
+        }
     }
 }
 

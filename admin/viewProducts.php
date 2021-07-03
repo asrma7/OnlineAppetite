@@ -94,7 +94,7 @@ if (!isset($_SESSION['admin'])) {
                 <th>Category</th>
                 <th>Shop ID</th>
                 <th class="no-sort">Image</th>
-                <th class="no-sort no-search">Edit/Delete</th>
+                <th class="no-sort no-search">View</th>
               </tr>
             </thead>
             <tbody>
@@ -124,8 +124,7 @@ if (!isset($_SESSION['admin'])) {
                   </td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-warning m-1">Edit</button>
-                      <button class="btn btn-danger m-1">Delete</button>
+                      <button class="btn btn-info m-1" onclick="window.location.href='../product.php?id=<?= $product['PRODUCT_ID'] ?>'">View</button>
                     </div>
                   </td>
                 </tr>
@@ -142,7 +141,7 @@ if (!isset($_SESSION['admin'])) {
                 <th>Category</th>
                 <th>Shop ID</th>
                 <th>Image</th>
-                <th>Edit/Delete</th>
+                <th>View</th>
               </tr>
             </tfoot>
           </table>

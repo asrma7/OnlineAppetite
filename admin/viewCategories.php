@@ -100,12 +100,12 @@ if (!isset($_SESSION['admin'])) {
                   <td><?= $category['DESCRIPTION'] ?></td>
                   <td>
                     <div class="image-preview">
-                      <img class="abs-image" src="<?= $customer['IMAGE'] ?>" alt="Category Image">
+                      <img class="abs-image" src="<?= $category['IMAGE'] ?>" alt="Category Image">
                     </div>
                   </td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-warning m-1">Edit</button>
+                      <button class="btn btn-warning m-1" onclick="window.location.href = 'editCategory.php?id=<?= $category['CATEGORY_ID'] ?>'">Edit</button>
                       <button class="btn btn-danger m-1">Delete</button>
                     </div>
                   </td>

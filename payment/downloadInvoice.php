@@ -34,6 +34,7 @@ $pdf->addCompany(
 if ($payment['PAYMENT_METHOD'] == 'cash') {
     $pdf->watermark("Invoice Pending");
 }
+$pdf->SetTitle('Payment Invoice');
 $pdf->Image('../assets/images/logosmall.png', 10, 17, null, 20);
 $pdf->addDate(date('d/m/Y'));
 $pdf->addClient("CL" . $order['USER_ID']);

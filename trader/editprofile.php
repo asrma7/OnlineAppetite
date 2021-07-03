@@ -91,7 +91,7 @@ if (!isset($_SESSION['trader'])) {
             <div class="row">
               <div class="col-md-3 col-sm-6 col-12">
                 <div class="img">
-                  <img src="<?= $user['IMAGE'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2" id="imagePreview"  style="max-width: 250px;">
+                  <img src="<?= $user['IMAGE'] ?? '/assets/images/adminlte/avatar2.png' ?>" alt="" class="img-circle elevation-2" id="imagePreview" style="max-width: 250px;">
                 </div>
                 <div class="form-group mt-4">
                   <label for="profileImage">Profile Image</label>
@@ -108,18 +108,22 @@ if (!isset($_SESSION['trader'])) {
                 <div class="form-group">
                   <label for="name">Business Name</label>
                   <input type="text" id="name" name="full_name" class="form-control <?= isset($errors['full_name']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['FULL_NAME'] ?>" value="<?= $old['full_name'] ?? '' ?>">
+                  <?= isset($errors['full_name']) ? '<div class="invalid-feedback">' . $errors['full_name'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
                   <label for="email">Business Email</label>
                   <input type="email" id="email" name="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['EMAIL'] ?>" value="<?= $old['email'] ?? '' ?>">
+                  <?= isset($errors['email']) ? '<div class="invalid-feedback">' . $errors['email'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
                   <label for="username">Username</label>
                   <input type="text" id="username" name="username" class="form-control <?= isset($errors['username']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['USERNAME'] ?>" value="<?= $old['username'] ?? '' ?>">
+                  <?= isset($errors['username']) ? '<div class="invalid-feedback">' . $errors['username'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
                   <label for="contact">Contact No.</label>
                   <input type="text" id="contact" name="contact_no" class="form-control <?= isset($errors['contact_no']) ? 'is-invalid' : ''; ?>" placeholder="<?= $user['CONTACT_NO'] ?>" value="<?= $old['contact_no'] ?? '' ?>">
+                  <?= isset($errors['contact_no']) ? '<div class="invalid-feedback">' . $errors['contact_no'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
                   <label for="gender">Gender</label>
@@ -129,23 +133,28 @@ if (!isset($_SESSION['trader'])) {
                     <option <?= $user['GENDER'] == '3' ? 'selected' : ''; ?> value="3">Others</option>
                     <option <?= $user['GENDER'] == '4' ? 'selected' : ''; ?> value="4">Prefer not to specify</option>
                   </select>
+                  <?= isset($errors['gender']) ? '<div class="invalid-feedback">' . $errors['gender'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
                   <div class="my-2">
                     <strong>Address</strong>
                     <input type="text" id="st1" name="street" class="form-control <?= isset($errors['street']) ? 'is-invalid' : ''; ?>" placeholder="Street Address" value="<?= $user['STREET'] ?>">
+                    <?= isset($errors['street']) ? '<div class="invalid-feedback">' . $errors['street'] . '</div>' : ''; ?>
                   </div>
                   <div class="row my-2">
                     <div class="col-6">
                       <input type="text" id="city" name="city" class="form-control <?= isset($errors['city']) ? 'is-invalid' : ''; ?>" placeholder="City" value="<?= $user['CITY'] ?>">
+                      <?= isset($errors['city']) ? '<div class="invalid-feedback">' . $errors['city'] . '</div>' : ''; ?>
                     </div>
                     <div class="col-6">
                       <input type="text" id="state" name="state" class="form-control <?= isset($errors['state']) ? 'is-invalid' : ''; ?>" placeholder="State/Province" value="<?= $user['STATE'] ?>">
+                      <?= isset($errors['state']) ? '<div class="invalid-feedback">' . $errors['state'] . '</div>' : ''; ?>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-6">
                       <input type="text" id="postal" name="postal" class="form-control <?= isset($errors['postal']) ? 'is-invalid' : ''; ?>" placeholder="Postal Code" value="<?= $user['POSTAL'] ?>">
+                      <?= isset($errors['postal']) ? '<div class="invalid-feedback">' . $errors['postal'] . '</div>' : ''; ?>
                     </div>
                     <div class="col-6">
                       <select id="country" name="country" class="form-control <?= isset($errors['country']) ? 'is-invalid' : ''; ?>" required>
@@ -153,6 +162,7 @@ if (!isset($_SESSION['trader'])) {
                         <option <?= $user['COUNTRY'] == 'India' ? 'selected' : ''; ?> value="India">India</option>
                         <option <?= $user['COUNTRY'] == 'Bhutan' ? 'selected' : ''; ?> value="Bhutan">Bhutan</option>
                       </select>
+                      <?= isset($errors['country']) ? '<div class="invalid-feedback">' . $errors['country'] . '</div>' : ''; ?>
                     </div>
                   </div>
                 </div>
@@ -160,6 +170,7 @@ if (!isset($_SESSION['trader'])) {
                 <div class="form-group">
                   <label for="trading_since">Trading Since</label>
                   <input type="date" id="trading_since" name="trading_since" class="form-control <?= isset($errors['trading_since']) ? 'is-invalid' : ''; ?>" value="<?= date('Y-m-d', strtotime($user['TRADING_SINCE'])) ?>">
+                  <?= isset($errors['trading_since']) ? '<div class="invalid-feedback">' . $errors['trading_since'] . '</div>' : ''; ?>
                 </div>
                 <div class="form-group">
                   <label>Business Type</label><br>

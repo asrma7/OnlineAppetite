@@ -1,7 +1,7 @@
 <?php
 require_once '../utils/sessionManager.php';
-if(!isset($_SESSION['admin']))
-{
+require_once '../utils/database.php';
+if (!isset($_SESSION['admin'])) {
   header('Location: /admin/login.php');
 }
 ?>
@@ -35,6 +35,7 @@ if(!isset($_SESSION['admin']))
     <?php
     $page = "Payments";
     include 'header.php';
+    $payments = fetch_all_row('SELECT * FROM PAYMENTS');
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -65,24 +66,30 @@ if(!isset($_SESSION['admin']))
               <tr>
                 <th>Invoice ID</th>
                 <th>Order ID</th>
-                <th>Customer ID</th>
-                <th class="no-sort">Products</th>
                 <th>Amount</th>
-                <th class="no-sort no-searching">View/Print</th>
+                <th>Payment Method</th>
+                <th>Payment Date</th>
+                <th>Txn ID</th>
+                <th>Payment Fee</th>
+                <th class="text-center no-sort no-searching">Print</th>
               </tr>
             </thead>
             <tbody>
-              <?php for ($i = 0; $i < 50; $i++) { ?>
+              <?php foreach ($payments as $payment) { ?>
                 <tr>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr</td>
-                  <td>Rs. 4000</td>
+                  <td><?= $payment['PAYMENT_ID'] ?></td>
+                  <td><?= $payment['ORDER_ID'] ?></td>
+                  <td><?= number_format($payment['AMOUNT'] / 100, 2) ?></td>
+                  <td><?= ucwords($payment['PAYMENT_METHOD']) ?></td>
+                  <td><?= $payment['PAYMENT_DATE'] ?></td>
+                  <td><?= $payment['TXN_ID'] ?? '-' ?></td>
+                  <td><?= number_format($payment['PAYMENT_FEE'] / 100, 2) ?></td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-info m-1">View</button>
-                      <button class="btn btn-primary m-1">Print</button>
+                      <form action="../payment/downloadInvoice.php" method="post">
+                        <input type="hidden" name="order_id" value="<?= $payment['ORDER_ID'] ?>">
+                        <button class="btn btn-success m-1">Print</button>
+                      </form>
                     </div>
                   </td>
                 </tr>
@@ -92,10 +99,12 @@ if(!isset($_SESSION['admin']))
               <tr>
                 <th>Invoice ID</th>
                 <th>Order ID</th>
-                <th>Customer ID</th>
-                <th>Products</th>
                 <th>Amount</th>
-                <th>View/Print</th>
+                <th>Payment Method</th>
+                <th>Payment Date</th>
+                <th>Txn ID</th>
+                <th>Payment Fee</th>
+                <th>Print</th>
               </tr>
             </tfoot>
           </table>
