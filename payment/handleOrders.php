@@ -2,28 +2,28 @@
 include '../utils/database.php';
 include '../utils/sessionManager.php';
 
-if(!isset($_SESSION['user']))
-{
+if (!isset($_SESSION['user'])) {
     header('Location: /');
+} else {
+    $user_id = $_SESSION['user']['USER_ID'];
 }
 
 $method = $_GET['method'];
 $slot = $_POST['custom'];
-$txn_id = "'".$_POST['txn_id']."'" ?? "NULL";
+$txn_id = "'" . $_POST['txn_id'] . "'" ?? "NULL";
 $payment_fee = $_POST['payment_fee'] ?? null;
 $payment_fee *= 100;
-$code = "'".$_GET['voucherCode']."'" ?? "NULL";
-$amount = $_POST['payment_gross']*100;
-$voucher = fetch_row("SELECT * FROM VOUCHERS WHERE VOUCHER_CODE = '$code'");
-if($voucher){
+$code = "'" . $_GET['voucherCode'] . "'" ?? "NULL";
+$amount = $_POST['payment_gross'] * 100;
+$voucher = fetch_row("SELECT * FROM VOUCHERS WHERE VOUCHER_CODE = $code");
+if ($voucher) {
     $voucher_discount = $voucher['DISCOUNT_AMOUNT'];
-}
-else {
+} else {
     $voucher_discount = "NULL";
 }
 $cart = $_SESSION['user']['cart'] ?? [];
 
-$order = query("INSERT INTO ORDERS (SLOT_ID, AMOUNT, VOUCHER_CODE, VOUCHER_DISCOUNT) VALUES ('$slot', '$amount', $code, $voucher_discount)");
+$order = query("INSERT INTO ORDERS (USER_ID, SLOT_ID, AMOUNT, VOUCHER_CODE, VOUCHER_DISCOUNT) VALUES ('$user_id', '$slot', '$amount', $code, $voucher_discount)");
 $order_id = get_last_id("ORDERS");
 
 if (!$order) {
@@ -34,7 +34,7 @@ foreach ($cart as $shop) {
     foreach ($shop['products'] as $product_id => $product) {
         $site_discount = $product['site_discount'] * 100;
         $product_discount = $product['product_discount'] * 100;
-        query("INSERT INTO ORDER_PRODUCT (ORDER_ID, PRODUCT_ID, PRICE, SITE_DISCOUNT, PRODUCT_DISCOUNT, QUANTITY) VALUES ('$order_id', '$product_id', '" . $product['price']*100 . "', $site_discount, $product_discount, '" . $product['quantity'] . "')");
+        query("INSERT INTO ORDER_PRODUCT (ORDER_ID, PRODUCT_ID, PRICE, SITE_DISCOUNT, PRODUCT_DISCOUNT, QUANTITY) VALUES ('$order_id', '$product_id', '" . $product['price'] * 100 . "', $site_discount, $product_discount, '" . $product['quantity'] . "')");
     }
 }
 
@@ -44,5 +44,5 @@ if (!$payment) {
     die("Error while processing order");
 } else {
     $_SESSION['user']['cart'] = [];
-    header('Location: /paymentSuccess.php');
+    header("Location: /paymentSuccess.php?OrderID=$order_id");
 }

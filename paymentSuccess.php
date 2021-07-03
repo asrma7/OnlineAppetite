@@ -1,5 +1,5 @@
 <?php
-$orderID = $_GET['OrderID']??'';
+$orderID = $_GET['OrderID'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +59,10 @@ $orderID = $_GET['OrderID']??'';
             shopping with us!
         </div>
         <button class="loadmore" onclick="window.location.href='/'">Go back to shopping</button>
-        <button class="download" onclick="">Download Invoice</button>
+        <form action="payment/downloadInvoice.php" method="POST">
+            <input type="hidden" name="order_id" value="<?= $orderID ?>">
+            <button class="download">Download Invoice</button>
+        </form>
     </div>
     <?php include 'footer.php'; ?>
     <script src="js/script.js"></script>
