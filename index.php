@@ -1,8 +1,8 @@
 <?php
 require_once 'utils/database.php';
 $count = $_GET['more'] ?? '' == 'true' ? 24 : 12;
-$latestProducts = fetch_all_row("SELECT * FROM PRODUCTS ORDER BY CREATED_AT ".limit_result(4));
-$products = fetch_all_row("SELECT * FROM PRODUCTS ORDER BY ".random_order()." ".limit_result($count));
+$latestProducts = fetch_all_row("SELECT * FROM PRODUCTS WHERE CONFIRMED_ON IS NOT NULL ORDER BY CREATED_AT ".limit_result(4));
+$products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CONFIRMED_ON IS NOT NULL ORDER BY ".random_order()." ".limit_result($count));
 ?>
 <!DOCTYPE html>
 <html lang="en">

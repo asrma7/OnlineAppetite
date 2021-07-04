@@ -7,7 +7,7 @@ if(!$pageCategory){
     exit();
 }
 $count = $_GET['more'] ?? '' == 'true' ? 30 : 15;
-$products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CATEGORY_ID = '$category_id' ORDER BY CREATED_AT ".limit_result($count));
+$products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CATEGORY_ID = '$category_id' AND CONFIRMED_ON IS NOT NULL ORDER BY CREATED_AT ".limit_result($count));
 ?>
 <!DOCTYPE html>
 <html lang="en">

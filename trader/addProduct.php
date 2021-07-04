@@ -52,7 +52,7 @@ if (!isset($_SESSION['trader'])) {
     include 'header.php';
     $user_id = $_SESSION['trader']['USER_ID'];
     $categories = fetch_all_row('SELECT * FROM CATEGORIES');
-    $shops = fetch_all_row("SELECT * FROM SHOPS WHERE TRADER_ID = '$user_id'");
+    $shops = fetch_all_row("SELECT * FROM SHOPS WHERE TRADER_ID = '$user_id' AND VERIFIED_ON IS NOT NULL");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
