@@ -89,7 +89,7 @@ if (!isset($_SESSION['admin'])) {
                 <th>Category Name</th>
                 <th class="no-sort">Description</th>
                 <th class="no-sort">Image</th>
-                <th class="no-sort no-search">Edit/Delete</th>
+                <th class="no-sort no-search">Edit</th>
               </tr>
             </thead>
             <tbody>
@@ -106,7 +106,6 @@ if (!isset($_SESSION['admin'])) {
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-warning m-1" onclick="window.location.href = 'editCategory.php?id=<?= $category['CATEGORY_ID'] ?>'">Edit</button>
-                      <button class="btn btn-danger m-1">Delete</button>
                     </div>
                   </td>
                 </tr>
@@ -119,7 +118,7 @@ if (!isset($_SESSION['admin'])) {
                 <th>Category Name</th>
                 <th>Description</th>
                 <th>Image</th>
-                <th>Edit/Delete</th>
+                <th>Edit</th>
               </tr>
             </tfoot>
           </table>

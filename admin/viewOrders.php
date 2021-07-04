@@ -72,7 +72,7 @@ if (!isset($_SESSION['admin'])) {
                 <th>Voucher Code</th>
                 <th>Voucher Discount</th>
                 <th>Status</th>
-                <th class="no-sort no-search">View/Print</th>
+                <th class="no-sort no-search">Print/Confirm/Cancel</th>
               </tr>
             </thead>
             <tbody>
@@ -100,11 +100,27 @@ if (!isset($_SESSION['admin'])) {
                       ?></td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-info m-1">View</button>
                       <form action="../payment/downloadInvoice.php" method="post">
                         <input type="hidden" name="order_id" value="<?= $order['ORDER_ID'] ?>">
-                        <button class="btn btn-success m-1">Print</button>
+                        <button class="btn btn-primary m-1">Print</button>
                       </form>
+                      <?php if ($order['STATUS'] == 1) {
+                      ?>
+                        <button class="btn btn-success m-1" onclick="window.location.replace('confirmOrder.php?id=<?= $order['ORDER_ID'] ?>')">Confirm</button>
+                        <button class="btn btn-danger m-1" onclick="window.location.replace('cancelOrder.php?id=<?= $order['ORDER_ID'] ?>')">Cancel</button>
+                      <?php
+                      } elseif ($order['STATUS'] == 2) {
+                      ?>
+                        <button class="btn disabled btn-success m-1">Confirmed</button>
+                        <button class="btn disabled btn-secondary m-1">Cancel</button>
+                      <?php
+                      } else {
+                      ?>
+                      <button class="btn disabled btn-secondary m-1">Confirm</button>
+                      <button class="btn disabled btn-danger m-1">Cancelled</button>
+                      <?php
+                      }
+                      ?>
                     </div>
                   </td>
                 </tr>
@@ -120,7 +136,7 @@ if (!isset($_SESSION['admin'])) {
                 <th>Voucher Code</th>
                 <th>Voucher Discount</th>
                 <th>Status</th>
-                <th>View/Print</th>
+                <th>Print/Confirm/Cancel</th>
               </tr>
             </tfoot>
           </table>

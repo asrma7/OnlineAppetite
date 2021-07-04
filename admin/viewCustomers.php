@@ -1,9 +1,13 @@
 <?php
 require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
-if(!isset($_SESSION['admin']))
-{
+if (!isset($_SESSION['admin'])) {
   header('Location: /admin/login.php');
+} else {
+  if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']);
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -104,16 +108,16 @@ if(!isset($_SESSION['admin']))
                   <td><?= $customer['FULL_NAME'] ?></td>
                   <td><?= $customer['CREATED_AT'] ?></td>
                   <td><?= $customer['EMAIL'] ?></td>
-                  <td class="text-center"><?= $customer['EMAIL_VERIFIED_AT']??'-' ?></td>
+                  <td class="text-center"><?= $customer['EMAIL_VERIFIED_AT'] ?? '-' ?></td>
                   <td><?= $customer['GENDER'] ?></td>
                   <td>
                     <div class="image-preview">
-                      <img class="abs-image" src="<?= $customer['IMAGE']??'../assets/images/adminlte/avatar2.png' ?>" alt="User Image">
+                      <img class="abs-image" src="<?= $customer['IMAGE'] ?? '../assets/images/adminlte/avatar2.png' ?>" alt="User Image">
                     </div>
                   </td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-danger m-1" onclick="window.location.replace('resetUserPassword.php?id=<?= $customer['USER_ID'] ?>')">Reset Password</button>
+                      <button class="btn btn-danger m-1" onclick="resetPassword('<?= $customer['CUSTOMER_ID'] ?>', this)">Reset Password</button>
                     </div>
                   </td>
                 </tr>
@@ -192,6 +196,19 @@ if(!isset($_SESSION['admin']))
         }]
       }).buttons().container().appendTo('#shopTable_wrapper .col-md-6:eq(0)');
     });
+  </script>
+  <script>
+    function resetPassword(user, btn) {
+      $(btn).prop('disabled', true);
+      $.post('resetUserPassword.php', {
+          'id': user
+        },
+        function(data) {
+          $(btn).prop('disabled', false);
+          response = JSON.parse(data);
+          alert(response['message']);
+        });
+    }
   </script>
 </body>
 

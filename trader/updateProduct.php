@@ -12,6 +12,12 @@ extract($data);
 $errors = [];
 
 $user_id = $_SESSION['trader']['USER_ID'];
+$product = fetch_row("SELECT * FROM PRODUCTS WHERE PRODUCT_ID = '$productID'");
+
+if($product['TRADER_ID']!=$user_id){
+    header('Location: ../401.php');
+    exit();
+}
 
 //product name
 if (empty($productName)) {
@@ -75,8 +81,6 @@ if (file_exists($_FILES['productImage1']["tmp_name"])) {
             $errors['productImage1'] = "Image dimension should be within 500X500.";
         }
     }
-} else {
-    $errors['productImage1'] = "Product Image 1 is required.";
 }
 
 if (file_exists($_FILES['productImage2']["tmp_name"])) {
@@ -108,36 +112,41 @@ if (file_exists($_FILES['productImage2']["tmp_name"])) {
             $errors['productImage2'] = "Image dimension should be within 500X500.";
         }
     }
-} else {
-    $errors['productImage2'] = "Product Image 2 is required.";
 }
 
 //error size
 if (sizeof($errors) == 0) {
-    $filename = uniqid('ProductImage_');
-    $target = "../uploads/products/" . $filename . '.' . $file_extension;
-    if (move_uploaded_file($_FILES['productImage1']["tmp_name"], $target)) {
-        $productImage1 = '/uploads/products/' . $filename . '.' . $file_extension;
-    } else {
-        $errors['productImage1'] = "Problem in uploading image files.";
+    if (file_exists($_FILES['productImage1']["tmp_name"])) {
+        $filename = uniqid('ProductImage_');
+        $target = "../uploads/products/" . $filename . '.' . $file_extension;
+        if (move_uploaded_file($_FILES['productImage1']["tmp_name"], $target)) {
+            $productImage1 = '/uploads/products/' . $filename . '.' . $file_extension;
+        } else {
+            $errors['productImage1'] = "Problem in uploading image files.";
+        }
     }
 }
 if (sizeof($errors) == 0) {
-    $filename = uniqid('ProductImage_');
-    $target = "../uploads/products/" . $filename . '.' . $file_extension;
-    if (move_uploaded_file($_FILES['productImage2']["tmp_name"], $target)) {
-        $productImage2 = '/uploads/products/' . $filename . '.' . $file_extension;
-    } else {
-        $errors['productImage2'] = "Problem in uploading image files.";
+    if (file_exists($_FILES['productImage2']["tmp_name"])) {
+        $filename = uniqid('ProductImage_');
+        $target = "../uploads/products/" . $filename . '.' . $file_extension;
+        if (move_uploaded_file($_FILES['productImage2']["tmp_name"], $target)) {
+            $productImage2 = '/uploads/products/' . $filename . '.' . $file_extension;
+        } else {
+            $errors['productImage2'] = "Problem in uploading image files.";
+        }
     }
 }
 
 //error size
 if (sizeof($errors) == 0) {
     $price = $price * 100;
-    $sql = "INSERT INTO PRODUCTS (PRODUCT_NAME, CATEGORY_ID, PRICE, STOCK, TRADER_ID, SHOP_ID, DESCRIPTION, IMAGE1, IMAGE2)
-    VALUES
-    ('$productName', '$category', '$price', '$stock', '$user_id', '$shop', '$description', '$productImage1', '$productImage2')";
+    $sql = "UPDATE PRODUCTS SET PRODUCT_NAME = '$productName', CATEGORY_ID = '$category', PRICE = '$price', STOCK = '$stock', SHOP_ID = '$shop', DESCRIPTION = '$description'";
+    if (!empty($productImage1))
+        $sql .= ", IMAGE1 = '$productImage1'";
+    if (!empty($productImage2))
+        $sql .= ", IMAGE2 = '$productImage2'";
+    $sql .= " WHERE PRODUCT_ID = '$productID'";
     $res = query($sql);
     if (!$res)
         $_SESSION['message'] = ["message" => "Error while inserting Product", 'color' => "danger"];
@@ -149,4 +158,4 @@ if (sizeof($errors) == 0) {
     $_SESSION['old'] = $old;
 }
 
-header('Location:/trader/addProduct.php');
+header('Location:/trader/editProduct.php?id=' . $productID);

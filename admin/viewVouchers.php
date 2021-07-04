@@ -82,7 +82,7 @@ if (!isset($_SESSION['admin'])) {
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-warning m-1" onclick="window.location.href = 'editVoucher.php?id=<?= $voucher['VOUCHER_ID'] ?>'">Edit</button>
-                      <button class="btn btn-danger m-1">Delete</button>
+                      <button class="btn btn-danger m-1" onclick="window.location.replace('deleteVoucher.php?id=<?= $voucher['VOUCHER_ID'] ?>')">Delete</button>
                     </div>
                   </td>
                 </tr>

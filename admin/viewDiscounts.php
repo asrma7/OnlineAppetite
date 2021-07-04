@@ -89,8 +89,8 @@ if (!isset($_SESSION['admin'])) {
                   <td><?= $discount['FULL_NAME'] ?></td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-warning m-1" onclick="window.location.href = 'editDiscount.php?id=<?= $discount['DISCOUNT_ID'] ?>'">Edit</button>
-                      <button class="btn btn-danger m-1">Delete</button>
+                      <button class="btn btn-warning m-1" onclick="window.location.replace('editDiscount.php?id=<?= $discount['DISCOUNT_ID'] ?>')">Edit</button>
+                      <button class="btn btn-danger m-1" onclick="window.location.replace('deleteDiscount.php?id=<?= $discount['DISCOUNT_ID'] ?>')">Delete</button>
                     </div>
                   </td>
                 </tr>

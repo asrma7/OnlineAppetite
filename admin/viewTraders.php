@@ -82,36 +82,35 @@ if (!isset($_SESSION['admin'])) {
                 <tr>
                   <td><?= $trader['USER_ID'] ?></td>
                   <td><?= $trader['FULL_NAME'] ?></td>
-                  <td><?= $trader['VERTIFIED_ON'] ?? '-' ?></td>
-                  <td style="text-align: center;">
-                    <?= isset($product['VERIFIED_ON']) ?
-                      '<button class="btn btn-danger m-1">Remove</button>' :
-                      '<button class="btn btn-primary m-1">Verify</button>'
-                    ?>
+                  <td class="text-center"><?= $trader['VERIFIED_AT'] ?? '-' ?></td>
+                  <td class="text-center">
+                    <?php if (!isset($trader['VERIFIED_AT'])) { ?><button class="btn btn-primary m-1" onclick="window.location.replace('verifyTrader.php?id=<?= $trader['USER_ID'] ?>')">Verify</button>
+                    <?php } else { ?><button class="btn disabled btn-primary m-1">Verified</button><?php } ?>
                   </td>
                   <td><?= $trader['TOTAL_SHOPS'] ?></td>
                   <td><?= $trader['BUSINESS_TYPE'] ?></td>
                   <td><?= $trader['CONTACT_NO'] ?></td>
                   <td><?= $trader['TRADING_SINCE'] ?></td>
                   <td>
-                  <?php
-                  switch($trader['STATUS']){
-                    case 1:
-                      echo 'Pending';
-                      break;
+                    <?php
+                    switch ($trader['STATUS']) {
+                      case 1:
+                        echo 'Pending';
+                        break;
                       case 2:
-                      echo 'Active';
-                      break;
+                        echo 'Active';
+                        break;
                       case 3:
-                      echo 'Suspended';
-                      break;
-                  }
-                  ?>
+                        echo 'Suspended';
+                        break;
+                    }
+                    ?>
                   </td>
                   <td>
                     <div class="d-flex">
                       <button class="btn btn-info m-1" onclick="window.location.href='../traderProfile.php?id=<?= $trader['USER_ID'] ?>'">View</button>
-                      <button class="btn btn-danger m-1">Suspend</button>
+                    <?php if ($trader['STATUS'] == 2) { ?><button class="btn btn-danger m-1" onclick="window.location.replace('suspendTrader.php?id=<?= $trader['USER_ID'] ?>')">Suspend</button>
+                    <?php } elseif($trader['STATUS'] == 3) { ?><button class="btn btn-warning m-1" onclick="window.location.replace('unsuspendTrader.php?id=<?= $trader['USER_ID'] ?>')">Unsuspend</button><?php } ?>
                     </div>
                   </td>
                 </tr>

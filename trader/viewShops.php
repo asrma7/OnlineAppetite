@@ -87,8 +87,8 @@ if(!isset($_SESSION['trader']))
                   <td><?= $shop['TOTAL_PRODUCTS'] ?></td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-warning m-1">Edit</button>
-                      <button class="btn btn-danger m-1">Delete</button>
+                      <button class="btn btn-warning m-1" onclick="window.location.href='editShop.php?id=<?= $shop['SHOP_ID'] ?>'">Edit</button>
+                      <button class="btn btn-danger m-1" onclick="window.location.replace('deleteShop.php?id=<?= $shop['SHOP_ID'] ?>')">Delete</button>
                     </div>
                   </td>
                 </tr>

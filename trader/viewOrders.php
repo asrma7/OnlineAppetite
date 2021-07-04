@@ -1,7 +1,7 @@
 <?php
 require_once '../utils/sessionManager.php';
-if(!isset($_SESSION['trader']))
-{
+require_once '../utils/database.php';
+if (!isset($_SESSION['trader'])) {
   header('Location: /trader/login.php');
 }
 ?>
@@ -35,6 +35,8 @@ if(!isset($_SESSION['trader']))
     <?php
     $page = "Orders";
     include 'header.php';
+    $trader_id = $_SESSION['trader']['USER_ID'];
+    $orders = fetch_all_row("SELECT ORDER_PRODUCT.*, PRODUCTS.*, ORDERS.USER_ID, ORDERS.ORDER_DATE, SLOTS.* FROM ORDER_PRODUCT INNER JOIN PRODUCTS USING (PRODUCT_ID) INNER JOIN ORDERS USING (ORDER_ID) INNER JOIN SLOTS USING (SLOT_ID) WHERE ORDERS.STATUS = 2 AND TRADER_ID = '$trader_id'");
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -64,24 +66,48 @@ if(!isset($_SESSION['trader']))
             <thead>
               <tr>
                 <th>Order ID</th>
-                <th>Order Date</th>
                 <th>Customer ID</th>
-                <th class="no-sort">Products</th>
-                <th class="no-sort no-search">View/Confirm/Cancel</th>
+                <th>Order Date</th>
+                <th>Slot Time</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Site Discount</th>
+                <th>Product Discount</th>
+                <th>Quantity</th>
+                <th class="no-sort no-search">Confirm/Cancel</th>
               </tr>
             </thead>
             <tbody>
-              <?php for ($i = 0; $i < 50; $i++) { ?>
+              <?php foreach ($orders as $order) { ?>
                 <tr>
-                  <td>1</td>
-                  <td>04-12-2021</td>
-                  <td>1</td>
-                  <td>Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr, Apple 1kg, Vegetable oil 1ltr</td>
+                  <td><?= $order['ORDER_ID'] ?></td>
+                  <td><?= $order['USER_ID'] ?></td>
+                  <td><?= $order['ORDER_DATE'] ?></td>
+                  <td><?= $order['SLOT_TIME'] ?></td>
+                  <td><?= $order['PRODUCT_NAME'] ?></td>
+                  <td><?= number_format($order['PRICE'] / 100, 2) ?></td>
+                  <td><?= $order['SITE_DISCOUNT'] ?? '-' ?></td>
+                  <td><?= number_format($order['PRODUCT_DISCOUNT'] / 100, 2) ?></td>
+                  <td><?= $order['QUANTITY'] ?></td>
                   <td>
                     <div class="d-flex">
-                      <button class="btn btn-info m-1">View</button>
-                      <button class="btn btn-success m-1">Confirm</button>
-                      <button class="btn btn-danger m-1">Cancel</button>
+                      <?php if ($order['STATUS'] == 1) {
+                      ?>
+                        <button class="btn btn-success m-1" onclick="window.location.replace('confirmOrder.php?id=<?= $order['ID'] ?>')">Confirm</button>
+                        <button class="btn btn-danger m-1" onclick="window.location.replace('cancelOrder.php?id=<?= $order['ID'] ?>')">Cancel</button>
+                      <?php
+                      } elseif ($order['STATUS'] == 2) {
+                      ?>
+                        <button class="btn disabled btn-success m-1">Confirmed</button>
+                        <button class="btn disabled btn-secondary m-1">Cancel</button>
+                      <?php
+                      } else {
+                      ?>
+                        <button class="btn disabled btn-secondary m-1">Confirm</button>
+                        <button class="btn disabled btn-danger m-1">Cancelled</button>
+                      <?php
+                      }
+                      ?>
                     </div>
                   </td>
                 </tr>
@@ -89,12 +115,16 @@ if(!isset($_SESSION['trader']))
             </tbody>
             <tfoot>
               <tr>
-
                 <th>Order ID</th>
-                <th>Order Date</th>
                 <th>Customer ID</th>
-                <th>Products</th>
-                <th>View/Confirm/Cancel</th>
+                <th>Order Date</th>
+                <th>Slot Time</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Site Discount</th>
+                <th>Product Discount</th>
+                <th>Quantity</th>
+                <th>Confirm/Cancel</th>
               </tr>
             </tfoot>
           </table>

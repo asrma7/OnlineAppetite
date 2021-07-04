@@ -104,22 +104,21 @@ if (!isset($_SESSION['admin'])) {
                   <td><?= $product['PRODUCT_NAME'] ?></td>
                   <td class="text-center"><?= $product['CONFIRMED_ON'] ?? '-' ?></td>
                   <td style="text-align: center;">
-                    <?= isset($product['CONFIRMED_ON']) ?
-                      '<button class="btn btn-danger m-1">Remove</button>' :
-                      '<button class="btn btn-primary m-1">Confirm</button>' ?>
+                    <?php if (!isset($product['CONFIRMED_ON'])) { ?><button class="btn btn-primary m-1" onclick="window.location.replace('confirmProduct.php?id=<?= $product['PRODUCT_ID'] ?>')">Verify</button>
+                    <?php } else { ?><button class="btn disabled btn-primary m-1">Verified</button><?php } ?>
                   </td>
                   <td><?= number_format((float)$product['PRICE'] / 100.0, 2, '.', '') ?></td>
                   <td><?= $product['STOCK'] ?></td>
                   <td><?= $product['CATEGORY_NAME'] ?></td>
                   <td><?= $product['SHOP_ID'] ?></td>
                   <td>
-                  <div class="d-flex">
-                    <div class="image-preview">
-                      <img class="abs-image px-1" src="<?= $product['IMAGE1'] ?>" alt="Product Image">
-                    </div>
-                    <div class="image-preview">
-                      <img class="abs-image px-1" src="<?= $product['IMAGE2'] ?>" alt="Product Image">
-                    </div>
+                    <div class="d-flex">
+                      <div class="image-preview">
+                        <img class="abs-image px-1" src="<?= $product['IMAGE1'] ?>" alt="Product Image">
+                      </div>
+                      <div class="image-preview">
+                        <img class="abs-image px-1" src="<?= $product['IMAGE2'] ?>" alt="Product Image">
+                      </div>
                     </div>
                   </td>
                   <td>

@@ -1,5 +1,6 @@
 <?php
 require_once '../utils/sessionManager.php';
+require_once '../utils/database.php';
 if(!isset($_SESSION['admin']))
 {
   header('Location: /admin/login.php');
@@ -31,6 +32,14 @@ if(!isset($_SESSION['admin']))
     <?php
     $page = "Dashboard";
     include 'header.php';
+    $total_products = fetch_row("SELECT COUNT(*) AS C FROM PRODUCTS")['C'];
+    $total_shops = fetch_row("SELECT COUNT(*) AS C FROM SHOPS")['C'];
+    $total_traders = fetch_row("SELECT COUNT(*) AS C FROM TRADERS")['C'];
+    $total_customers = fetch_row("SELECT COUNT(*) AS C FROM CUSTOMERS")['C'];
+    $pending_products = fetch_row("SELECT COUNT(*) AS C FROM PRODUCTS WHERE CONFIRMED_ON IS NULL")['C'];
+    $pending_shops = fetch_row("SELECT COUNT(*) AS C FROM SHOPS WHERE VERIFIED_ON IS NULL")['C'];
+    $pending_traders = fetch_row("SELECT COUNT(*) AS C FROM TRADERS WHERE VERIFIED_AT IS NULL")['C'];
+    $pending_orders = fetch_row("SELECT COUNT(*) AS C FROM ORDERS WHERE STATUS = 1")['C'];
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -63,7 +72,7 @@ if(!isset($_SESSION['admin']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">Total Products</span>
-                  <span class="info-box-number">1,410</span>
+                  <span class="info-box-number"><?= $total_products ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -76,7 +85,7 @@ if(!isset($_SESSION['admin']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">Pending Products</span>
-                  <span class="info-box-number">13,648</span>
+                  <span class="info-box-number"><?= $pending_products ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -89,7 +98,7 @@ if(!isset($_SESSION['admin']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">Total Shops</span>
-                  <span class="info-box-number">410</span>
+                  <span class="info-box-number"><?= $total_shops ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -102,7 +111,7 @@ if(!isset($_SESSION['admin']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">Pending Shop</span>
-                  <span class="info-box-number">13,648</span>
+                  <span class="info-box-number"><?= $pending_shops ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -115,7 +124,7 @@ if(!isset($_SESSION['admin']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">Traders</span>
-                  <span class="info-box-number">93,139</span>
+                  <span class="info-box-number"><?= $total_traders ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -128,7 +137,7 @@ if(!isset($_SESSION['admin']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">Registerations</span>
-                  <span class="info-box-number">93,139</span>
+                  <span class="info-box-number"><?= $total_customers ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -141,7 +150,7 @@ if(!isset($_SESSION['admin']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">Pending Orders</span>
-                  <span class="info-box-number">93,139</span>
+                  <span class="info-box-number"><?= $pending_orders ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>

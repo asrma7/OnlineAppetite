@@ -13,7 +13,7 @@ $slot = $_POST['custom'];
 $txn_id = isset($_POST['txn_id']) ? "'" . $_POST['txn_id'] . "'" : "NULL";
 $payment_fee = $_POST['payment_fee'] ?? null;
 $payment_fee *= 100;
-$code = isset($_GET['voucherCode']) ? "'" . $_GET['voucherCode'] . "'" : "NULL";
+$code = !empty($_GET['voucherCode']) ? "'" . $_GET['voucherCode'] . "'" : "NULL";
 $amount = $_POST['payment_gross'] * 100;
 $voucher = fetch_row("SELECT * FROM VOUCHERS WHERE VOUCHER_CODE = $code");
 if ($voucher) {
@@ -34,7 +34,7 @@ foreach ($cart as $shop) {
     foreach ($shop['products'] as $product_id => $product) {
         $site_discount = $product['site_discount'] * 100;
         $product_discount = $product['product_discount'] * 100;
-        query("INSERT INTO ORDER_PRODUCT (ORDER_ID, PRODUCT_ID, PRICE, SITE_DISCOUNT, PRODUCT_DISCOUNT, QUANTITY) VALUES ('$order_id', '$product_id', '" . $product['price'] * 100 . "', $site_discount, $product_discount, '" . $product['quantity'] . "')");
+        query("INSERT INTO ORDER_PRODUCT (ORDER_ID, PRODUCT_ID, SITE_DISCOUNT, PRODUCT_DISCOUNT, QUANTITY) VALUES ('$order_id', '$product_id', $site_discount, $product_discount, '" . $product['quantity'] . "')");
     }
 }
 

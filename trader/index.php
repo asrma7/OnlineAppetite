@@ -1,5 +1,6 @@
 <?php
 require_once '../utils/sessionManager.php';
+require_once '../utils/database.php';
 if(!isset($_SESSION['trader']))
 {
   header('Location: /trader/login.php');
@@ -31,6 +32,13 @@ if(!isset($_SESSION['trader']))
     <?php
     $page = "Dashboard";
     include 'header.php';
+
+    $trader_id = $_SESSION['trader']['USER_ID'];
+
+    $total_products = fetch_row("SELECT COUNT(*) AS C FROM PRODUCTS WHERE TRADER_ID = '$trader_id'")['C'];
+    $total_shops = fetch_row("SELECT COUNT(*) AS C FROM SHOPS WHERE TRADER_ID = '$trader_id'")['C'];
+    $pending_orders = fetch_row("SELECT COUNT(*) AS C FROM ORDER_PRODUCT INNER JOIN ORDERS USING (ORDER_ID) INNER JOIN PRODUCTS USING (PRODUCT_ID) WHERE TRADER_ID = '$trader_id' AND ORDERS.STATUS = 2 AND ORDER_PRODUCT.STATUS = 1")['C'];
+    $completed_orders = fetch_row("SELECT COUNT(*) AS C FROM ORDER_PRODUCT INNER JOIN PRODUCTS USING (PRODUCT_ID) WHERE TRADER_ID = '$trader_id' AND STATUS = 2")['C'];
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -63,7 +71,7 @@ if(!isset($_SESSION['trader']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">My Products</span>
-                  <span class="info-box-number">1,410</span>
+                  <span class="info-box-number"><?= $total_products ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -76,7 +84,7 @@ if(!isset($_SESSION['trader']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">My Shops</span>
-                  <span class="info-box-number">410</span>
+                  <span class="info-box-number"><?= $total_shops ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -89,7 +97,7 @@ if(!isset($_SESSION['trader']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">Pending Orders</span>
-                  <span class="info-box-number">13,648</span>
+                  <span class="info-box-number"><?= $pending_orders ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -102,7 +110,7 @@ if(!isset($_SESSION['trader']))
 
                 <div class="info-box-content">
                   <span class="info-box-text">Completed Orders</span>
-                  <span class="info-box-number">93,139</span>
+                  <span class="info-box-number"><?= $completed_orders ?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>

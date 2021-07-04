@@ -1,8 +1,7 @@
 <?php
 require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
-if(!isset($_SESSION['admin']))
-{
+if (!isset($_SESSION['admin'])) {
   header('Location: /admin/login.php');
 }
 ?>
@@ -78,14 +77,12 @@ if(!isset($_SESSION['admin']))
             <tbody>
               <?php foreach ($shops as $shop) { ?>
                 <tr>
-                <td><?= $shop['SHOP_ID'] ?></td>
+                  <td><?= $shop['SHOP_ID'] ?></td>
                   <td><?= $shop['SHOP_NAME'] ?></td>
-                  <td class="text-center"><?= $shop['VERIFIED_ON']??'-' ?></td>
+                  <td class="text-center"><?= $shop['VERIFIED_ON'] ?? '-' ?></td>
                   <td style="text-align: center;">
-                  <?= isset($product['VERIFIED_ON']) ?
-                      '<button class="btn btn-danger m-1">Remove</button>':
-                      '<button class="btn btn-primary m-1">Verify</button>'
-                    ?>
+                    <?php if (!isset($shop['VERIFIED_ON'])) { ?><button class="btn btn-primary m-1" onclick="window.location.replace('verifyShop.php?id=<?= $shop['SHOP_ID'] ?>')">Verify</button>
+                    <?php } else { ?><button class="btn disabled btn-primary m-1">Verified</button><?php } ?>
                   </td>
                   <td><?= $shop['GOV_NO'] ?></td>
                   <td><?= $shop['SHOP_TYPE'] ?></td>
