@@ -2,11 +2,10 @@
 require_once 'utils/sessionManager.php';
 require_once 'utils/database.php';
 $categories = fetch_all_row("SELECT * FROM categories");
-$page = $page??'';
-$userCart = $_SESSION['user']['cart']??[];
+$page = $page ?? '';
+$userCart = $_SESSION['user']['cart'] ?? [];
 $cartSize = 0;
-foreach($userCart as $cartShop)
-{
+foreach ($userCart as $cartShop) {
     $cartSize += count($cartShop['products']);
 }
 
@@ -23,8 +22,8 @@ foreach($userCart as $cartShop)
                 <span id='date'></span>
             </div>
         </div>
-        <form class="search">
-            <input type="text" name="search" class="searchbar">
+        <form action="search.php" class="search">
+            <input type="text" name="q" placeholder="Search in OnlineAppetite" value="<?= $searchbar ?? '' ?>" class="searchbar">
             <button type="submit"><img src="assets/images/search.png" alt="search"></button>
         </form>
         <div class="top-buttons">

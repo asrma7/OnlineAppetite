@@ -191,9 +191,13 @@ li.my-nav-link.active, li.my-nav-dropdown.active {
 .searchbar {
     width: 500px;
     height: 35px;
-    background-color: #DDD;
-    border: none;
+    background-color: #FFFFFF;
+    border: 1px solid #DDD;
     padding: 0 35px 0 10px;
+}
+
+.searchbar::placeholder {
+    color: #AAAAAA;
 }
 
 .searchbar:focus {
@@ -214,8 +218,9 @@ li.my-nav-link.active, li.my-nav-dropdown.active {
 }
 
 .signin, .signup {
-    background-color: #C4C4C4;
+    background-color: #04c524;
     border: none;
+    color: white;
     padding: 10px;
     margin: 0 8px;
     cursor: pointer;
@@ -294,7 +299,7 @@ li.my-nav-link.active, li.my-nav-dropdown.active {
     padding: 15px;
 }
 
-.product-data .price {
+.product .price {
     color: #F84343;
     font-weight: 700;
 }
@@ -382,7 +387,7 @@ footer {
     transform: translate(-50%, -50%);
 }
 
-@media screen and (max-width:650px) {
+@media screen and (max-width:759px) {
     .top-row {
         display: none;
     }

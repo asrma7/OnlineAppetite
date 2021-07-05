@@ -76,19 +76,22 @@
 ////////////////////////////////////////
 
 try {
-    $conn = new PDO("sqlite:".__DIR__."/../database.sqlite");
+    $conn = new PDO("sqlite:" . __DIR__ . "/../database.sqlite");
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}catch(PDOException $e) {
+} catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
 
-function query($sql){
+function query($sql)
+{
     global $conn;
     $stmt = $conn->prepare($sql);
-    return $stmt->execute();
+    $res = $stmt->execute();
+    return $res;
 }
 
-function fetch_all_row($sql){
+function fetch_all_row($sql)
+{
     global $conn;
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -96,7 +99,8 @@ function fetch_all_row($sql){
     return $res;
 }
 
-function fetch_row($sql){
+function fetch_row($sql)
+{
     global $conn;
     $stmt = $conn->prepare($sql);
     $res = $stmt->execute();
@@ -104,19 +108,21 @@ function fetch_row($sql){
     return $res;
 }
 
-function get_last_id($table) {
+function get_last_id($table)
+{
     global $conn;
     return $conn->lastInsertId();
 }
 
-function toDate($date, $format) {
+function toDate($date, $format)
+{
     return "'$date'";
 }
 
 function random_order()
 {
     return "RANDOM()";
-}    
+}
 
 function limit_result($row_count)
 {

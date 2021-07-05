@@ -4,7 +4,7 @@ require_once 'utils/database.php';
 $product_id = $_GET['id'];
 $user_id = $_SESSION['user']['USER_ID'] ?? "";
 $currentProduct = fetch_row("SELECT PRODUCTS.*, SHOPS.SHOP_ID, SHOP_NAME, (SELECT AVG(RATING) FROM REVIEWS WHERE REVIEWS.PRODUCT_ID = PRODUCTS.PRODUCT_ID) AS RATING FROM PRODUCTS INNER JOIN SHOPS ON SHOPS.SHOP_ID = PRODUCTS.SHOP_ID WHERE PRODUCT_ID = '$product_id' AND CONFIRMED_ON IS NOT NULL");
-if(!$currentProduct){
+if (!$currentProduct) {
     header('Location: 404.php');
     exit();
 }
@@ -21,7 +21,7 @@ foreach ($discounts as $discount) {
     $current_discounted_price = $current_discounted_price * (100 - $discount['RATE']) * 0.01;
 }
 $current_discount_rate = (round($currentProduct['PRICE'] / 100, 2) - $current_discounted_price) * 100 / round($currentProduct['PRICE'] / 100, 2);
-$products = fetch_all_row("SELECT * FROM PRODUCTS WHERE PRODUCT_ID != '$product_id' AND CONFIRMED_ON IS NOT NULL AND CATEGORY_ID = '" . $currentProduct['CATEGORY_ID'] . "' ORDER BY CREATED_AT " . limit_result(10));
+$products = fetch_all_row("SELECT PRODUCTS.*, (SELECT AVG(RATING) FROM REVIEWS WHERE REVIEWS.PRODUCT_ID = PRODUCTS.PRODUCT_ID) AS RATING FROM PRODUCTS WHERE PRODUCT_ID != '$product_id' AND CONFIRMED_ON IS NOT NULL AND CATEGORY_ID = '" . $currentProduct['CATEGORY_ID'] . "' ORDER BY CREATED_AT " . limit_result(10));
 $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_ID = REVIEWS.USER_ID WHERE PRODUCT_ID = '$product_id' ORDER BY REVIEWS.CREATED_AT " . limit_result(4));
 ?>
 <!doctype html>
@@ -61,7 +61,7 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                         <div class="col-sm-7 text-start">
                             <h1 style="font-family: Gill Sans, sans-serif;font-size: 28px;margin-top:10%"><?= $currentProduct['PRODUCT_NAME'] ?></h1>
                             <?php if (!isset($currentProduct['RATING'])) {
-                                echo "Not Rated";
+                                echo "<div>Not Rated</div>";
                             } else {
                             ?>
                                 <div class="stars">
@@ -83,7 +83,7 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                             <br>
                             <span style="color:#F1592A; font-weight:500; font-size:20px;"> £ <?= number_format((float)$current_discounted_price, 2, '.', '') ?> </span><br>
                             <?php
-                            if ($currentProduct['PRICE'] != $current_discounted_price) {
+                            if (round($currentProduct['PRICE'] / 100.0, 2) != $current_discounted_price) {
                             ?>
                                 <div>
                                     <span class="discount">£ <?= number_format((float)$currentProduct['PRICE'] / 100.0, 2, '.', '') ?></span> -
@@ -188,7 +188,7 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                         <span class="product-name py-2"><?= $product['PRODUCT_NAME'] ?></span>
                         <span class="price pb-2">£ <?= number_format((float)$discounted_price, 2, '.', '') ?></span>
                         <?php
-                        if ($product['PRICE'] != $discounted_price) {
+                        if (round($product['PRICE'] / 100.0, 2) != $discounted_price) {
                         ?>
                             <div>
                                 <span class="discount">£ <?= number_format((float)$product['PRICE'] / 100, 2, '.', '') ?></span> -
@@ -197,6 +197,23 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                         <?php
                         }
                         ?>
+                        <?php if ($product['RATING'] > 0) { ?>
+                            <div class="stars d-inline-block">
+                                <?php
+                                for ($i = 0; $i < (int)$product['RATING']; $i++) {
+                                    echo '<small class="fas fa-star text-warning"></small>';
+                                }
+                                $remaining = 5 - (int)$product['RATING'];
+                                if ($product['RATING'] != (int)$product['RATING']) {
+                                    echo '<small class="fas fa-star-half-alt text-warning"></small>';
+                                    $remaining--;
+                                }
+                                for ($i = 0; $i < $remaining; $i++) {
+                                    echo '<small class="far fa-star text-warning"></small>';
+                                }
+                                ?>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             <?php } ?>

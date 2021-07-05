@@ -2,12 +2,12 @@
 require 'utils/database.php';
 $category_id = $_GET['id'];
 $pageCategory = fetch_row("SELECT * FROM CATEGORIES WHERE CATEGORY_ID = '$category_id'");
-if(!$pageCategory){
+if (!$pageCategory) {
     header('Location: 404.php');
     exit();
 }
 $count = $_GET['more'] ?? '' == 'true' ? 30 : 15;
-$products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CATEGORY_ID = '$category_id' AND CONFIRMED_ON IS NOT NULL ORDER BY CREATED_AT ".limit_result($count));
+$products = fetch_all_row("SELECT PRODUCTS.*, (SELECT AVG(RATING) FROM REVIEWS WHERE REVIEWS.PRODUCT_ID = PRODUCTS.PRODUCT_ID) AS RATING FROM PRODUCTS WHERE CATEGORY_ID = '$category_id' AND CONFIRMED_ON IS NOT NULL ORDER BY CREATED_AT " . limit_result($count));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +17,7 @@ $products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CATEGORY_ID = '$category
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 
     <title><?= $pageCategory['CATEGORY_NAME'] ?></title>
@@ -45,7 +46,7 @@ $products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CATEGORY_ID = '$category
                         <span class="product-name py-2"><?= $product['PRODUCT_NAME'] ?></span>
                         <span class="price pb-2">£ <?= number_format((float)$discounted_price, 2, '.', '') ?></span>
                         <?php
-                        if ($product['PRICE'] != $discounted_price) {
+                        if (round($product['PRICE'] / 100.0, 2) != $discounted_price) {
                         ?>
                             <div>
                                 <span class="discount">£ <?= number_format((float)$product['PRICE'] / 100, 2, '.', '') ?></span> -
@@ -54,6 +55,23 @@ $products = fetch_all_row("SELECT * FROM PRODUCTS WHERE CATEGORY_ID = '$category
                         <?php
                         }
                         ?>
+                        <?php if ($product['RATING'] > 0) { ?>
+                            <div class="stars d-inline-block">
+                                <?php
+                                for ($i = 0; $i < (int)$product['RATING']; $i++) {
+                                    echo '<small class="fas fa-star text-warning"></small>';
+                                }
+                                $remaining = 5 - (int)$product['RATING'];
+                                if ($product['RATING'] != (int)$product['RATING']) {
+                                    echo '<small class="fas fa-star-half-alt text-warning"></small>';
+                                    $remaining--;
+                                }
+                                for ($i = 0; $i < $remaining; $i++) {
+                                    echo '<small class="far fa-star text-warning"></small>';
+                                }
+                                ?>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             <?php } ?>
