@@ -3,10 +3,7 @@ require_once '../utils/database.php';
 require_once '../utils/sessionManager.php';
 require_once 'invoice.php';
 
-if (!isset($_SESSION['user'])) {
-    header('Location: /');
-    exit();
-} else if (!isset($_POST['order_id'])) {
+if (!isset($_POST['order_id'])) {
     header('Location: /');
     exit();
 } else {

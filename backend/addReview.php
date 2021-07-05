@@ -5,6 +5,9 @@ require_once '../utils/utils.php';
 if (!isset($_SESSION['user'])) {
     header('Location: /signin.php');
     exit();
+} else if (!isset($_SESSION['user']['EMAIL_VERIFIED_AT'])) {
+    header('Location: /verifyEmail.php');
+    exit();
 } else {
     $user_id = $_SESSION['user']['USER_ID'];
 }

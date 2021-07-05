@@ -22,6 +22,9 @@
     if (!isset($_SESSION['user'])) {
         header('Location: /signin.php');
         exit();
+    } else if (!isset($_SESSION['user']['EMAIL_VERIFIED_AT'])) {
+        header('Location: /verifyEmail.php');
+        exit();
     } else {
         $shops = $_SESSION['user']['cart'] ?? [];
     }

@@ -2,7 +2,10 @@
 require_once 'utils/sessionManager.php';
 if (!isset($_SESSION['user'])) {
   header('Location: /signin.php');
-}else {
+} else if (!isset($_SESSION['user']['EMAIL_VERIFIED_AT'])) {
+  header('Location: /verifyEmail.php');
+  exit();
+} else {
   if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
     unset($_SESSION['message']);

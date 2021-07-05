@@ -4,6 +4,9 @@ require_once '../utils/sessionManager.php';
 if (!isset($_SESSION['user'])) {
     echo json_encode(['status'=>'error', 'message'=>'signin']);
     exit();
+} else if (!isset($_SESSION['user']['EMAIL_VERIFIED_AT'])) {
+    echo json_encode(['status'=>'error', 'message'=>'verifyemail']);
+    exit();
 } else {
     $cart = $_SESSION['user']['cart'] ?? [];
 }

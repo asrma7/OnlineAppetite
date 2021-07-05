@@ -5,6 +5,9 @@ $businessEmail = "onlineappetite@gmail.com";
 $siteUrl = "http://localhost:3000";
 if (!isset($_SESSION['user'])) {
     header('Location: signin.php');
+} else if (!isset($_SESSION['user']['EMAIL_VERIFIED_AT'])) {
+    header('Location: /verifyEmail.php');
+    exit();
 } else {
     $cart = $_SESSION['user']['cart'] ?? [];
     $total = 0.0;
@@ -19,8 +22,7 @@ if (!isset($_SESSION['user'])) {
     }
     if ($voucher && $total > ($voucher['MINIMUM'] / 100)) {
         $discountedPrice -= ($voucher['DISCOUNT_AMOUNT'] / 100);
-    }
-    else {
+    } else {
         $code = '';
     }
 }

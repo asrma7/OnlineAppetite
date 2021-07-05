@@ -388,6 +388,8 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
                         } else {
                             if (response['message'] == 'signin') {
                                 window.location.href = '/signin.php';
+                            }else if (response['message'] == 'verifyemail') {
+                                window.location.href = '/verifyemail.php';
                             } else {
                                 r = confirm(response['message']);
                                 if (r == true) {

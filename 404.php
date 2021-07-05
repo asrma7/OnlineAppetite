@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/404.css">
+    <link rel="stylesheet" href="css/error-page.css">
 
     <title>Page not Found</title>
 </head>
@@ -25,7 +25,7 @@
     <?php include 'footer.php'; ?>
     <script src="js/script.js"></script>
     <script src="js/adminlte/jquery.min.js"></script>
-    <script src="js/404.js"></script>
+    <script src="js/error-page.js"></script>
     </script>
 </body>
 
