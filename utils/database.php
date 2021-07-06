@@ -143,7 +143,7 @@
 /////////////////MYSQLi/////////////////
 ////////////////////////////////////////
 
-$conn = new mysqli('localhost', 'root', 'Hello@123', 'OnlineAppetite');
+$conn = new mysqli('localhost:3306', 'root', 'Hello@123', 'OnlineAppetite');
 
 // Check connection
 if ($conn->connect_error) {
