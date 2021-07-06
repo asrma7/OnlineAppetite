@@ -1,7 +1,10 @@
 <?php
 require_once 'utils/mail.php';
 require_once 'utils/utils.php';
+require_once 'utils/sessionManager.php';
 extract($_POST);
+
+$old = $_POST;
 
 $data = sanitize_array($_POST);
 
@@ -9,6 +12,26 @@ $name = $data['name'];
 $email = $data['email'];
 $subject = $data['subject'];
 $message = $data['message'];
+
+$errors = [];
+
+if (empty($name)) {
+    $errors['name'] = "Name is required";
+}
+
+if (empty($email)) {
+    $errors['email'] = "Email is required";
+} elseif (!preg_match('/^\S+@\S+\.\S+$/', $email)) {
+    $errors['email'] = "Please enter a valid email";
+}
+
+if (empty($subject)) {
+    $errors['subject'] = "Subject is required";
+}
+
+if (empty($message)) {
+    $errors['message'] = "Message is required";
+}
 
 $mail = '<!DOCTYPE html>
 <html lang="en">
@@ -131,8 +154,8 @@ $mail = '<!DOCTYPE html>
     </div>
     <div class="contentbox">
         <div class="content">
-            <div class="message">Contact Mail From:<br> '.$name.'</div>
-            <span class="tagline">'.$email.'</span>
+            <div class="message">Contact Mail From:<br> ' . $name . '</div>
+            <span class="tagline">' . $email . '</span>
             <table>
                 <tbody>
                     <thead>
@@ -143,19 +166,19 @@ $mail = '<!DOCTYPE html>
                     </thead>
                     <tr>
                         <td>Name</td>
-                        <td>'.$name.'</td>
+                        <td>' . $name . '</td>
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td>'.$email.'</td>
+                        <td>' . $email . '</td>
                     </tr>
                     <tr>
                         <td>Subject</td>
-                        <td>'.$subject.'</td>
+                        <td>' . $subject . '</td>
                     </tr>
                     <tr>
                         <td>Message</td>
-                        <td>'.$message.'</td>
+                        <td>' . $message . '</td>
                     </tr>
                 </tbody>
             </table>
@@ -173,7 +196,18 @@ $mail = '<!DOCTYPE html>
 </body>
 
 </html>';
-
-sendMail('admin@onlineappetite.com', 'Contact Form Recieved', $mail);
+if (count($errors) == 0) {
+    $send = sendMail('admin@onlineappetite.com', 'Contact Form Recieved', $mail);
+    if ($send) {
+        $_SESSION['message'] = ['message' => 'Contact message recieved. Thank you', 'color' => 'success'];
+    } else {
+        $_SESSION['message'] = ['message' => 'Sorry, Error while sending contact form.', 'color' => 'danger'];
+        $_SESSION['old'] = $old;
+    }
+} else {
+    $_SESSION['message'] = ['message' => 'Please fix the following errors.', 'color' => 'danger'];
+    $_SESSION['errors'] = $errors;
+    $_SESSION['old'] = $old;
+}
 
 header('Location: customerCare.php');

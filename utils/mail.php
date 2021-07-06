@@ -4,11 +4,10 @@ require_once __DIR__ . '/PHPMailer/PHPMailer.php';
 require_once __DIR__ . '/PHPMailer/Exception.php';
 
 use \PHPMailer\PHPMailer\PHPMailer;
-use \PHPMailer\PHPMailer\Exception;
 
 function sendMail($to, $subject, $message)
 {
-    $mail = new PHPMailer(true);
+    $mail = new PHPMailer();
     //settings
     $mail->isSMTP();
     $mail->Host = 'smtp.mailtrap.io';

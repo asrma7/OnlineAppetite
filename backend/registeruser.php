@@ -2,8 +2,8 @@
 include '../utils/database.php';
 require_once '../utils/sessionManager.php';
 require_once '../utils/utils.php';
-require_once 'utils/mail.php';
-require_once 'mailTemplate.php';
+require_once '../utils/mail.php';
+require_once '../mailTemplate.php';
 $old = $_POST;
 $data = sanitize_array($_POST);
 extract($data);
