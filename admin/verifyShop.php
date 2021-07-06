@@ -13,7 +13,7 @@ query("UPDATE SHOPS SET VERIFIED_ON = ".toDate(date('Y-m-d'),"YYYY-MM-DD")." WHE
 
 $user_email = fetch_row("SELECT EMAIL FROM SHOPS INNER JOIN USERS ON USERS.USER_ID = SHOPS.TRADER_ID WHERE SHOP_ID = '$shop_id'")['EMAIL'];
 
-$mail = makeMail("Your Shop Has Been Confirmed", "http://localhost:3000/trader", "Login Now", null, "(Step ahead in your business career.)");
+$mail = makeMail("Your Shop Has Been Confirmed", "http://localhost/trader", "Login Now", null, "(Step ahead in your business career.)");
 
 sendMail($user_email, "Account Confirmed Online Appetite", $mail);
 

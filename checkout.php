@@ -2,7 +2,7 @@
 require_once 'utils/sessionManager.php';
 require_once 'utils/database.php';
 $businessEmail = "onlineappetite@gmail.com";
-$siteUrl = "http://localhost:3000";
+$siteUrl = "http://localhost";
 if (!isset($_SESSION['user'])) {
     header('Location: signin.php');
 } else if (!isset($_SESSION['user']['EMAIL_VERIFIED_AT'])) {

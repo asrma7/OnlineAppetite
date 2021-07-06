@@ -29,7 +29,7 @@ if (empty($user)) {
     else
         query("INSERT INTO RESET_PASSWORD (EMAIL, TOKEN, CREATED_AT) VALUES ('$useremail', '$token', " . toTime(date('Y/m/d H:i:s')) . ")");
     $message = "Click the button below to reset your password";
-    $link = "http://localhost:3000/trader/resetPassword.php?email=$useremail&token=$token";
+    $link = "http://localhost/trader/resetPassword.php?email=$useremail&token=$token";
     $mail = makeMail($message, $link, "Change Password", $link, "If you ignore this message your password won't be changed.");
     sendMail($useremail, "Reset your OnlineAppetite Password", $mail);
     $_SESSION['message'] = ['message' => 'Reset link sent to your email!', 'color' => 'success'];

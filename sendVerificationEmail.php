@@ -23,7 +23,7 @@ if (!empty(fetch_row("SELECT * FROM VERIFY_EMAIL WHERE EMAIL = '$useremail'")))
 else
     query("INSERT INTO VERIFY_EMAIL (EMAIL, TOKEN, CREATED_AT) VALUES ('$useremail', '$token', " . toTime(date('Y/m/d H:i:s')) . ")");
 $message = "We're glad you're here,<br>" . $useremail;
-$link = "http://localhost:3000/verifyUserEmail.php?email=$useremail&token=$token";
+$link = "http://localhost/verifyUserEmail.php?email=$useremail&token=$token";
 $mail = makeMail($message, $link, "Activate Account", null, "(Just confirming you're you.)");
 sendMail($useremail, "Verify your OnlineAppetite Account", $mail);
 $_SESSION['message'] = ['message' => 'Verification link sent to your email!', 'color' => 'success'];

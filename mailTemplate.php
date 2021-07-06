@@ -100,7 +100,7 @@ function makeMail($message, $link, $button, $secondaryLink, $tagline)
 
 <body>
     <div class="yellow-back">
-        <img src="http://localhost:3000/assets/images/black-white.png" alt="OnlineAppetite">
+        <img src="http://localhost/assets/images/black-white.png" alt="OnlineAppetite">
     </div>
     <div class="contentbox">
         <div class="content">
@@ -115,9 +115,9 @@ function makeMail($message, $link, $button, $secondaryLink, $tagline)
                 &copy;2020-2021 OnlineAppetite<sup>&trade;</sup>, All rights reserved.<br>
                 J-302 Suncity Apartments • Pepsicola, Kathmandu • Bagmati, Nepal
                 <div class="links">
-                    <a href="http://localhost:3000/customer.php">Contact Us</a> •
-                    <a href="http://localhost:3000/toc.php">Terms of Use</a> •
-                    <a href="http://localhost:3000/privacy.php">Privacy Policy</a>
+                    <a href="http://localhost/customer.php">Contact Us</a> •
+                    <a href="http://localhost/toc.php">Terms of Use</a> •
+                    <a href="http://localhost/privacy.php">Privacy Policy</a>
                 </div>
             </div>
         </div>

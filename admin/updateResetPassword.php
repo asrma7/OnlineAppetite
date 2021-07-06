@@ -42,7 +42,7 @@ if (sizeof($errors) == 0) {
     if (!query($sql)) {
         $_SESSION['message'] = ["message" => "Error changing password", 'color' => "danger"];
     } else {
-        $mail = makeMail("Your Password Has Been Reset." . $password, "http://localhost:3000/signin.php", "Login Now", null, "(Get back to your account.)");
+        $mail = makeMail("Your Password Has Been Reset." . $password, "http://localhost/signin.php", "Login Now", null, "(Get back to your account.)");
         sendMail($user_email, "Account Password Reset Online Appetite", $mail);
         $_SESSION['message'] = ["message" => "Password changed successfully", 'color' => "success"];
         query("DELETE FROM RESET_PASSWORD WHERE EMAIL = '$email'");
