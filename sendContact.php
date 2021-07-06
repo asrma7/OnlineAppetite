@@ -1,8 +1,16 @@
 <?php
+require_once 'utils/mail.php';
+require_once 'utils/utils.php';
+extract($_POST);
 
-function makeMail($message, $link, $button, $secondaryLink, $tagline)
-{
-    $mail = '<!DOCTYPE html>
+$data = sanitize_array($_POST);
+
+$name = $data['name'];
+$email = $data['email'];
+$subject = $data['subject'];
+$message = $data['message'];
+
+$mail = '<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,6 +19,14 @@ function makeMail($message, $link, $button, $secondaryLink, $tagline)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             background-color: #EFEEEA;
             font-family: Georgia, Times, \'Times New Roman\', serif;
@@ -55,24 +71,6 @@ function makeMail($message, $link, $button, $secondaryLink, $tagline)
             letter-spacing: .3px;
         }
 
-        .action {
-            margin: 40px 0;
-        }
-
-        .action a {
-            display: inline-block;
-            margin: auto;
-            padding: 20px;
-            letter-spacing: .3px;
-            background-color: #007C89;
-            border: 1px solid #007C89;
-            box-shadow: 0 2px 5px #999;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            color: #ffffff;
-        }
-
         .tagline {
             display: block;
             font-size: 16px;
@@ -95,6 +93,35 @@ function makeMail($message, $link, $button, $secondaryLink, $tagline)
             font-weight: 500;
             text-decoration: none;
         }
+
+        table {
+            border-collapse: collapse;
+            box-shadow: 0 5px 10px #e1e5ee;
+            background-color: white;
+            text-align: left;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        thead {
+            box-shadow: 0 5px 10px #e1e5ee;
+        }
+
+        th {
+            padding: 1rem 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+            font-size: 0.7rem;
+            font-weight: 900;
+        }
+
+        td {
+            padding: 1rem 2rem;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f4f6fb;
+        }
     </style>
 </head>
 
@@ -104,14 +131,35 @@ function makeMail($message, $link, $button, $secondaryLink, $tagline)
     </div>
     <div class="contentbox">
         <div class="content">
-            <div class="message">' . $message . '</div>';
-    if (isset($button))
-        $mail .= '<div class="action"><a href="' . $link . '">' . $button . '</a></div>';
-    if (isset($secondaryLink))
-        $mail .= 'or click the link below:<br><a href='.$secondaryLink.'>'.$secondaryLink.'</a>';
-    if (isset($tagline))
-        $mail .= '<span class="tagline">' . $tagline . '</span>';
-    $mail .= '<div class="footer">
+            <div class="message">Contact Mail From:<br> '.$name.'</div>
+            <span class="tagline">'.$email.'</span>
+            <table>
+                <tbody>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>'.$name.'</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>'.$email.'</td>
+                    </tr>
+                    <tr>
+                        <td>Subject</td>
+                        <td>'.$subject.'</td>
+                    </tr>
+                    <tr>
+                        <td>Message</td>
+                        <td>'.$message.'</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="footer">
                 &copy;2020-2021 OnlineAppetite<sup>&trade;</sup>, All rights reserved.<br>
                 J-302 Suncity Apartments • Pepsicola, Kathmandu • Bagmati, Nepal
                 <div class="links">
@@ -125,5 +173,7 @@ function makeMail($message, $link, $button, $secondaryLink, $tagline)
 </body>
 
 </html>';
-    return $mail;
-}
+
+sendMail('admin@onlineappetite.com', 'Contact Form Recieved', $mail);
+
+header('Location: customerCare.php');

@@ -2,6 +2,8 @@
 include '../utils/database.php';
 require_once '../utils/sessionManager.php';
 require_once '../utils/utils.php';
+require_once 'utils/mail.php';
+require_once 'mailTemplate.php';
 $old = $_POST;
 $data = sanitize_array($_POST);
 extract($data);
@@ -47,15 +49,26 @@ if (sizeof($errors) == 0) {
     (FULL_NAME, USERNAME, EMAIL, STREET, CITY, STATE, POSTAL, COUNTRY, GENDER, PASSWORD_HASH)
      VALUES 
      ('$name', '$username', '$email', '$street', '$city', '$state', '$postal', '$country', '$gender', '$password')";
-     $res1 = query($sql1);
-     $user_id = fetch_row("SELECT USER_ID FROM USERS WHERE USERNAME = '$username'")['USER_ID'];
-     $sql2 = "INSERT INTO CUSTOMERS (USER_ID) VALUES ('$user_id')";
+    $res1 = query($sql1);
+    $user_id = fetch_row("SELECT USER_ID FROM USERS WHERE USERNAME = '$username'")['USER_ID'];
+    $sql2 = "INSERT INTO CUSTOMERS (USER_ID) VALUES ('$user_id')";
     if (!$res1)
         $_SESSION['message'] = ["message" => "Error while user registeration", 'color' => "danger"];
     elseif (!query($sql2))
         $_SESSION['message'] = ["message" => "Error while customer registeration", 'color' => "danger"];
-    else
+    else {
+        $token = md5(RAND(4000, 5000));
+        $useremail = $email;
+        if (!empty(fetch_row("SELECT * FROM VERIFY_EMAIL WHERE EMAIL = '$useremail'")))
+            query("UPDATE VERIFY_EMAIL SET TOKEN = '$token', CREATED_AT = " . toTime(date('Y/m/d H:i:s')) . " WHERE EMAIL = '$useremail'");
+        else
+            query("INSERT INTO VERIFY_EMAIL (EMAIL, TOKEN, CREATED_AT) VALUES ('$useremail', '$token', " . toTime(date('Y/m/d H:i:s')) . ")");
+        $message = "We're glad you're here,<br>" . $useremail;
+        $link = "http://localhost:3000/verifyUserEmail.php?email=$useremail&token=$token";
+        $mail = makeMail($message, $link, "Activate Account", null, "(Just confirming you're you.)");
+        sendMail($useremail, "Verify your OnlineAppetite Account", $mail);
         $_SESSION['message'] = ["message" => "You have registered Successfully! Redirecting...", 'color' => "success"];
+    }
 } else {
     $_SESSION['message'] = ["message" => "Please fix the following errors", 'color' => "danger"];
     $_SESSION['errors'] = $errors;

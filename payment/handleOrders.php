@@ -35,6 +35,7 @@ foreach ($cart as $shop) {
         $site_discount = $product['site_discount'] * 100;
         $product_discount = $product['product_discount'] * 100;
         query("INSERT INTO ORDER_PRODUCT (ORDER_ID, PRODUCT_ID, SITE_DISCOUNT, PRODUCT_DISCOUNT, QUANTITY) VALUES ('$order_id', '$product_id', $site_discount, $product_discount, '" . $product['quantity'] . "')");
+        query("UPDATE PRODUCTS SET STOCK = STOCK - ".$product['quantity']);
     }
 }
 

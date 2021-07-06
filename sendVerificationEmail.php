@@ -1,33 +1,30 @@
 <?php
 require_once 'utils/sessionManager.php';
 require_once 'utils/database.php';
+require_once 'utils/mail.php';
 require_once 'mailTemplate.php';
-if (isset($_SESSION['user'])) {
+if (!isset($_SESSION['user'])) {
+    header('Location: /signin.php');
+    exit();
+} else if (isset($_SESSION['user']['EMAIL_VERIFIED_AT'])) {
     header('Location: /');
     exit();
 }
-$old = $_POST;
-$username = $_POST['username'] ?? '';
-$email = $_POST['email'] ?? '';
-$user = fetch_row("SELECT * FROM USERS WHERE (USERNAME = '$username' OR EMAIL = '$email') AND USER_ROLE = 3");
-if (empty($user)) {
-    $_SESSION['message'] = ['message' => 'User not found!', 'color' => 'danger'];
-    $_SESSION['old'] = $old;
-    header('Location: forgotpassword.php');
+$userVerified = fetch_row("SELECT * FROM CUSTOMERS WHERE USER_ID = '" . $_SESSION['user']['USER_ID'] . "'");
+if (isset($userVerified['EMAIL_VERIFIED_AT'])) {
+    $_SESSION['EMAIL_VERIFIED_AT'] = $userVerified['EMAIL_VERIFIED_AT'];
+    header('Location: /');
     exit();
-} else if ($user['USERNAME'] != $username || $user['EMAIL'] != $email) {
-    $_SESSION['message'] = ['message' => 'Username and email do not match!', 'color' => 'danger'];
-    $_SESSION['old'] = $old;
-    header('Location: forgotpassword.php');
-    exit();
-} else {
-    $token = md5(RAND(4000, 5000));
-    $useremail = $user['EMAIL'];
-    if (!empty(fetch_row("SELECT * FROM RESET_PASSWORD WHERE EMAIL = '$useremail'")))
-        query("UPDATE RESET_PASSWORD SET TOKEN = '$token', CREATED_AT = " . toDate(date('Y-m-d'), 'YYYY-MM-DD'));
-    else
-        query("INSERT INTO RESET_PASSWORD (EMAIL, TOKEN) VALUES ('$useremail', '$token')");
-    $message = "We're glad you're here,<br>" . $user['EMAIL'];
-    $link = "http://localhost:3000/resetPassword.php?email=$useremail&token=$token";
-    echo makeMail($message, $link, "Activate Account", "(Just confirming you're you.)");
 }
+$token = md5(RAND(4000, 5000));
+$useremail = $_SESSION['user']['EMAIL'];
+if (!empty(fetch_row("SELECT * FROM VERIFY_EMAIL WHERE EMAIL = '$useremail'")))
+    query("UPDATE VERIFY_EMAIL SET TOKEN = '$token', CREATED_AT = " . toTime(date('Y/m/d H:i:s')) . " WHERE EMAIL = '$useremail'");
+else
+    query("INSERT INTO VERIFY_EMAIL (EMAIL, TOKEN, CREATED_AT) VALUES ('$useremail', '$token', " . toTime(date('Y/m/d H:i:s')) . ")");
+$message = "We're glad you're here,<br>" . $useremail;
+$link = "http://localhost:3000/verifyUserEmail.php?email=$useremail&token=$token";
+$mail = makeMail($message, $link, "Activate Account", null, "(Just confirming you're you.)");
+sendMail($useremail, "Verify your OnlineAppetite Account", $mail);
+$_SESSION['message'] = ['message' => 'Verification link sent to your email!', 'color' => 'success'];
+header("Location: verifyEmail.php");

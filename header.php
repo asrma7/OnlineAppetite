@@ -60,9 +60,6 @@ foreach ($userCart as $cartShop) {
             <li class="my-nav-link <?php echo $page == 'home' ? 'active' : ''; ?>">
                 <a href="/">Home</a>
             </li>
-            <li class="my-nav-link <?php echo $page == 'deal' ? 'active' : ''; ?>">
-                <a href="todaydeal.php">Today's Deal</a>
-            </li>
             <li class="my-nav-dropdown <?php echo $page == 'category' ? 'active' : ''; ?>">
                 <span class="my-dropdown-btn">Categories</span>
                 <div class="my-dropdown-content">

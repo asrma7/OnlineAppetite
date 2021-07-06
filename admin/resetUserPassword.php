@@ -2,6 +2,7 @@
 include '../utils/database.php';
 require_once '../utils/sessionManager.php';
 require_once '../utils/mail.php';
+require_once '../mailTemplate.php';
 if (!isset($_SESSION['admin'])) {
     header('Location: /admin/login.php');
 } else {
@@ -11,8 +12,10 @@ if (!isset($_SESSION['admin'])) {
 $user_email = fetch_row("SELECT EMAIL FROM USERS WHERE USER_ID = '$user_id'")['EMAIL'];
 
 $pass = random_str(10);
-$message = "Your new password is: <b>$pass</b>";
-sendMail($user_email, 'Password has been reset', $message);
+
+$mail = makeMail("Your Password Has Been Reset by Administrator.<br>New password: ".$password, "http://localhost:3000/signin.php", "Login Now", null, "(Thank you for shopping with us.)");
+sendMail($user_email, "Account Password Reset Online Appetite", $mail);
+
 $password = password_hash($pass, PASSWORD_DEFAULT);
 
 $sql = "UPDATE USERS SET PASSWORD_HASH = '$password' WHERE USER_ID = '$user_id'";

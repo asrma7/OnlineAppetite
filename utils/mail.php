@@ -9,29 +9,28 @@ use \PHPMailer\PHPMailer\Exception;
 function sendMail($to, $subject, $message)
 {
     $mail = new PHPMailer(true);
-    try {
-        //settings
-        $mail->isSMTP();
-        $mail->Host = 'smtp.mailtrap.io';
-        $mail->SMTPAuth = true;
-        $mail->Port = 2525;
-        $mail->Username = '6a28cdced9467e';
-        $mail->Password = 'd9b0a0ebc86b64';
+    //settings
+    $mail->isSMTP();
+    $mail->Host = 'smtp.mailtrap.io';
+    $mail->SMTPAuth = true;
+    $mail->Port = 2525;
+    $mail->Username = '6a28cdced9467e';
+    $mail->Password = 'd9b0a0ebc86b64';
 
-        $mail->setFrom('no_reply@onlineappetite.com', 'OnlineAppetite');
+    $mail->setFrom('no_reply@onlineappetite.com', 'OnlineAppetite');
 
-        //recipient
-        $mail->addAddress($to);
+    //recipient
+    $mail->addAddress($to);
 
-        //content
-        $mail->isHTML(true); // Set email format to HTML
-        $mail->Subject = $subject;
-        $mail->Body = $message;
-
-        $mail->send();
-    } catch (Exception $e) {
-        echo 'Message could not be sent.';
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
-        die();
+    //content
+    $mail->isHTML(true); // Set email format to HTML
+    $mail->Subject = $subject;
+    $mail->Body = $message;
+    if (!$mail->Send()) {
+        echo 'Message was not sent.';
+        echo 'Mailer error: ' . $mail->ErrorInfo;
+        return false;
+    } else {
+        return true;
     }
 }

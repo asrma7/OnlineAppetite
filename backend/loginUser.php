@@ -26,6 +26,11 @@ if (empty($login)) {
     } else {
         unset($user['PASSWORD_HASH']);
         $_SESSION['user'] = $user;
-        header('Location: /');
+        if (!isset($user['EMAIL_VERIFIED_AT'])) {
+            header('Location: /verifyEmail.php');
+            exit();
+        } else {
+            header('Location: /');
+        }
     }
 }

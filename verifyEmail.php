@@ -1,8 +1,22 @@
 <?php
 require_once 'utils/sessionManager.php';
-if(!isset($_SESSION['user'])){
+require_once 'utils/database.php';
+if (!isset($_SESSION['user'])) {
     header('Location: /signin.php');
+    exit();
+} else if (isset($_SESSION['user']['EMAIL_VERIFIED_AT'])) {
+    header('Location: /');
+    exit();
 }
+$userVerified = fetch_row("SELECT * FROM CUSTOMERS WHERE USER_ID = '" . $_SESSION['user']['USER_ID'] . "'");
+if (isset($userVerified['EMAIL_VERIFIED_AT'])) {
+    $_SESSION['EMAIL_VERIFIED_AT'] = $userVerified['EMAIL_VERIFIED_AT'];
+    header('Location: /');
+    exit();
+}
+
+$message = $_SESSION['message'] ?? [];
+unset($_SESSION['message']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +37,12 @@ if(!isset($_SESSION['user'])){
     include 'header.php';
     ?>
     <section class="login-clean">
-        <form method="POST" action="backend/loginUser.php">
+        <form action="sendVerificationEmail.php">
+            <?php if (!empty($message)) { ?>
+                <div class="alert alert-<?= $message['color'] ?> text-center" role="alert">
+                    <?= $message['message']; ?>
+                </div>
+            <?php } ?>
             <h1 class="text-center" style="margin: 30px;margin-top: -2px; color: black;">Verify Email</h1>
             <p>Please verify your email to continue using your email.</p>
             <div class="mb-3">

@@ -1,13 +1,15 @@
 <?php
 include '../utils/database.php';
 include '../utils/sessionManager.php';
+include '../utils/mail.php';
+include '../mailTemplate.php';
 extract($_POST);
 $errors = [];
 $reset = fetch_row("SELECT * FROM RESET_PASSWORD WHERE EMAIL = '$email'");
 $user = fetch_row("SELECT * FROM USERS WHERE EMAIL = '$email' AND USER_ROLE = 1");
 if (!empty($reset)) {
     $expires = strtotime('+1 hour', strtotime($reset['CREATED_AT']));
-  }
+}
 if (empty($reset)) {
     $_SESSION['message'] = ['message' => "Reset link is invalid", 'color' => "danger"];
     header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -40,6 +42,8 @@ if (sizeof($errors) == 0) {
     if (!query($sql)) {
         $_SESSION['message'] = ["message" => "Error changing password", 'color' => "danger"];
     } else {
+        $mail = makeMail("Your Password Has Been Reset." . $password, "http://localhost:3000/signin.php", "Login Now", null, "(Get back to your account.)");
+        sendMail($user_email, "Account Password Reset Online Appetite", $mail);
         $_SESSION['message'] = ["message" => "Password changed successfully", 'color' => "success"];
         query("DELETE FROM RESET_PASSWORD WHERE EMAIL = '$email'");
     }

@@ -1,6 +1,7 @@
 <?php
 require_once '../utils/sessionManager.php';
 require_once '../utils/database.php';
+require_once 'utils/mail.php';
 require_once '../mailTemplate.php';
 if (isset($_SESSION['trader'])) {
     header('Location: /trader');
@@ -24,10 +25,13 @@ if (empty($user)) {
     $token = md5(RAND(4000, 5000));
     $useremail = $user['EMAIL'];
     if (!empty(fetch_row("SELECT * FROM RESET_PASSWORD WHERE EMAIL = '$useremail'")))
-        query("UPDATE RESET_PASSWORD SET TOKEN = '$token', CREATED_AT = " . toTime(date('Y/m/d H:i:s')));
+        query("UPDATE RESET_PASSWORD SET TOKEN = '$token', CREATED_AT = " . toTime(date('Y/m/d H:i:s')) . " WHERE EMAIL = '$useremail'");
     else
         query("INSERT INTO RESET_PASSWORD (EMAIL, TOKEN, CREATED_AT) VALUES ('$useremail', '$token', " . toTime(date('Y/m/d H:i:s')) . ")");
     $message = "Click the button below to reset your password";
     $link = "http://localhost:3000/trader/resetPassword.php?email=$useremail&token=$token";
-    echo makeMail($message, $link, "Change Password", "or click the link below:<br><a href='$link'>$link</a>");
+    $mail = makeMail($message, $link, "Change Password", $link, "If you ignore this message your password won't be changed.");
+    sendMail($useremail, "Reset your OnlineAppetite Password", $mail);
+    $_SESSION['message'] = ['message' => 'Reset link sent to your email!', 'color' => 'success'];
+    header('Location: forgot-password.php');
 }
