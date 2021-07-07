@@ -38,6 +38,7 @@ if (empty($reset)) {
     <title>Login</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/Login-Form.css">
+    <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 

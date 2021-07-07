@@ -17,6 +17,7 @@ if (!isset($_SESSION['user'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="/css/adminlte/adminlte.min.css">
 
   <title>Profile</title>

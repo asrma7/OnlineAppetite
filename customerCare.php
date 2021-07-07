@@ -18,6 +18,7 @@ unset($_SESSION['old']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/customercare.css">
+    <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 

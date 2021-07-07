@@ -59,13 +59,15 @@ button, input, textarea, select {
     background: rgba(0, 0, 0, 0.3);
 }
 
+.carousel-caption {
+    user-select: none;
+}
+
 .carousel-inner .item img {
     width: 100%;
 }
 
 .hamburger {
-    position: absolute;
-    left: 20px;
     font-size: large;
     cursor: pointer;
 }
@@ -75,7 +77,7 @@ nav {
     width: calc(100% - 60px);
     padding: 10px 30px;
     background-color: #FFFFFF;
-    z-index: 1;
+    z-index: 20;
 }
 
 .nav {
@@ -84,18 +86,52 @@ nav {
 }
 
 .small-nav {
-    text-align: center;
-    line-height: 50px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .small-nav img {
-    height: 40px;
+    height: 30px;
     cursor: pointer;
 }
 
 #navspacer {
-    height: 50px;
+    height: 54px;
     width: 100%;
+    background-color: red;
+}
+
+#nav-collapse {
+    position: fixed;
+    z-index: 10;
+    left: -300px;
+    overflow-y: scroll;
+    background-color: white;
+    height: calc(100vh - 60px);
+    width: 300px;
+    padding-top: 60px;
+    transition: left 250ms ease-in;
+}
+
+#nav-collapse ul li {
+    display: block;
+}
+
+#nav-collapse ul li a {
+    padding: 20px 30px;
+    width: calc(100% - 60px);
+    text-decoration: none;
+    color: #2E2E2E;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+#nav-collapse ul li:hover {
+    background-color: #f1f1f1;
+}
+
+#nav-collapse ul li.active {
+    background-color: #e9e9e9;
 }
 
 .fixed-top {
@@ -132,7 +168,7 @@ ul * {
     position: absolute;
     outline: 2px solid #8CC63F;
     right: 50px;
-    top: 0;
+    top: -5px;
     display: flex;
     display: none;
 }
@@ -156,6 +192,7 @@ li.my-nav-link, .my-dropdown-btn {
     color: black;
     font-weight: 700;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 li.my-nav-link a {
@@ -178,6 +215,7 @@ li.my-nav-link.active, li.my-nav-dropdown.active {
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
+    top: 35px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
@@ -246,6 +284,10 @@ li.my-nav-link.active, li.my-nav-dropdown.active {
     padding: 0 35px 0 10px;
 }
 
+.search-small .searchbar {
+    width: 250px;
+}
+
 .searchbar::placeholder {
     color: #AAAAAA;
 }
@@ -280,6 +322,10 @@ li.my-nav-link.active, li.my-nav-dropdown.active {
 .cart {
     position: relative;
     cursor: pointer;
+}
+
+.cart img {
+    height: 25px;
 }
 
 .cart #cart-count {
@@ -567,7 +613,7 @@ footer {
 
 @media screen and (max-width:991px) {
     nav {
-        padding: 0 10px;
+        padding: 10px;
         position: fixed;
         top: 0;
         width: calc(100% - 20px);

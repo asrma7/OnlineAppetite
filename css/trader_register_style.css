@@ -1,7 +1,7 @@
 .trader-form{
     background-color: #C4C4C4;
     margin:0px auto;
-    width:50%;
+    max-width:500px;
     padding:50px;
     border-radius:10px;
     color:black;

@@ -21,12 +21,14 @@ if(isset($_SESSION['user'])){
     <link rel="stylesheet" href="css/style.css">
     <title>Login</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="css/Login-Form.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <?php
+    $page = "signin";
     include 'header.php';
     ?>
     <section class="login-clean">

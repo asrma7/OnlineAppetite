@@ -44,13 +44,13 @@ foreach ($userCart as $cartShop) {
                     <a href="/profile.php" class="greetings">Hi <?= explode(' ', $_SESSION['user']['FULL_NAME'])[0] ?></a>
                     <button onclick="location.href='logout.php'" class="signup">Sign Out</button>
                 </div>
+                <div class="cart" onclick="window.location.href='/cart.php'">
+                    <img src="assets/images/cart.png" alt="cart">
+                    <span id="cart-count"><?= $cartSize ?></span>
+                </div>
             <?php
             }
             ?>
-            <div class="cart" onclick="window.location.href='/cart.php'">
-                <img src="assets/images/cart.png" alt="cart">
-                <span id="cart-count"><?= $cartSize ?></span>
-            </div>
         </div>
     </div>
     <nav id="navbar">
@@ -90,10 +90,10 @@ foreach ($userCart as $cartShop) {
                         <div class="search-btn" onclick="showSearch()">
                             <img src="assets/images/search.png" id="search-btn" alt="">
                         </div>
-                        <div class="collapsible-section" id="collapsible-search">
+                        <form action="search.php" class="collapsible-section" id="collapsible-search">
                             <input type="text" name="search" autocomplete="off" />
                             <button class="btn-search">Search</button>
-                        </div>
+                        </form>
                     </div>
                 </li>
                 <?php if (!isset($_SESSION['user'])) { ?>
@@ -122,12 +122,39 @@ foreach ($userCart as $cartShop) {
                 <?php } ?>
             </ul>
         </div>
-        <div class="d-block d-md-none small-nav">
-            <div class="hamburger">
+        <div class="d-flex d-md-none small-nav p-2">
+            <div class="hamburger" onclick="openNav()">
                 <div class="fa fa-bars"></div>
             </div>
             <img src="assets/images/smalllogo.png" onclick="window.location.href='/'" alt="">
+            <div class="cart" onclick="window.location.href='/cart.php'">
+                <img src="assets/images/cart.png" alt="cart">
+                <span id="cart-count"><?= $cartSize ?></span>
+            </div>
         </div>
     </nav>
+
+    <div id="nav-collapse" data-open=false>
+        <ul>
+            <li <?php echo $page == 'home' ? ' class="active"' : ''; ?>><a href="/">Home</a></li>
+            <li <?php echo $page == 'category' ? ' class="active"' : ''; ?>><a>Categories</a></li>
+            <li <?php echo $page == 'customerCare' ? ' class="active"' : ''; ?>><a href="/customercare.php">Customer Care</a></li>
+            <li <?php echo $page == 'seller' ? ' class="active"' : ''; ?>><a href="/traderregister.php">Become a Seller</a></li>
+            <li><a href="/trader">Trader Login</a></li>
+            <?php if (!isset($_SESSION['user'])) { ?>
+                <li <?php echo $page == 'signin' ? ' class="active"' : ''; ?>><a href="/signin.php">Sign in</a></li>
+                <li <?php echo $page == 'signup' ? ' class="active"' : ''; ?>><a href="/signup.php">Sign up</a></li>
+            <?php } else { ?>
+                <li <?php echo $page == 'profile' ? ' class="active"' : ''; ?>><a href="/profile.php">Profile</a></li>
+                <li><a href="/logout.php">Sign out</a></li>
+            <?php } ?>
+            <li>
+                <form action="search.php" class="search search-small">
+                    <input type="text" name="q" placeholder="Search in OnlineAppetite" value="<?= $searchbar ?? '' ?>" class="searchbar">
+                    <button type="submit"><img src="assets/images/search.png" alt="search"></button>
+                </form>
+            </li>
+        </ul>
+    </div>
     <div id="navspacer"></div>
 </header>

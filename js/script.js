@@ -58,3 +58,15 @@ function showSearch() {
   else
     divEl.style.display = "none";
 }
+
+function openNav() {
+  elem = document.getElementById("nav-collapse");
+  isOpen = elem.dataset.open;
+  if(isOpen=="false"){
+    elem.style.left = "0";
+    elem.dataset.open = "true";
+  }else {
+    elem.style.left = "-300px";
+    elem.dataset.open = "false";
+  }
+}
