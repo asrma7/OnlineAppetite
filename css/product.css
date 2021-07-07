@@ -23,6 +23,11 @@ a {
     object-fit: cover;
 }
 
+.reviews {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
 .review {
     padding-left: 30px;
     font-size: .9em;

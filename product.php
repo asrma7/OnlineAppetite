@@ -22,7 +22,7 @@ foreach ($discounts as $discount) {
 }
 $current_discount_rate = (round($currentProduct['PRICE'] / 100, 2) - $current_discounted_price) * 100 / round($currentProduct['PRICE'] / 100, 2);
 $products = fetch_all_row("SELECT PRODUCTS.*, (SELECT AVG(RATING) FROM REVIEWS WHERE REVIEWS.PRODUCT_ID = PRODUCTS.PRODUCT_ID) AS RATING FROM PRODUCTS WHERE PRODUCT_ID != '$product_id' AND CONFIRMED_ON IS NOT NULL AND CATEGORY_ID = '" . $currentProduct['CATEGORY_ID'] . "' ORDER BY CREATED_AT " . limit_result(10));
-$reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_ID = REVIEWS.USER_ID WHERE PRODUCT_ID = '$product_id' ORDER BY REVIEWS.CREATED_AT " . limit_result(4));
+$reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_ID = REVIEWS.USER_ID WHERE PRODUCT_ID = '$product_id' ORDER BY REVIEWS.CREATED_AT");
 ?>
 <!doctype html>
 <html lang="en">
