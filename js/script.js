@@ -1,31 +1,23 @@
 var scrollBtn = document.getElementById('gotoTop');
 var navbar = document.getElementById('navbar');
-window.onscroll = function () { scrollFunction() };
-
-function scrollFunction() {
-  if (document.body.scrollTop > 65 || document.documentElement.scrollTop > 65) {
-    scrollBtn.style.display = "block";
-    navbar.style.position = "fixed";
-  } else {
-    scrollBtn.style.display = "none";
-    navbar.style.position = "absolute";
-  }
-}
-
 // When the user clicks on the button, scroll to the top of the document
 function gotoTop() {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-function openNav() {
-  var nav = document.querySelector('ul.my-nav');
-  if (nav.classList.contains('small-nav')) {
-    nav.classList.remove('small-nav');
+window.onscroll = function () { scrollFunction() };
+
+function scrollFunction() {
+  if (window.scrollY > 60) {
+    navbar.classList.add('fixed-top');
+    navbar.querySelector('.nav-right').classList.remove('d-lg-none');
   } else {
-    nav.classList.add('small-nav');
+    navbar.classList.remove('fixed-top');
+    navbar.querySelector('.nav-right').classList.add('d-lg-none');
   }
 }
+
 var date = new Date();
 var months = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -56,3 +48,13 @@ xhttp.onreadystatechange = function () {
 };
 xhttp.open("GET", "http://ip-api.com/json", true);
 xhttp.send();
+
+
+divEl = document.getElementById('collapsible-search');
+
+function showSearch() {
+  if (divEl.style.display != "flex")
+    divEl.style.display = "flex";
+  else
+    divEl.style.display = "none";
+}
