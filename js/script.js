@@ -53,20 +53,35 @@ xhttp.send();
 divEl = document.getElementById('collapsible-search');
 
 function showSearch() {
-  if (divEl.style.display != "flex")
-    divEl.style.display = "flex";
-  else
-    divEl.style.display = "none";
+  if (divEl.dataset.expanded == "false") {
+    divEl.classList.add('expanded');
+    divEl.dataset.expanded = "true"
+  } else {
+    divEl.classList.remove('expanded');
+    divEl.dataset.expanded = "false"
+  }
 }
 
 function openNav() {
   elem = document.getElementById("nav-collapse");
   isOpen = elem.dataset.open;
-  if(isOpen=="false"){
+  if (isOpen == "false") {
     elem.style.left = "0";
     elem.dataset.open = "true";
-  }else {
+  } else {
     elem.style.left = "-300px";
     elem.dataset.open = "false";
+  }
+}
+
+function expandDropdown(elm) {
+  dropdown = elm.nextElementSibling;
+  if (dropdown.dataset.collapse == 'true') {
+    dropdown.style.maxHeight = '400px';
+    dropdown.dataset.collapse = "false";
+  }
+  else {
+    dropdown.style.maxHeight = 0;
+    dropdown.dataset.collapse = "true";
   }
 }

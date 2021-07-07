@@ -187,7 +187,7 @@ $searchProducts = fetch_all_row($sql);
                 </div>
                 <div class="filter-buttons">
                     <button class="btn btn-warning btn-lg" onclick="clearSearchParams()">Reset</button>
-                    <button class="btn btn-info btn-lg" onclick="closeFilters()">Save</button>
+                    <button class="btn btn-info btn-lg" onclick="closeFilters()">Done</button>
                 </div>
             </div>
             <div class="right-view ps-lg-5">

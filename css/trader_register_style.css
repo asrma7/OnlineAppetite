@@ -1,15 +1,16 @@
-.trader-form{
+.trader-form {
     background-color: #C4C4C4;
-    margin:0px auto;
-    max-width:500px;
-    padding:50px;
-    border-radius:10px;
-    color:black;
+    margin: 0px auto;
+    max-width: 600px;
+    padding: 50px;
+    border-radius: 10px;
+    color: black;
 }
 
-.trader-form input{
-    border-radius:0px;
+.trader-form input {
+    border-radius: 0px;
 }
+
 .traderbtn {
     background-color: #F1592A;
     border: none;
@@ -30,14 +31,20 @@
     color: #000;
 }
 
-.trader-form label{
+.trader-form label {
     -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none; 
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 
 .form-select:invalid {
     color: gray;
-  }
+}
+
+@media screen and (max-width: 991px) {
+    .trader-form {
+        max-width: 500px;
+    }    
+}

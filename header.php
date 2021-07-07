@@ -90,9 +90,11 @@ foreach ($userCart as $cartShop) {
                         <div class="search-btn" onclick="showSearch()">
                             <img src="assets/images/search.png" id="search-btn" alt="">
                         </div>
-                        <form action="search.php" class="collapsible-section" id="collapsible-search">
-                            <input type="text" name="search" autocomplete="off" />
-                            <button class="btn-search">Search</button>
+                        <form action="search.php" class="collapsible-section" data-expanded="false" id="collapsible-search">
+                            <div class="search-group">
+                                <input type="text" name="q" />
+                                <button class="btn-search">Search</button>
+                            </div>
                         </form>
                     </div>
                 </li>
@@ -134,10 +136,19 @@ foreach ($userCart as $cartShop) {
         </div>
     </nav>
 
-    <div id="nav-collapse" data-open=false>
+    <div id="nav-collapse" class="d-md-none" data-open=false>
         <ul>
             <li <?php echo $page == 'home' ? ' class="active"' : ''; ?>><a href="/">Home</a></li>
-            <li <?php echo $page == 'category' ? ' class="active"' : ''; ?>><a>Categories</a></li>
+            <li <?php echo $page == 'category' ? ' class="active"' : ''; ?> onclick="expandDropdown(this)"><a>Categories</a></li>
+            <li class="dropdown-content" data-collapse="true">
+                <?php
+                foreach ($categories as $category) {
+                ?>
+                    <a href="/category.php?id=<?= $category['CATEGORY_ID'] ?>"><?= $category['CATEGORY_NAME'] ?></a>
+                <?php
+                }
+                ?>
+            </li>
             <li <?php echo $page == 'customerCare' ? ' class="active"' : ''; ?>><a href="/customercare.php">Customer Care</a></li>
             <li <?php echo $page == 'seller' ? ' class="active"' : ''; ?>><a href="/traderregister.php">Become a Seller</a></li>
             <li><a href="/trader">Trader Login</a></li>

@@ -86,7 +86,6 @@ unset($_SESSION['old']);
     </script>
     <?php include 'footer.php'; ?>
     <script src="js/script.js"></script>
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     </script>
 </body>
 
