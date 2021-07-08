@@ -20,7 +20,7 @@ if (!empty($rating) && !empty($review)) {
     if (empty($user_review)) {
         $sql = "INSERT INTO REVIEWS (USER_ID, PRODUCT_ID, RATING, REVIEW) VALUES ('$user_id', '$product_id', '$rating', '$review')";
     } else {
-        $sql = "UPDATE REVIEWS SET RATING = '$rating', REVIEW = '$review'";
+        $sql = "UPDATE REVIEWS SET RATING = '$rating', REVIEW = '$review' WHERE REVIEW_ID = ".$user_review['REVIEW_ID'];
     }
     query($sql);
 }
