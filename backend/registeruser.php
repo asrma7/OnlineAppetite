@@ -77,7 +77,7 @@ if (sizeof($errors) == 0) {
 header('Location:/signup.php');
 function checkUsernameUnique($username)
 {
-    $row = fetch_row("SELECT COUNT(*) as C FROM users WHERE USERNAME = '$username'");
+    $row = fetch_row("SELECT COUNT(*) as C FROM USERS WHERE USERNAME = '$username'");
     $count = $row['C'];
     if ($count > 0) return false;
     return true;
