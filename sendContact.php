@@ -197,7 +197,7 @@ $mail = '<!DOCTYPE html>
 
 </html>';
 if (count($errors) == 0) {
-    $send = sendMail('admin@onlineappetite.com', 'Contact Form Recieved', $mail);
+    $send = sendMail('appetiteonline0@gmail.com', 'Contact Form Recieved', $mail);
     if ($send) {
         $_SESSION['message'] = ['message' => 'Contact message recieved. Thank you', 'color' => 'success'];
     } else {

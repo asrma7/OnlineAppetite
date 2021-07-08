@@ -10,11 +10,12 @@ function sendMail($to, $subject, $message)
     $mail = new PHPMailer();
     //settings
     $mail->isSMTP();
-    $mail->Host = 'smtp.mailtrap.io';
+    $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Port = 2525;
-    $mail->Username = '6a28cdced9467e';
-    $mail->Password = 'd9b0a0ebc86b64';
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
+    $mail->Username = 'appetiteonline0@gmail.com';
+    $mail->Password = 'pexprhuazjfoqofy    ';
 
     $mail->setFrom('no_reply@onlineappetite.com', 'OnlineAppetite');
 
