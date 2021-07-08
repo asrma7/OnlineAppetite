@@ -143,7 +143,7 @@
 /////////////////MYSQLi/////////////////
 ////////////////////////////////////////
 
-$conn = new mysqli('localhost:3306', 'root', 'Hello@123', 'OnlineAppetite');
+$conn = new mysqli('remotemysql.com:3306', 'IAOYrmug9w', 'CH626V1Q8h', 'IAOYrmug9w');
 
 // Check connection
 if ($conn->connect_error) {

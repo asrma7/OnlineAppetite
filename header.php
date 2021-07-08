@@ -1,7 +1,7 @@
 <?php
 require_once 'utils/sessionManager.php';
 require_once 'utils/database.php';
-$categories = fetch_all_row("SELECT * FROM categories");
+$categories = fetch_all_row("SELECT * FROM CATEGORIES");
 $page = $page ?? '';
 $userCart = $_SESSION['user']['cart'] ?? [];
 $cartSize = 0;
