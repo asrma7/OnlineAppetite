@@ -9,6 +9,7 @@ $orderID = $_GET['OrderID'] ?? '';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 
     <title>Payment Success</title>
@@ -67,6 +68,8 @@ $orderID = $_GET['OrderID'] ?? '';
     </div>
     <?php include 'footer.php'; ?>
     <script src="js/script.js"></script>
+    <script src="js/adminlte/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     </script>
 </body>
 

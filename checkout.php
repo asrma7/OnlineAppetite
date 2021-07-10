@@ -52,7 +52,7 @@ if (!isset($_SESSION['user'])) {
             <h2 class="text-center pt-4"> Select Collection Slot </h1>
                 <select name="slot" id="slot" style="width:85%; height: 30px" class="my-4 mx-5" onchange="slotChanged(this.value)">
                     <?php foreach ($slots as $slot) { ?>
-                        <option value="<?= $slot['SLOT_ID'] ?>" <?= $slot['ORDER_COUNT'] >= 20 ? 'disabled' : '' ?>><?= $slot['SLOT_TIME'] ?> <?= $slot['ORDER_COUNT'] >= 20 ? '(Full)' : '' ?></option>
+                        <option value="<?= $slot['ORDER_COUNT'] >= 20 ? '' : $slot['SLOT_ID'] ?>" <?= $slot['ORDER_COUNT'] >= 20 ? 'disabled' : '' ?>><?= $slot['SLOT_TIME'] ?> <?= $slot['ORDER_COUNT'] >= 20 ? '(Full)' : '' ?></option>
                     <?php } ?>
                 </select>
         </div>
