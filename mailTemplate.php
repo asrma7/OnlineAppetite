@@ -100,7 +100,7 @@ function makeMail($message, $link, $button, $secondaryLink, $tagline)
 
 <body>
     <div class="yellow-back">
-        <img src="http://localhost/assets/images/black-white.png" alt="OnlineAppetite">
+        <img src="https://i.imgur.com/Renb0Dn.png" alt="OnlineAppetite">
     </div>
     <div class="contentbox">
         <div class="content">

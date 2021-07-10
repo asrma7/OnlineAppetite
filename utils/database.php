@@ -52,7 +52,11 @@
 
 // function get_last_id($table) {
 //     global $conn;
-//     return $table."_seq.currval";
+//     $stmt = oci_parse($conn, "SELECT ".$table."_seq.currval AS ID"." FROM DUAL;");
+//     oci_execute($stmt);
+//     $res = oci_fetch_assoc($stmt);
+
+//     return $res['ID'];
 // }
 
 // function toDate($date, $format) {
