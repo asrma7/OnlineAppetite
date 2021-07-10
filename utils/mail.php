@@ -15,7 +15,7 @@ function sendMail($to, $subject, $message)
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
     $mail->Username = 'appetiteonline0@gmail.com';
-    $mail->Password = 'pexprhuazjfoqofy    ';
+    $mail->Password = 'pexprhuazjfoqofy';
 
     $mail->setFrom('no_reply@onlineappetite.com', 'OnlineAppetite');
 

@@ -1,8 +1,8 @@
 <?php
 include 'utils/database.php';
 include 'utils/sessionManager.php';
-require_once '../utils/mail.php';
-require_once '../mailTemplate.php';
+require_once 'utils/mail.php';
+require_once 'mailTemplate.php';
 extract($_POST);
 $errors = [];
 $reset = fetch_row("SELECT * FROM RESET_PASSWORD WHERE EMAIL = '$email'");
