@@ -52,7 +52,8 @@ function fetch_row($sql){
 
 function get_last_id($table) {
     global $conn;
-    $stmt = oci_parse($conn, "SELECT ".$table."_seq.currval AS ID"." FROM DUAL;");
+    $sql = "SELECT ".$table."_SEQ.currval AS ID"." FROM DUAL";
+    $stmt = oci_parse($conn, $sql);
     oci_execute($stmt);
     $res = oci_fetch_assoc($stmt);
 

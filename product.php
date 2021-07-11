@@ -171,10 +171,13 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
     </div>
     <!-- Similar Products -->
     <h1 style="font-family: Gill Sans, sans-serif;font-size: 28px;" class="text-center mt-5">Related Products</h1>
-    <div class="container">
+    <div class="container-fluid">
         <div class="products">
             <?php
-            foreach ($products as $product) {
+            foreach ($products as $index => $product) {
+                if($index >= 5){
+                    break;
+                }
                 $discounts = fetch_all_row("SELECT RATE FROM DISCOUNTS WHERE ((DISCOUNT_TYPE = 'all') OR (DISCOUNT_TYPE = 'category' AND TARGET_ID = '" . $product['CATEGORY_ID'] . "') OR (DISCOUNT_TYPE = 'product' AND TARGET_ID = '" . $product['PRODUCT_ID'] . "')) AND STARTS_ON < CURRENT_DATE AND EXPIRES_ON > CURRENT_DATE ORDER BY DISCOUNT_TYPE");
                 $discounted_price = round($product['PRICE'] / 100.0, 2);
                 foreach ($discounts as $discount) {

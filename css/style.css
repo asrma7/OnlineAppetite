@@ -367,14 +367,14 @@ li.my-nav-link.active, li.my-nav-dropdown.active {
 .index-categories {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: center;
     padding: 20px;
 }
 
 .products {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: center;
 }
 
 .index-category {
@@ -384,7 +384,7 @@ li.my-nav-link.active, li.my-nav-dropdown.active {
 }
 
 .product {
-    margin: 25px;
+    margin: 15px;
     cursor: pointer;
     width: 200px;
     background-color: #ffffff;

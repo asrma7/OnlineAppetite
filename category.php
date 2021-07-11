@@ -28,8 +28,8 @@ $products = fetch_all_row("SELECT PRODUCTS.*, (SELECT AVG(RATING) FROM REVIEWS W
     $page = 'category';
     include 'header.php';
     ?>
-    <div class="container text-center py-5">
-        <h2 class="text-start" style="padding-left: 25px;">Category: <?= $pageCategory['CATEGORY_NAME'] ?></h2>
+    <div class="container-fluid text-center py-5">
+        <h2>Category: <?= $pageCategory['CATEGORY_NAME'] ?></h2>
         <div class="products">
             <?php
             foreach ($products as $product) {

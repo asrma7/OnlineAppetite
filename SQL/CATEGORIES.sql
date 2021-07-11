@@ -3,3 +3,5 @@ INSERT INTO CATEGORIES (CATEGORY_ID, CATEGORY_NAME, CREATED_AT, DESCRIPTION, IMA
 INSERT INTO CATEGORIES (CATEGORY_ID, CATEGORY_NAME, CREATED_AT, DESCRIPTION, IMAGE, UPDATED_AT) VALUES ('3', 'Delicatessen', TO_DATE('2021-07-01 14:18:36', 'YYYY-MM-DD HH24:MI:SS'), 'A delicatessen is a small market where you can buy prepared food, sandwiches, sliced meat and cheese, and other food items.', '/uploads/categories/Category_60dd7de03167d.jpg', NULL);
 INSERT INTO CATEGORIES (CATEGORY_ID, CATEGORY_NAME, CREATED_AT, DESCRIPTION, IMAGE, UPDATED_AT) VALUES ('4', 'Fishmonger', TO_DATE('2021-07-01 14:20:09', 'YYYY-MM-DD HH24:MI:SS'), 'Fishmongers are shop preparing and subsequently selling fish and products which conventionally accompany fish.', '/uploads/categories/Category_60dd7e3d4b073.jpg', NULL);
 INSERT INTO CATEGORIES (CATEGORY_ID, CATEGORY_NAME, CREATED_AT, DESCRIPTION, IMAGE, UPDATED_AT) VALUES ('5', 'Greengrocers', TO_DATE('2021-07-01 14:21:50', 'YYYY-MM-DD HH24:MI:SS'), ' A shop selling primarily goods such as vegetables and fruits.', '/uploads/categories/Category_60dd7ea21644a.jpg', NULL);
+
+SELECT CATEGORIES_SEQ.nextval FROM DUAL;
