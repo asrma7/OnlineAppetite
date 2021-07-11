@@ -34,36 +34,41 @@ $products = fetch_all_row("SELECT PRODUCTS.*, (SELECT AVG(RATING) FROM REVIEWS W
             <div class="carousel-item active" data-bs-interval="3000">
                 <img src="assets/images/slider1.jpeg" class="d-block w-100" alt="slider1">
                 <div class="carousel-caption d-none d-md-block">
-                    <h2 class="display-3">First slide label</h2>
-                    <p class="display-6">Some representative placeholder content for the first slide.</p>
+                    <h2 class="display-3">Online Appetite</h2>
+                    <p class="display-6">Online Appetite is the leading online marketplace in uk connecting thousands of
+                        sellers with millions of customers in uk.</p>
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="5000">
                 <img src="assets/images/slider2.jpeg" class="d-block w-100" alt="slider2">
                 <div class="carousel-caption d-none d-md-block">
-                    <h2 class="display-3">First slide label</h2>
-                    <p class="display-6">Some representative placeholder content for the first slide.</p>
+                    <h2 class="display-3">Online Appetite</h2>
+                    <p class="display-6">Online Appetite is the leading online marketplace in uk connecting thousands of
+                        sellers with millions of customers in uk.</p>
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="5000">
                 <img src="assets/images/slider3.jpeg" class="d-block w-100" alt="slider3">
                 <div class="carousel-caption d-none d-md-block">
-                    <h2 class="display-3">First slide label</h2>
-                    <p class="display-6">Some representative placeholder content for the first slide.</p>
+                    <h2 class="display-3">Online Appetite</h2>
+                    <p class="display-6">Online Appetite is the leading online marketplace in uk connecting thousands of
+                        sellers with millions of customers in uk.</p>
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="5000">
                 <img src="assets/images/slider4.jpeg" class="d-block w-100" alt="slider4">
                 <div class="carousel-caption d-none d-md-block">
-                    <h2 class="display-3">First slide label</h2>
-                    <p class="display-6">Some representative placeholder content for the first slide.</p>
+                    <h2 class="display-3">Online Appetite</h2>
+                    <p class="display-6">Online Appetite is the leading online marketplace in uk connecting thousands of
+                        sellers with millions of customers in uk.</p>
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="5000">
                 <img src="assets/images/slider5.jpeg" class="d-block w-100" alt="slider5">
                 <div class="carousel-caption d-none d-md-block">
-                    <h2 class="display-3">First slide label</h2>
-                    <p class="display-6">Some representative placeholder content for the first slide.</p>
+                    <h2 class="display-3">Online Appetite</h2>
+                    <p class="display-6">Online Appetite is the leading online marketplace in uk connecting thousands of
+                        sellers with millions of customers in uk.</p>
                 </div>
             </div>
         </div>

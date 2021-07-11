@@ -22,14 +22,18 @@
         </div>
         <div class="about">
             <h2>About Us</h2>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+            <span>The greatest cuisine in town is available on our Online Appetite Ecommerce Site. We provide you with
+                high-quality food that is both nutritious and available at a low cost.
+                Please visit our website if you are looking for any type of food product in the area. We will always be
+                here to assist you.The finest food is online hunger.
+                <strong>"ONLINE APPETITE THE BEST APPETITE".</strong></span>
         </div>
         <div class="contact">
             <h2>Contact Us</h2>
             <ul class="contact-data">
-            <li><img src="assets/images/mappin.png" alt="mappin"> Pepsicola, Kathmandu</li>
-            <li><img src="assets/images/phone.png" alt="phone"> +977-9803286585</li>
-            <li><img src="assets/images/mail.png" alt="email"> support@onlineappetite.com</li>
+                <li><img src="assets/images/mappin.png" alt="mappin"> Pepsicola, Kathmandu</li>
+                <li><img src="assets/images/phone.png" alt="phone"> +977-9803286585</li>
+                <li><img src="assets/images/mail.png" alt="email"> support@onlineappetite.com</li>
             </ul>
         </div>
     </div>
