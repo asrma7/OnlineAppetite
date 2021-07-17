@@ -16,7 +16,7 @@ $user = fetch_row("SELECT PASSWORD_HASH FROM USERS WHERE USER_ID = '$user_id'");
 if(empty($oldpass)) {
     $errors['oldpass'] = "Old password is required.";
 }
-elseif (!password_verify($oldpass, $user['PASSWORD_HASH'])){
+elseif (md5($oldpass) != $user['PASSWORD_HASH']){
     $errors['oldpass'] = "Old password does not match.";
 }
 if (empty($password)) {
@@ -29,7 +29,7 @@ if (empty($password)) {
     $errors['confirm'] = "Password Confirmation does not match.";
 }
 if(sizeof($errors) == 0){
-    $password = password_hash($password, PASSWORD_DEFAULT);
+    $password = md5($password);
     $sql = "UPDATE USERS SET PASSWORD_HASH = '$password' WHERE USER_ID = '$user_id'";
     if(!query($sql)){
         $_SESSION['message'] = ["message" => "Error changing password", 'color' => "danger"];

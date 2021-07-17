@@ -56,7 +56,7 @@ if (empty($toc)) {
     $errors['toc'] = "You must agree to the Terms and Conditions";
 }
 if (sizeof($errors) == 0) {
-    $password = password_hash($password, PASSWORD_DEFAULT);
+    $password = md5($password);
     $sql1 = "INSERT INTO USERS
     (FULL_NAME, USERNAME, EMAIL, STREET, CITY, STATE, POSTAL, COUNTRY, GENDER, USER_ROLE, PASSWORD_HASH)
      VALUES 

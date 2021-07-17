@@ -37,7 +37,7 @@ if (empty($password)) {
     $errors['confirm'] = "Password Confirmation does not match.";
 }
 if (sizeof($errors) == 0) {
-    $password = password_hash($password, PASSWORD_DEFAULT);
+    $password = md5($password);
     $sql = "UPDATE USERS SET PASSWORD_HASH = '$password' WHERE EMAIL = '$email'";
     if (!query($sql)) {
         $_SESSION['message'] = ["message" => "Error changing password", 'color' => "danger"];

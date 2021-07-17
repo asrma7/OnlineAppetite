@@ -18,7 +18,7 @@ if (empty($login)) {
         $_SESSION['errors'] = $errors;
         $_SESSION['old'] = $old;
         header('Location: /admin/login.php');
-    } else if (!password_verify($password, $user['PASSWORD_HASH'])) {
+    } else if (md5($password) != $user['PASSWORD_HASH']) {
         $errors['password'] = "Password Does not match.";
         $_SESSION['errors'] = $errors;
         $_SESSION['old'] = $old;

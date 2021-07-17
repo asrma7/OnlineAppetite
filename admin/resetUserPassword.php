@@ -16,7 +16,7 @@ $pass = random_str(10);
 $mail = makeMail("Your Password Has Been Reset by Administrator.<br>New password: ".$password, "http://localhost/signin.php", "Login Now", null, "(Thank you for shopping with us.)");
 sendMail($user_email, "Account Password Reset Online Appetite", $mail);
 
-$password = password_hash($pass, PASSWORD_DEFAULT);
+$password = md5($pass);
 
 $sql = "UPDATE USERS SET PASSWORD_HASH = '$password' WHERE USER_ID = '$user_id'";
 if (!query($sql)) {
