@@ -37,5 +37,5 @@ if (array_key_exists($shop['shop_id'], $cart)) {
 
 $_SESSION['user']['cart'] = $cart;
 
-$response = ['status' => 'success', 'message' => "Product added to cart"];
+$response = ['status' => 'success', 'message' => "Product added to cart. Goto Cart?"];
 echo json_encode($response);

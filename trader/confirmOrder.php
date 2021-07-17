@@ -3,8 +3,8 @@ include '../utils/database.php';
 require_once '../utils/sessionManager.php';
 require_once '../utils/mail.php';
 require_once '../mailTemplate.php';
-if (!isset($_SESSION['admin'])) {
-    header('Location: /admin/login.php');
+if (!isset($_SESSION['trader'])) {
+    header('Location: /trader/login.php');
 } else {
     $id = $_GET['id'] ?? '';
 }

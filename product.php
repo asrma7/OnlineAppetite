@@ -35,7 +35,6 @@ $reviews = fetch_all_row("SELECT * FROM REVIEWS INNER JOIN USERS ON USERS.USER_I
     <link rel="stylesheet" href="css/star-rating/star-rating.min.css">
     <link rel="stylesheet" href="css/star-rating/theme.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/product.css">
     <title>Product</title>
     <!-- Required meta tags -->

@@ -90,8 +90,6 @@ if (!$user || $user['USER_ROLE'] != 2) {
     </div><!-- /.container-fluid -->
     <?php include 'footer.php'; ?>
     <script src="js/script.js"></script>
-    <script src="js/index.js"></script>
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     </script>
 </body>
 

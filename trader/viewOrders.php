@@ -86,7 +86,7 @@ if (!isset($_SESSION['trader'])) {
                   <td><?= $order['SLOT_TIME'] ?></td>
                   <td><?= $order['PRODUCT_NAME'] ?></td>
                   <td><?= number_format($order['PRICE'] / 100, 2) ?></td>
-                  <td><?= $order['SITE_DISCOUNT'] ?? '-' ?></td>
+                  <td><?= number_format($order['SITE_DISCOUNT'] / 100, 2) ?? '-' ?></td>
                   <td><?= number_format($order['PRODUCT_DISCOUNT'] / 100, 2) ?></td>
                   <td><?= $order['QUANTITY'] ?></td>
                   <td>
